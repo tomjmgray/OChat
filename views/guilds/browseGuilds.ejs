@@ -8,6 +8,11 @@
 <body>
     <%- include('../partials/header') %>
     <h1>Join Guilds</h1>
+    <ul>
+        <% guilds.forEach((guild) => { %>
+            <li><a href="/guilds/<%= guild._id %>"><%= guild.name %></a></li>
+        <% }) %>
+    </ul>
     <p>Don't see your guild anywhere on the site? Sign your guild up <a href="/guilds/createGuild">here</a> to get started!</p>
 
     

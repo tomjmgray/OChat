@@ -6,6 +6,7 @@
     <title>Document</title>
 </head>
 <body>
+    <%- include('../partials/header.ejs') %>
     <h1><%= guild.name %></h1>
     <p><%= guild.description %></p>
     <h2>Leadership</h2>
@@ -21,6 +22,7 @@
             <li><%= member.name %></li>
         <% }) %>
     </ul>
+    <p>Want to join <%= guild.name %>? Send a join request <a href="/guilds/<%= guild._id %>/joinRequest">here</a></p>
 
 </body>
 </html>

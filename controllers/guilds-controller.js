@@ -8,7 +8,7 @@ router.get('/join', (req, res) => {
         const guilds = {
             guilds: foundGuilds
         };
-        res.render('guilds/joinGuild.ejs', guilds);
+        res.render('guilds/browseGuilds.ejs', guilds);
     })
 })
 
@@ -44,12 +44,36 @@ router.get('/:id', (req, res) => {
     db.Guilds.findById(req.params.id).populate(['members', 'guildMaster', 'officers', 'realm']
     ).exec((err, foundGuild) => {
         if (err) throw err;
-        console.log(foundGuild);
+        
         const context = {
             guild: foundGuild
         }
         res.render('guilds/guildPage', context);
     })
+})
+
+router.get('/:id/joinRequest', (req, res) => {
+    db.Guilds.findById(req.params.id).populate('guildMaster').exec((err, foundGuild) => {
+        if (err) throw err;
+        db.Users.findById(req.session.currentUser._id).populate('characters').exec((err, populatedUser) => {
+            if (err) throw err;
+            const context = {
+                guild: foundGuild,
+                user: populatedUser
+            };
+            res.render('guilds/joinGuildForm', context);
+        })
+    })
+})
+
+router.post('/:id/joinRequest', (req, res) => {
+    console.log(req.body)
+    db.Guilds.findByIdAndUpdate(req.params.id, {$push: {joinRequests: req.body.charId}}, (err, updatedGuild) => {
+        if (err) throw err;
+        console.log(updatedGuild.joinRequests);
+        res.redirect(`/guilds/${req.params.id}`)
+    });
+    
 })
 
 module.exports = router;

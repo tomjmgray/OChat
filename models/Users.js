@@ -8,6 +8,7 @@ const usersSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'Characters' 
     }],
+    main: {type: Schema.Types.ObjectId, ref: 'Characters'}
 })
 
 const Users = mongoose.model('Users', usersSchema);

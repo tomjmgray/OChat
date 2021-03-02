@@ -3,6 +3,7 @@ const Schema = mongoose.Schema;
 
 const characterScema = new Schema({
     user: {type: Schema.Types.ObjectId, ref: 'Users'},
+    isMain: {type: Boolean, default: false},
     name: {type: String, required: true},
     class: {type: String, required: true},
     race: {type: String, required: true},

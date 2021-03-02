@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1><%= guild.name %> Join Request</h1>
+    <p>Select which of your characters you wish to join the guild with:</p>
+    
+    <% user.characters.forEach((char, index) => { %>
+        <% if (!guild.joinRequests.includes(char._id)) { %>
+            <% if (!char.guild || char.guild.toString() !== guild._id.toString()) { %>
+                <form action="/guilds/<%= guild._id %>/joinRequest" method="POST">
+                    <input type="hidden" value="<%= char._id %>" name="charId">
+                    <label for="charId"><%= char.name %> test <%= %></label>
+                    <button type="submit">Request Invite</button>
+                </form>
+        <% }} %>
+    <% }) %>
+        
+    
+    
+</body>
+</html>

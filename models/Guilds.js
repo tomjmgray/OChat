@@ -7,7 +7,8 @@ const guildsSchema = new Schema({
     guildMaster: {type: Schema.Types.ObjectId, ref: 'Characters'},
     officers: [{type: Schema.Types.ObjectId, ref: 'Characters'}],
     description: {type: String},
-    realm: {type: Schema.Types.ObjectId, ref: 'Realms'}
+    realm: {type: Schema.Types.ObjectId, ref: 'Realms'}, 
+    joinRequests: [{type: Schema.Types.ObjectId, ref: 'Characters'}]
 })
 
 const Guilds = mongoose.model('Guilds', guildsSchema);
