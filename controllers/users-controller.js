@@ -4,6 +4,9 @@ const express = require('express');
 const router = express.Router();
 const db = require('../models');
 const bcrypt = require('bcrypt');
+const flash = require('express-flash');
+
+router.use(flash());
 
 router.get('/profile', (req, res) => {
     const userId = req.session.currentUser?._id;
@@ -19,18 +22,20 @@ router.get('/profile', (req, res) => {
 router.post('/login', (req, res) => {
     db.Users.findOne({username: {$eq: req.body.username}}, (err, foundUser) => {
         if (err) throw err;
+        console.log(foundUser);
         if (!foundUser) {
-            alert('Improper login credentials, please try again');
-            res.render('/');
+            console.log('Improper login credentials, please try again');
+
+            return res.redirect('/');
         }
-        bcrypt.compare(req.body.password, foundUser.password, (err, resolved) => {
-            if (err) throw err;
+        bcrypt.compare(req.body.password, foundUser?.password, (err, resolved) => {
+            if (err) console.log(err);
             if (resolved) {
                 console.log('Login Succesful'),
                 req.session.currentUser = foundUser;
                 res.redirect('/users/profile')
             } else {
-                alert('Improper login credentials, please try again');
+                // alert('Improper login credentials, please try again');
                 res.redirect('/');
             }
         })
