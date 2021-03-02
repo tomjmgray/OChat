@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Register your guild here!</h1>
+    <p>Note that by creating a guild, you will be assigned as the guild's GM by default. You can later change this setting in the edit guild page.</p>
+    <form action="/guilds/createGuild" method="POST">
+        <label for="guildMaster">Select which of your characters is your guild's GM:</label>
+        <br>
+        <select name="guildMaster" id="guildMaster">
+            <% for (let i = 0; i < user.characters.length; i++) { %>
+                <option value=<%= user.characters[i]._id %>><%= user.characters[i].name %></option>
+            <% } %>
+        </select>
+        <label for="name">Guild Name</label>
+        <input type="text" name="name" id="name">
+        <br>
+        <label for="realm">Realm</label>
+        <select name="realm" id="realm">
+            <% for (let i = 0; i < realms.length; i++) { %>
+                <option value=<%= realms[i]._id %>><%= realms[i].name %></option>
+            <% } %>
+        </select>
+        <br>
+        <label for="description">Please provide a brief description of your guild here:</label>
+        <br>
+        <textarea name="description" id="description" cols="50" rows="30"></textarea>
+        <br>
+        <button type="submit">Create Guild</button>
+    </form>
+</body>
+</html>

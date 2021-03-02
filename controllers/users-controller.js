@@ -10,7 +10,11 @@ router.use(flash());
 
 router.get('/profile', (req, res) => {
     const userId = req.session.currentUser?._id;
-    db.Users.findById(userId).populate('characters').exec((err, foundUser) => {
+    db.Users.findById(userId).populate({path: 'characters', populate: [{
+        path: 'guild', model: 'Guilds'
+    }, {
+        path: 'realm', model: 'Realms'
+    }]}).exec((err, foundUser) => {
         if (err) throw err;
         const context = {
             user: foundUser
