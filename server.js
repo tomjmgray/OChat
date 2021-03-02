@@ -32,6 +32,29 @@ app.get('/', (req, res) => {
     res.render('landing.ejs');
 })
 
+app.get('/home', (req, res) => {
+    const userId = req.session.currentUser?._id;
+    db.Users.findById(userId).populate(
+        {path: 'characters', populate: [
+            {path: 'guild', model: 'Guilds'},
+            {path: 'realm', model: 'Realms'}
+        ]}
+    ).exec((err, foundUser) => {
+        if (err) throw err;
+        const guilds = [];
+        foundUser.characters.forEach((char) => {
+            if (char.guild) {
+                guilds.push(char.guild);
+            }
+        })
+        const context = {
+            guilds: guilds,
+            user: foundUser
+        };
+        res.render('home.ejs', context);
+    })
+})
+
 app.post('/register', (req, res) => {
     bcrypt.hash(req.body.password, 15, (err, hashPass) => {
         const newUser = {

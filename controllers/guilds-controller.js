@@ -40,4 +40,16 @@ router.post('/createGuild', (req, res) => {
     })
 })
 
+router.get('/:id', (req, res) => {
+    db.Guilds.findById(req.params.id).populate(['members', 'guildMaster', 'officers', 'realm']
+    ).exec((err, foundGuild) => {
+        if (err) throw err;
+        console.log(foundGuild);
+        const context = {
+            guild: foundGuild
+        }
+        res.render('guilds/guildPage', context);
+    })
+})
+
 module.exports = router;

@@ -6,6 +6,7 @@
     <title>Document</title>
 </head>
 <body>
+    <%- include('../partials/header') %>
     <h1>Create a new character</h1>
     <form action="/characters/new" method="POST">
         <input type="hidden" name="user" id="user" value="<%= user %>">

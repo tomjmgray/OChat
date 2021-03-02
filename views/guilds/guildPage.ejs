@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1><%= guild.name %></h1>
+    <p><%= guild.description %></p>
+    <h2>Leadership</h2>
+    <ul>
+        <li>Guild Master: <%= guild.guildMaster.name %></li>
+        <% guild.officers.forEach((officer) => { %>
+            <li><%= officer.name %></li>
+        <% }) %>
+    </ul>
+    <h2>Members</h2>
+    <ul>
+        <% guild.members.forEach((member) => { %>
+            <li><%= member.name %></li>
+        <% }) %>
+    </ul>
+
+</body>
+</html>
