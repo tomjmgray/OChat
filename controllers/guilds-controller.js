@@ -45,6 +45,20 @@ router.post('/createGuild', (req, res) => {
     })
 })
 
+router.get('/manageGuild/:id', (req, res) => {
+    if (req.session.currentUser.isAdmin?.toString() !== req.params.id) {
+        res.redirect(`/guilds/${req.params.id}`);
+    }
+    db.Guilds.findById(req.params.id, (err, foundGuild) => {
+        if (err) throw err;
+        context = {
+            user: req.session.currentUser,
+            guild: foundGuild
+        }
+        res.render('guilds/manageGuild.ejs', context);
+    })
+})
+
 router.get('/:id', (req, res) => {
     db.Guilds.findById(req.params.id).populate(['members', 'guildMaster', 'officers', 'realm']
     ).exec((err, foundGuild) => {
