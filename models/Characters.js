@@ -11,7 +11,7 @@ const characterScema = new Schema({
     level: {type: Number, required: true},
     guild: {type: Schema.Types.ObjectId, ref: 'Guilds'},
     guildRank: {type: String},
-    realm: {type: String},
+    realm: {type: Schema.Types.ObjectId, ref: 'Realms'},
 });
 
 const Characters = mongoose.model('Characters', characterScema);

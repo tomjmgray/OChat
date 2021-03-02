@@ -15,7 +15,7 @@ router.get('/profile', (req, res) => {
         const context = {
             user: foundUser
         };
-        res.render('userProfile.ejs', context);
+        res.render('user/userProfile.ejs', context);
     })
 })
 

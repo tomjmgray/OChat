@@ -69,7 +69,11 @@
         <label for="level">Level</label>
         <input type="number" name="level" id="level" max="70" min="1"><br>
         <label for="realm">Realm</label>
-        <input type="text" name="realm" id="realm">
+        <select name="realm" id="realm">
+            <% for (let i = 0; i < realms.length; i++) { %>
+                <option value=<%= realms[i]._id %>><%= realms[i].name %></option>
+            <% } %>
+        </select>
         <br>
         <button type="submit">Add Character</button>
     </form>

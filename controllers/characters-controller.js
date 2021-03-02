@@ -3,10 +3,15 @@ const router = express.Router();
 const db = require('../models');
 
 router.get('/new', (req, res) => {
-    const userId = {
-        user: req.session.currentUser?._id
-    }
-    res.render('createCharacter.ejs', userId);
+    db.Realms.find({}, (err, foundRealms) => {
+        if (err) throw err;
+        const context = {
+            user: req.session.currentUser?._id,
+            realms: foundRealms,
+        }
+    
+        res.render('characters/createCharacter.ejs', context);
+    })
 })
 
 router.post('/new', (req, res) => {

@@ -17,7 +17,9 @@
                 <h3><%= user.characters[i].name %></h3>
                 <p>Level <%= user.characters[i].level%> <%= user.characters[i].race %> <%= user.characters[i].spec %> <%= user.characters[i].class %> </p>
                 <% if (user.characters[i]?.guild) { %>
-                <p><%= user.characters[i]?.guildRank %> of <%= user.characters[i]?.guild?.name %></p>
+                    <p><%= user.characters[i]?.guildRank %> of <%= user.characters[i]?.guild?.name %></p>
+                <% } else { %>
+                    <p>You haven't joined a guild for the time being. Click <a href="/guilds/join">here</a> to browse guilds and send a request to join!</p>
                 <% } %>
             <% } %>
         <% } %>

@@ -13,5 +13,7 @@ mongoose.connection.on('connected', () => {console.log('connected to mongo')});
 
 module.exports = {
     Users: require('./Users'),
-    Characters: require('./Characters')
+    Characters: require('./Characters'),
+    Guilds: require('./Guilds'),
+    Realms: require('./Realms'),
 }

@@ -10,6 +10,7 @@ const bcrypt = require('bcrypt');
 
 const usersController = require('./controllers/users-controller.js');
 const charactersController = require('./controllers/characters-controller.js');
+const guildsController = require('./controllers/guilds-controller');
 
 app.use(express.static('public'));
 app.use(bodyParser.urlencoded({extended: false}));
@@ -25,6 +26,7 @@ app.use(session({
 
 app.use('/users', usersController);
 app.use('/characters', charactersController);
+app.use('/guilds', guildsController);
 
 app.get('/', (req, res) => {
     res.render('landing.ejs');
