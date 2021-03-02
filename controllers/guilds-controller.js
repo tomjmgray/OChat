@@ -30,11 +30,16 @@ router.post('/createGuild', (req, res) => {
     db.Guilds.create(req.body, (err, createdGuild) => {
         if (err) throw err;
         console.log(createdGuild);
-        db.Characters.findByIdAndUpdate(createdGuild.guildMaster, {guild: createdGuild, guildRank: 'Guild Master'}, (err, updatedUser) => {
-            db.Realms.findByIdAndUpdate(createdGuild.realm, {$push: {guilds: createdGuild._id}}, (err, updatedRealm) => {
+        db.Characters.findByIdAndUpdate(createdGuild.guildMaster, {guild: createdGuild, guildRank: 'Guild Master'}, (err, updatedCharacter) => {
+            if (err) throw err;
+            db.Users.findByIdAndUpdate(updatedCharacter.user, {$push: {isAdmin: createdGuild._id}}, (err, updatedUser) => {
                 if (err) throw err;
-                console.log(updatedRealm);
-                res.redirect('/users/profile');
+                console.log(updatedUser.isAdmin);
+                db.Realms.findByIdAndUpdate(createdGuild.realm, {$push: {guilds: createdGuild._id}}, (err, updatedRealm) => {
+                    if (err) throw err;
+                    console.log(updatedRealm);
+                    res.redirect('/users/profile');
+                })
             })
         })
     })
@@ -46,7 +51,8 @@ router.get('/:id', (req, res) => {
         if (err) throw err;
         
         const context = {
-            guild: foundGuild
+            guild: foundGuild,
+            user: req.session.currentUser
         }
         res.render('guilds/guildPage', context);
     })

@@ -8,7 +8,8 @@ const usersSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'Characters' 
     }],
-    main: {type: Schema.Types.ObjectId, ref: 'Characters'}
+    main: {type: Schema.Types.ObjectId, ref: 'Characters'},
+    isAdmin: [{type: Schema.Types.ObjectId, ref: 'Guilds'}]
 })
 
 const Users = mongoose.model('Users', usersSchema);
