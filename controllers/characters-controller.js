@@ -37,4 +37,40 @@ router.post('/new', (req, res) => {
     })
 })
 
+router.get('/editCharacter/:id', (req, res) => {
+    db.Characters.findById(req.params.id, (err, foundCharacter) => {
+        if (err) throw err;
+        if (foundCharacter.user.toString() !== req.session.currentUser._id.toString()) {
+            res.redirect('/');
+        }
+        db.Realms.find({}, (err, foundRealms) => {
+            if (err) throw err;
+            const context = {
+                user: req.session.currentUser,
+                character: foundCharacter,
+                realms: foundRealms
+            }
+            res.render('characters/editCharacter.ejs', context);
+        })
+    })
+})
+
+router.put('/editCharacter/:id', (req, res) => {
+    const charObj = {
+        name: req.body.name,
+        spec: req.body.spec,
+        level: req.body.level,
+        realm: req.body.realm,
+        isMain: false
+    }
+    if (req.body.isMain === 'on') {
+        charObj.isMain = true
+    };
+    db.Characters.findByIdAndUpdate(req.params.id, charObj, (err, updatedCharacter) => {
+        if (err) throw err;
+        console.log(updatedCharacter);
+        res.redirect('/users/profile');
+    })
+})
+
 module.exports = router;
