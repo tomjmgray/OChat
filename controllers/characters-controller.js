@@ -31,6 +31,12 @@ router.post('/new', (req, res) => {
         if (err) throw err;
         db.Users.findByIdAndUpdate(req.body.user, {$push: {characters: createdCharacter._id}}, (err, updatedUser) => {
             if (err) throw err;
+            req.session.regenerate((err) => {
+                req.session.currentUser = updatedUser;
+            })
+            db.Realms.findByIdAndUpdate(createdCharacter.guild, {
+                $push: {characters: createdCharacter._id}
+            })
             res.redirect('/users/profile')
         })
     })
@@ -58,7 +64,9 @@ router.get('/grantAdmin/:charId', (req, res) => {
             $push: {isAdmin: foundChar.guild}
         }, (err, updatedUser) => {
             if (err) throw err;
-            req.session.currentUser = updatedUser
+            req.session.regenerate((err) => {
+                req.session.currentUser = updatedUser;
+            })
             res.redirect(`/guilds/manageGuildRoster/${foundChar.guild}`);
         })
     })
@@ -71,7 +79,9 @@ router.get('/removeAdmin/:charId', (req, res) => {
             $pull: {isAdmin: foundChar.guild}
         }, (err, updatedUser) => {
             if (err) throw err;
-            req.session.currentUser = updatedUser;
+            req.session.regenerate((err) => {
+                req.session.currentUser = updatedUser;
+            })
             res.redirect(`/guilds/manageGuildRoster/${foundChar.guild}`);
         })
     })
@@ -135,7 +145,9 @@ router.put('/editCharacter/:id', (req, res) => {
         if (updatedCharacter.isMain === true) {
             db.Users.findByIdAndUpdate(updatedCharacter.user, {main: updatedCharacter._id}, (err, updatedUser) => {
                 if (err) throw err;
-                req.session.currentUser = updatedUser;
+                req.session.regenerate((err) => {
+                    req.session.currentUser = updatedUser;
+                })
                 res.redirect('/users/profile');
             })
         } else {
@@ -159,7 +171,9 @@ router.get('/delete/:id', (req, res) => {
                 },
             }, (err, updatedUser) => {
                 if (err) throw err;
-                req.session.currentUser = updatedUser;
+                req.session.regenerate((err) => {
+                    req.session.currentUser = updatedUser;
+                })
                 db.Guilds.findByIdAndUpdate(deletedCharacter.guild, {
                     $pull: {
                         officers: deletedCharacter._id,
