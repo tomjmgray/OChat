@@ -6,10 +6,9 @@ router.get('/new', (req, res) => {
     db.Realms.find({}, (err, foundRealms) => {
         if (err) throw err;
         const context = {
-            user: req.session.currentUser?._id,
+            user: req.session.currentUser,
             realms: foundRealms,
         }
-        console.log(context.user);
         res.render('characters/createCharacter.ejs', context);
     })
 })
@@ -40,9 +39,9 @@ router.post('/new', (req, res) => {
 router.get('/editCharacter/:id', (req, res) => {
     db.Characters.findById(req.params.id, (err, foundCharacter) => {
         if (err) throw err;
-        if (foundCharacter.user.toString() !== req.session.currentUser._id.toString()) {
-            res.redirect('/');
-        }
+        // if (foundCharacter.user.toString() !== req.session.currentUser._id.toString()) {
+        //     res.redirect('/');
+        // }
         db.Realms.find({}, (err, foundRealms) => {
             if (err) throw err;
             const context = {
@@ -63,7 +62,20 @@ router.get('/grantAdmin/:charId', (req, res) => {
         }, (err, updatedUser) => {
             if (err) throw err;
             console.log(updatedUser.isAdmin);
-            res.redirect(`/guilds/manageGuild/${foundChar.guild}`);
+            res.redirect(`/guilds/manageGuildRoster/${foundChar.guild}`);
+        })
+    })
+})
+
+router.get('/removeAdmin/:charId', (req, res) => {
+    db.Characters.findById(req.params.charId, (err, foundChar) => {
+        if (err) throw err;
+        db.Users.findByIdAndUpdate(foundChar.user, {
+            $pull: {isAdmin: foundChar.guild}
+        }, (err, updatedUser) => {
+            if (err) throw err;
+            console.log(updatedUser.isAdmin);
+            res.redirect(`/guilds/manageGuildRoster/${foundChar.guild}`);
         })
     })
 })
@@ -82,7 +94,7 @@ router.get('/gkickOfficer/:charId', (req, res) => {
             }, (err, updatedGuild) => {
                 if (err) throw err;
                 console.log(updatedGuild.officers);
-                res.redirect(`/guilds/manageGuild/${updatedGuild._id}`);
+                res.redirect(`/guilds/manageGuildRoster/${updatedGuild._id}`);
             })
         })
     })
@@ -102,7 +114,7 @@ router.get('/gkickMember/:charId', (req, res) => {
             }, (err, updatedGuild) => {
                 if (err) throw err;
                 console.log(updatedGuild.members);
-                res.redirect(`/guilds/manageGuild/${updatedGuild._id}`);
+                res.redirect(`/guilds/manageGuildRoster/${updatedGuild._id}`);
             })
         })
     })
@@ -114,7 +126,8 @@ router.put('/editCharacter/:id', (req, res) => {
         spec: req.body.spec,
         level: req.body.level,
         realm: req.body.realm,
-        isMain: false
+        isMain: false,
+        user: req.session.currentUser._id
     }
     if (req.body.isMain === 'on') {
         charObj.isMain = true
@@ -122,7 +135,16 @@ router.put('/editCharacter/:id', (req, res) => {
     db.Characters.findByIdAndUpdate(req.params.id, charObj, (err, updatedCharacter) => {
         if (err) throw err;
         console.log(updatedCharacter);
-        res.redirect('/users/profile');
+        if (updatedCharacter.isMain === true) {
+            db.Users.findByIdAndUpdate(updatedCharacter.user, {main: updatedCharacter._id}, (err, updatedUser) => {
+                if (err) throw err;
+                console.log(updatedUser);
+                res.redirect('/users/profile');
+            })
+        } else {
+           res.redirect('/users/profile'); 
+        }
+        
     })
 })
 

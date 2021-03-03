@@ -23,8 +23,8 @@
         <% }) %>
     </ul>
     <p>Want to join <%= guild.name %>? Send a join request <a href="/guilds/<%= guild._id %>/joinRequest">here</a></p>
-    <% if (user.isAdmin.toString().includes(guild._id)) { %>
-        <button><a href="/guilds/manageGuild/<%= guild._id %>">Manage Guild</a></button>
+    <% if (user.isAdmin.join('').includes(guild._id)) { %>
+        <button><a href="/guilds/manageGuildRoster/<%= guild._id %>">Manage Guild Roster</a></button>
     <% } %>
     
 

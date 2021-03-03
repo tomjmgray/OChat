@@ -5,10 +5,11 @@ const db = require('../models');
 router.get('/join', (req, res) => {
     db.Guilds.find({}, (err, foundGuilds) => {
         if (err) throw err;
-        const guilds = {
+        const context = {
+            user: req.session.currentUser,
             guilds: foundGuilds
         };
-        res.render('guilds/browseGuilds.ejs', guilds);
+        res.render('guilds/browseGuilds.ejs', context);
     })
 })
 
@@ -32,9 +33,8 @@ router.post('/createGuild', (req, res) => {
         console.log(createdGuild);
         db.Characters.findByIdAndUpdate(createdGuild.guildMaster, {guild: createdGuild, guildRank: 'Guild Master'}, (err, updatedCharacter) => {
             if (err) throw err;
-            db.Users.findByIdAndUpdate(updatedCharacter.user, {$push: {isAdmin: createdGuild._id}}, (err, updatedUser) => {
+            db.Users.findByIdAndUpdate(req.session.currentUser._id, {$push: {isAdmin: createdGuild._id}}, (err, updatedUser) => {
                 if (err) throw err;
-                console.log(updatedUser.isAdmin);
                 db.Realms.findByIdAndUpdate(createdGuild.realm, {$push: {guilds: createdGuild._id}}, (err, updatedRealm) => {
                     if (err) throw err;
                     console.log(updatedRealm);
@@ -45,18 +45,22 @@ router.post('/createGuild', (req, res) => {
     })
 })
 
-router.get('/manageGuild/:id', (req, res) => {
-    if (req.session.currentUser.isAdmin?.toString() !== req.params.id) {
+router.get('/manageGuildRoster/:id', (req, res) => {
+    if (!req.session.currentUser.isAdmin?.includes(req.params.id)) {
         res.redirect(`/guilds/${req.params.id}`);
     }
-    db.Guilds.findById(req.params.id).populate(['members', 'guildMaster', 'officers', 'realm', 'joinRequests']).exec((err, foundGuild) => {
+    
+    db.Guilds.findById(req.params.id).populate(['members', 'guildMaster', 'realm', 'joinRequests', {
+        path: 'officers', populate: {
+            path: 'user', model: 'Users',
+        }
+    }]).exec((err, foundGuild) => {
         if (err) throw err;
         context = {
             user: req.session.currentUser,
             guild: foundGuild
         }
-        console.log(foundGuild);
-        res.render('guilds/manageGuild.ejs', context);
+        res.render('guilds/manageGuildRoster.ejs', context);
     })
 })
 
@@ -69,6 +73,8 @@ router.get('/:id', (req, res) => {
             guild: foundGuild,
             user: req.session.currentUser
         }
+        console.log(context.user.isAdmin.join('').includes(context.guild._id))
+        
         res.render('guilds/guildPage', context);
     })
 })
@@ -114,7 +120,7 @@ router.post('/addMember', (req, res) => {
                 }, (err, updatedCharacter) => {
                     if (err) throw err;
                     console.log(updatedCharacter)
-                    res.redirect(`/guilds/manageGuild/${req.body.guildId}`)
+                    res.redirect(`/guilds/manageGuildRoster/${req.body.guildId}`)
             })
         })
     } else {
@@ -133,7 +139,7 @@ router.post('/addMember', (req, res) => {
             }, (err, updatedCharacter) => {
                 if (err) throw err;
                 console.log(updatedCharacter.guild)
-                res.redirect(`/guilds/manageGuild/${req.body.guildId}`)
+                res.redirect(`/guilds/manageGuildRoster/${req.body.guildId}`)
             })
         })
     }
@@ -147,7 +153,7 @@ router.post('/declineJoinRequest', (req, res) => {
     }, (err, updatedGuild) => {
         if (err) throw err;
         console.log(updatedGuild.officers)
-        res.redirect(`/guilds/manageGuild/${req.body.guildId}`)
+        res.redirect(`/guilds/manageGuildRoster/${req.body.guildId}`)
     })
 })
 

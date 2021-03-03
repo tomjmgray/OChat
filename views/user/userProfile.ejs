@@ -16,7 +16,13 @@
             <h3>You haven't created any characters yet. Press the button to get started!</h3>
         <% } else { %>
             <% for (let i = 0; i < user.characters.length; i++) { %>
-                <h3><%= user.characters[i].name %></h3>
+                <h3 
+                    <% if(user.characters[i].isMain) { %>
+                        style="color:blue"
+                    <% } else { %>
+                        style="color:green"
+                    <% } %>
+                ><%= user.characters[i].name %></h3>
                 <p>Level <%= user.characters[i].level%> <%= user.characters[i].race %> <%= user.characters[i].spec %> <%= user.characters[i].class %> </p>
                 <% if (user.characters[i]?.guild) { %>
                     <p><%= user.characters[i]?.guildRank %> of <%= user.characters[i]?.guild?.name %></p>

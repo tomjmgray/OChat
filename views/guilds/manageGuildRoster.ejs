@@ -39,7 +39,12 @@
         <ul>
             <% guild.officers.forEach(officer => { %>
                 <li><%= officer.name %></li>
-                <button><a href="/characters/grantAdmin/<%= officer._id %>">Grant Guild admin privilege</a></button>
+                <% if (officer.user.isAdmin[0]?.toString() === guild._id.toString()) { %>
+                    <button><a href="/characters/removeAdmin/<%= officer._id %>">Remove Guild admin privilege</a></button>
+                <% } else { %>
+                    <button><a href="/characters/grantAdmin/<%= officer._id %>">Grant Guild admin privilege</a></button>
+                <% } %>
+                
                 <button><a href="/characters/demoteCharacter/<%= officer._id %>">Demote Officer</a></button>
                 <button><a href="/characters/gkickOfficer/<%= officer._id %>">GKick</a></button>
             <% }) %> 

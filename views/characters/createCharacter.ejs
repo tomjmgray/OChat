@@ -9,12 +9,12 @@
     <%- include('../partials/header') %>
     <h1>Create a new character</h1>
     <form action="/characters/new" method="POST">
-        <input type="hidden" name="user" id="user" value="<%= user %>">
+        <input type="hidden" name="user" id="user" value="<%= user._id %>">
         <label for="name">Character Name</label>
-        <input type="text" name="name" id="name">
+        <input type="text" name="name" id="name" required min="2">
         <br />
         <label for="race">Race</label>
-        <select name="race" id="race">
+        <select name="race" id="race" required>
             <option value="Blood Elf">Blood Elf</option>
             <option value="Dranei">Dranei</option>
             <option value="Dwarf">Dwarf</option>
@@ -28,7 +28,7 @@
         </select>
         <br />
         <label for="class">Class</label>
-        <select name="class" id="class">
+        <select name="class" id="class" required>
             <option value="Druid">Druid</option>
             <option value="Hunter">Hunter</option>
             <option value="Mage">Mage</option>
@@ -41,7 +41,7 @@
         </select>
         <br>
         <label for="spec">Spec</label>
-        <select name="spec" id="spec">
+        <select name="spec" id="spec" required>
             <option value="Restoration">Restoration</option>
             <option value="Feral">Feral</option>
             <option value="Balance">Balance</option>
@@ -68,9 +68,9 @@
             <option value="Fury">Fury</option>
         </select><br>
         <label for="level">Level</label>
-        <input type="number" name="level" id="level" max="70" min="1"><br>
+        <input type="number" name="level" id="level" max="70" min="1"required><br>
         <label for="realm">Realm</label>
-        <select name="realm" id="realm">
+        <select name="realm" id="realm" required>
             <% for (let i = 0; i < realms.length; i++) { %>
                 <option value=<%= realms[i]._id %>><%= realms[i].name %></option>
             <% } %>
