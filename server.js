@@ -43,7 +43,7 @@ app.get('/home', (req, res) => {
         if (err) throw err;
         const guilds = [];
         foundUser.characters.forEach((char) => {
-            if (char.guild) {
+            if (char.guild && !guilds.includes(char.guild)) {
                 guilds.push(char.guild);
             }
         })

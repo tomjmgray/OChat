@@ -6,28 +6,52 @@
     <title>Document</title>
 </head>
 <body>
+    <%- include('../partials/header') %>
     <h1>Manage <%= guild.name %></h1>
     <h2>Guild Invite Requests</h2>
     <ul>
-        <% for (let i = 0; i < guild.joinRequests.length; i++) { %>
-            <li>
-                <form action="/guilds/addMember" method="POST">
-                    <input type="hidden" value="<%= guild._id %>" name="guildId">
-                    <input type="hidden" id="name" name="name" value="<%= guild.joinRequests[i]._id %>">
-                    <label for="name"><%= guild.joinRequests[i].name %></label>
-                    <br>
-                    <label for="isOfficer">Add as Officer?</label>
-                    <input type="checkbox" name="isOfficer" id="isOfficer">
-                    <button type="submit">Accept Request</button>
-                </form>
-                <form action="/guilds/declineJoinRequest" method="POST">
-                    <input type="hidden" name="userId" value="<%=guild.joinRequests[i]._id%>">
-                    <input type="hidden" name="guildId" value="<%= guild._id %>">
-                    <button type="submit">Decline Request</button>
-                </form> 
-            </li>
-       <% } %>
+        <% if (guild.joinRequests.length !== 0) { %>
+            <% for (let i = 0; i < guild.joinRequests.length; i++) { %>
+                <li>
+                    <form action="/guilds/addMember" method="POST">
+                        <input type="hidden" value="<%= guild._id %>" name="guildId">
+                        <input type="hidden" id="name" name="name" value="<%= guild.joinRequests[i]._id %>">
+                        <label for="name"><%= guild.joinRequests[i].name %></label>
+                        <br>
+                        <label for="isOfficer">Add as Officer?</label>
+                        <input type="checkbox" name="isOfficer" id="isOfficer">
+                        <button type="submit">Accept Request</button>
+                    </form>
+                    <form action="/guilds/declineJoinRequest" method="POST">
+                        <input type="hidden" name="userId" value="<%=guild.joinRequests[i]._id%>">
+                        <input type="hidden" name="guildId" value="<%= guild._id %>">
+                        <button type="submit">Decline Request</button>
+                    </form> 
+                </li>
+           <% } %>
+        <% } else { %>
+            <li>You have no new join requests.</li>
+        <% } %>
+        
     </ul>
+    <h2>Manage Members</h2>
+    <h3>Officers</h3>
+        <ul>
+            <% guild.officers.forEach(officer => { %>
+                <li><%= officer.name %></li>
+                <button><a href="/characters/grantAdmin/<%= officer._id %>">Grant Guild admin privilege</a></button>
+                <button><a href="/characters/demoteCharacter/<%= officer._id %>">Demote Officer</a></button>
+                <button><a href="/characters/gkickOfficer/<%= officer._id %>">GKick</a></button>
+            <% }) %> 
+        </ul>
+    <h3>Members</h3>
+        <ul>
+            <% guild.members.forEach(member => { %>
+                <li><%= member.name %></li>
+                <button><a href="/characters/gkickMember/<%= member._id %>">GKick</a></button>
+            <% }) %>
+        </ul>
+    
     
 </body>
 </html>

@@ -11,10 +11,10 @@
     
     <% user.characters.forEach((char, index) => { %>
         <% if (!guild.joinRequests.includes(char._id)) { %>
-            <% if (!char.guild || char.guild.toString() !== guild._id.toString()) { %>
+            <% if (!char.guild) { %>
                 <form action="/guilds/<%= guild._id %>/joinRequest" method="POST">
                     <input type="hidden" value="<%= char._id %>" name="charId">
-                    <label for="charId"><%= char.name %> test <%= %></label>
+                    <label for="charId"><%= char.name %></label>
                     <button type="submit">Request Invite</button>
                 </form>
         <% }} %>

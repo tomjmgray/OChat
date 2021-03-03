@@ -139,7 +139,7 @@ router.post('/addMember', (req, res) => {
     }
 });
 
-router.post('declineJoinRequest', (req, res) => {
+router.post('/declineJoinRequest', (req, res) => {
     db.Guilds.findByIdAndUpdate(req.body.guildId, {
         $pull: {
             joinRequests: req.body.userId

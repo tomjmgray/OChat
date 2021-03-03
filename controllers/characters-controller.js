@@ -55,6 +55,59 @@ router.get('/editCharacter/:id', (req, res) => {
     })
 })
 
+router.get('/grantAdmin/:charId', (req, res) => {
+    db.Characters.findById(req.params.charId, (err, foundChar) => {
+        if (err) throw err;
+        db.Users.findByIdAndUpdate(foundChar.user, {
+            $push: {isAdmin: foundChar.guild}
+        }, (err, updatedUser) => {
+            if (err) throw err;
+            console.log(updatedUser.isAdmin);
+            res.redirect(`/guilds/manageGuild/${foundChar.guild}`);
+        })
+    })
+})
+
+router.get('/gkickOfficer/:charId', (req, res) => {
+    db.Characters.findById(req.params.charId, (err, foundChar) => {
+        if (err) throw err;
+        db.Characters.findByIdAndUpdate(foundChar._id, {
+            guild: null,
+            guildRank: ''
+        }, (err, updatedChar) => {
+            if (err) throw err;
+            console.log(updatedChar.guild);
+            db.Guilds.findByIdAndUpdate(foundChar.guild, {
+                $pull: {officers: foundChar._id}
+            }, (err, updatedGuild) => {
+                if (err) throw err;
+                console.log(updatedGuild.officers);
+                res.redirect(`/guilds/manageGuild/${updatedGuild._id}`);
+            })
+        })
+    })
+})
+
+router.get('/gkickMember/:charId', (req, res) => {
+    db.Characters.findById(req.params.charId, (err, foundChar) => {
+        if (err) throw err;
+        db.Characters.findByIdAndUpdate(foundChar._id, {
+            guild: null,
+            guildRank: ''
+        }, (err, updatedChar) => {
+            if (err) throw err;
+            console.log(updatedChar.guild);
+            db.Guilds.findByIdAndUpdate(foundChar.guild, {
+                $pull: {members: foundChar._id}
+            }, (err, updatedGuild) => {
+                if (err) throw err;
+                console.log(updatedGuild.members);
+                res.redirect(`/guilds/manageGuild/${updatedGuild._id}`);
+            })
+        })
+    })
+})
+
 router.put('/editCharacter/:id', (req, res) => {
     const charObj = {
         name: req.body.name,
