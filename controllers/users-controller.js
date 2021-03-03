@@ -23,15 +23,29 @@ router.get('/profile', (req, res) => {
         
     ).exec((err, foundUser) => {
         if (err) throw err;
+        req.session.reload((err) => {
+            req.session.currentUser = foundUser;
+        })
         const context = {
             user: foundUser
         };
+        console.log(req.session.currentUser);
         res.render('user/userProfile.ejs', context);
     })
 })
 
 router.post('/login', (req, res) => {
-    db.Users.findOne({username: {$eq: req.body.username}}, (err, foundUser) => {
+    db.Users.findOne({username: {$eq: req.body.username}}).populate([
+        {path: 'main', populate: [
+            {path: 'guild', model: 'Guilds'},
+            {path: 'realm', model: 'Realms'}
+        ]},
+        {path: 'characters', populate: [
+            {path: 'guild', model: 'Guilds'},
+            {path: 'realm', model: 'Realms'}
+        ]}
+    ]
+    ).exec((err, foundUser) => {
         if (err) throw err;
         console.log(foundUser);
         if (!foundUser) {
@@ -44,6 +58,8 @@ router.post('/login', (req, res) => {
             if (resolved) {
                 console.log('Login Succesful'),
                 req.session.currentUser = foundUser;
+                console.log('**********', foundUser);
+                console.log('!!!!!!!!!!!!', req.session.currentUser);
                 res.redirect('/users/profile')
             } else {
                 // alert('Improper login credentials, please try again');

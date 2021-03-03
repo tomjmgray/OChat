@@ -29,16 +29,31 @@ router.post('/new', (req, res) => {
     };
     db.Characters.create(charObj, (err, createdCharacter) => {
         if (err) throw err;
-        db.Users.findByIdAndUpdate(req.body.user, {$push: {characters: createdCharacter._id}}, (err, updatedUser) => {
+        db.Realms.findByIdAndUpdate(createdCharacter.guild, {
+            $push: {characters: createdCharacter._id}
+        }, (err, updatedRealm) => {
             if (err) throw err;
-            req.session.regenerate((err) => {
-                req.session.currentUser = updatedUser;
-            })
-            db.Realms.findByIdAndUpdate(createdCharacter.guild, {
-                $push: {characters: createdCharacter._id}
-            })
-            res.redirect('/users/profile')
+            if (charObj.isMain) {
+                db.Users.findByIdAndUpdate(req.body.user, {
+                    $push: {characters: createdCharacter._id},
+                    main: createdCharacter._id
+                }, {upsert: true}, (err, updatedUser) => {
+                    if (err) throw err;
+                    // req.session.currentUser = updatedUser;
+                    res.redirect('/users/profile')
+                })
+            } else {
+                db.Users.findByIdAndUpdate(req.body.user, {$push: {characters: createdCharacter._id}}, (err, updatedUser) => {
+                    if (err) throw err;
+                    // req.session.reload((err) => {
+                    //     req.session.currentUser = updatedUser;
+                    // })
+                    res.redirect('/users/profile')
+                })
+            }
+            
         })
+        
     })
 })
 
@@ -64,9 +79,9 @@ router.get('/grantAdmin/:charId', (req, res) => {
             $push: {isAdmin: foundChar.guild}
         }, (err, updatedUser) => {
             if (err) throw err;
-            req.session.regenerate((err) => {
-                req.session.currentUser = updatedUser;
-            })
+            // req.session.reload((err) => {
+            //     req.session.currentUser = updatedUser;
+            // })
             res.redirect(`/guilds/manageGuildRoster/${foundChar.guild}`);
         })
     })
@@ -79,9 +94,9 @@ router.get('/removeAdmin/:charId', (req, res) => {
             $pull: {isAdmin: foundChar.guild}
         }, (err, updatedUser) => {
             if (err) throw err;
-            req.session.regenerate((err) => {
-                req.session.currentUser = updatedUser;
-            })
+            // req.session.reload((err) => {
+            //     req.session.currentUser = updatedUser;
+            // })
             res.redirect(`/guilds/manageGuildRoster/${foundChar.guild}`);
         })
     })
@@ -143,11 +158,13 @@ router.put('/editCharacter/:id', (req, res) => {
         if (err) throw err;
         console.log(updatedCharacter);
         if (updatedCharacter.isMain === true) {
-            db.Users.findByIdAndUpdate(updatedCharacter.user, {main: updatedCharacter._id}, (err, updatedUser) => {
+            db.Users.findByIdAndUpdate(req.session.currentUser._id, {main: updatedCharacter._id}, {upsert: true}, (err, updatedUser) => {
                 if (err) throw err;
-                req.session.regenerate((err) => {
-                    req.session.currentUser = updatedUser;
-                })
+                console.log(updatedUser);
+                // req.session.reload((err) => {
+                //     req.session.currentUser = updatedUser;   
+                // })
+                
                 res.redirect('/users/profile');
             })
         } else {
@@ -171,9 +188,9 @@ router.get('/delete/:id', (req, res) => {
                 },
             }, (err, updatedUser) => {
                 if (err) throw err;
-                req.session.regenerate((err) => {
-                    req.session.currentUser = updatedUser;
-                })
+                // req.session.reload((err) => {
+                //     req.session.currentUser = updatedUser;
+                // })
                 db.Guilds.findByIdAndUpdate(deletedCharacter.guild, {
                     $pull: {
                         officers: deletedCharacter._id,

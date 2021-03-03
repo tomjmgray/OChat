@@ -8,7 +8,7 @@ const usersSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'Characters' 
     }],
-    main: {type: Schema.Types.ObjectId, ref: 'Characters'},
+    main: {type: Schema.Types.ObjectId, ref: 'Characters', default: null},
     isAdmin: [{type: Schema.Types.ObjectId, ref: 'Guilds'}]
 })
 

@@ -12,7 +12,7 @@
     <form action="/guilds/createGuild" method="POST">
         <label for="guildMaster">Select which of your characters is your guild's GM:</label>
         <br>
-        <select name="guildMaster" id="guildMaster">
+        <select name="guildMaster" id="guildMaster" required>
             <% for (let i = 0; i < user.characters.length; i++) { %>
                 <option value=<%= user.characters[i]._id %>><%= user.characters[i].name %></option>
             <% } %>
