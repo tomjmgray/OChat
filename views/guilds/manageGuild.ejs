@@ -7,5 +7,27 @@
 </head>
 <body>
     <h1>Manage <%= guild.name %></h1>
+    <h2>Guild Invite Requests</h2>
+    <ul>
+        <% for (let i = 0; i < guild.joinRequests.length; i++) { %>
+            <li>
+                <form action="/guilds/addMember" method="POST">
+                    <input type="hidden" value="<%= guild._id %>" name="guildId">
+                    <input type="hidden" id="name" name="name" value="<%= guild.joinRequests[i]._id %>">
+                    <label for="name"><%= guild.joinRequests[i].name %></label>
+                    <br>
+                    <label for="isOfficer">Add as Officer?</label>
+                    <input type="checkbox" name="isOfficer" id="isOfficer">
+                    <button type="submit">Accept Request</button>
+                </form>
+                <form action="/guilds/declineJoinRequest" method="POST">
+                    <input type="hidden" name="userId" value="<%=guild.joinRequests[i]._id%>">
+                    <input type="hidden" name="guildId" value="<%= guild._id %>">
+                    <button type="submit">Decline Request</button>
+                </form> 
+            </li>
+       <% } %>
+    </ul>
+    
 </body>
 </html>

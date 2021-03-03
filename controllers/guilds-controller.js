@@ -49,12 +49,13 @@ router.get('/manageGuild/:id', (req, res) => {
     if (req.session.currentUser.isAdmin?.toString() !== req.params.id) {
         res.redirect(`/guilds/${req.params.id}`);
     }
-    db.Guilds.findById(req.params.id, (err, foundGuild) => {
+    db.Guilds.findById(req.params.id).populate(['members', 'guildMaster', 'officers', 'realm', 'joinRequests']).exec((err, foundGuild) => {
         if (err) throw err;
         context = {
             user: req.session.currentUser,
             guild: foundGuild
         }
+        console.log(foundGuild);
         res.render('guilds/manageGuild.ejs', context);
     })
 })
@@ -94,6 +95,60 @@ router.post('/:id/joinRequest', (req, res) => {
         res.redirect(`/guilds/${req.params.id}`)
     });
     
+})
+
+router.post('/addMember', (req, res) => {
+    if (req.body.isOfficer === 'on') {
+        db.Guilds.findByIdAndUpdate(req.body.guildId, {
+            $push: {
+                officers: req.body.name
+            },
+            $pull: {
+                joinRequests: req.body.name
+            }
+        }, (err, updatedGuild) => {
+            if (err) throw err;
+            db.Characters.findByIdAndUpdate(req.body.name, {
+                    guild: req.body.guildId,
+                    guildRank: 'Officer'
+                }, (err, updatedCharacter) => {
+                    if (err) throw err;
+                    console.log(updatedCharacter)
+                    res.redirect(`/guilds/manageGuild/${req.body.guildId}`)
+            })
+        })
+    } else {
+        db.Guilds.findByIdAndUpdate(req.body.guildId, {
+            $push: {
+                members: req.body.name
+            },
+            $pull: {
+                joinRequests: req.body.name
+            }
+        }, (err, updatedGuild) => {
+            if (err) throw err;
+            db.Characters.findByIdAndUpdate(req.body.name, {
+                guild: req.body.guildId,
+                guildRank: 'Member'
+            }, (err, updatedCharacter) => {
+                if (err) throw err;
+                console.log(updatedCharacter.guild)
+                res.redirect(`/guilds/manageGuild/${req.body.guildId}`)
+            })
+        })
+    }
+});
+
+router.post('declineJoinRequest', (req, res) => {
+    db.Guilds.findByIdAndUpdate(req.body.guildId, {
+        $pull: {
+            joinRequests: req.body.userId
+        }
+    }, (err, updatedGuild) => {
+        if (err) throw err;
+        console.log(updatedGuild.officers)
+        res.redirect(`/guilds/manageGuild/${req.body.guildId}`)
+    })
 })
 
 module.exports = router;
