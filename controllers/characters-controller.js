@@ -39,9 +39,6 @@ router.post('/new', (req, res) => {
 router.get('/editCharacter/:id', (req, res) => {
     db.Characters.findById(req.params.id, (err, foundCharacter) => {
         if (err) throw err;
-        // if (foundCharacter.user.toString() !== req.session.currentUser._id.toString()) {
-        //     res.redirect('/');
-        // }
         db.Realms.find({}, (err, foundRealms) => {
             if (err) throw err;
             const context = {
@@ -61,7 +58,7 @@ router.get('/grantAdmin/:charId', (req, res) => {
             $push: {isAdmin: foundChar.guild}
         }, (err, updatedUser) => {
             if (err) throw err;
-            console.log(updatedUser.isAdmin);
+            req.session.currentUser = updatedUser
             res.redirect(`/guilds/manageGuildRoster/${foundChar.guild}`);
         })
     })
@@ -74,7 +71,7 @@ router.get('/removeAdmin/:charId', (req, res) => {
             $pull: {isAdmin: foundChar.guild}
         }, (err, updatedUser) => {
             if (err) throw err;
-            console.log(updatedUser.isAdmin);
+            req.session.currentUser = updatedUser;
             res.redirect(`/guilds/manageGuildRoster/${foundChar.guild}`);
         })
     })
@@ -138,12 +135,42 @@ router.put('/editCharacter/:id', (req, res) => {
         if (updatedCharacter.isMain === true) {
             db.Users.findByIdAndUpdate(updatedCharacter.user, {main: updatedCharacter._id}, (err, updatedUser) => {
                 if (err) throw err;
-                console.log(updatedUser);
+                req.session.currentUser = updatedUser;
                 res.redirect('/users/profile');
             })
         } else {
            res.redirect('/users/profile'); 
         }
+        
+    })
+})
+
+router.get('/delete/:id', (req, res) => {
+    db.Characters.findByIdAndDelete(req.params.id, (err, deletedCharacter) => {
+        if (err) throw err;
+        db.Realms.findByIdAndUpdate(deletedCharacter.guild, {
+            $pull: {characters: deletedCharacter._id}
+        }, (err, updatedRealm) => {
+            if (err) throw err;
+            db.Users.findByIdAndUpdate(req.session.currentUser._id, {
+                $pull: {
+                    characters: deletedCharacter._id, 
+                    main: deletedCharacter._id
+                },
+            }, (err, updatedUser) => {
+                if (err) throw err;
+                req.session.currentUser = updatedUser;
+                db.Guilds.findByIdAndUpdate(deletedCharacter.guild, {
+                    $pull: {
+                        officers: deletedCharacter._id,
+                        members: deletedCharacter._id
+                    }
+                }, (err, updatedGuild) => {
+                    if (err) throw err;
+                    res.redirect('/users/profile');
+                })
+            })
+        })
         
     })
 })

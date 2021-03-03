@@ -35,6 +35,7 @@ router.post('/createGuild', (req, res) => {
             if (err) throw err;
             db.Users.findByIdAndUpdate(req.session.currentUser._id, {$push: {isAdmin: createdGuild._id}}, (err, updatedUser) => {
                 if (err) throw err;
+                req.session.currentUser = updatedUser;
                 db.Realms.findByIdAndUpdate(createdGuild.realm, {$push: {guilds: createdGuild._id}}, (err, updatedRealm) => {
                     if (err) throw err;
                     console.log(updatedRealm);
