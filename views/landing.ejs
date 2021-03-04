@@ -1,28 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OChat</title>
+    <%- include('./partials/head') %>
+    <!-- <title>OChat</title> -->
 </head>
 <body>
-    <main>
-        <div class='container'>
-            <h1>What is OChat?</h1>
-            <p>OChat is a website where World of Warcraft players can organize players and guilds in order to schedule raids and distribute loot.</p>
-        </div>
+    
+    <header>
+        <h1>What is OChat?</h1>
+        <h2>OChat is a website where World of Warcraft players can organize players and guilds in order to schedule raids and distribute loot.</h2>
+    </header>
 
-        <div class="login-form">
-            
-            <p>Already a user? Login to get started</p>
+    <main>
+        <div class="form">
+            <h1>Login</h1>
+            <h3>Already a user?</h3>
             <form action="/users/login" method="POST">
-                <div>
+                <div >
                     <label for="username">Username </label>
+                    <br>
                     <input type="text" name="username" id="username">
                 </div>
                 <br />
                 <div>
                     <label for="password">Password</label>
+                    <br>
                     <input type="password" id="password" name="password">
                 </div>
                 <br />
@@ -30,16 +32,19 @@
             </form>
         </div>
 
-        <div class="register-form">
-            <p>Don't have an account? Sign up for free to get started!</p>
+        <div class="form">
+            <h1>Register</h1>
+            <h3>Don't have an account?</h3><h3>Sign up for free to get started!</h3>
             <form action="/register" method="POST">
                 <div>
                     <label for="username">Username</label>
+                    <br>
                     <input type="text" name="username" id="username">
                 </div>
                 <br />
                 <div>
                     <label for="password">Password</label>
+                    <br>
                     <input type="password" name="password" id="password">
                 </div>
                 

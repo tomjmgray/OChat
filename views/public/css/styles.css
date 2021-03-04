@@ -1,0 +1,62 @@
+:root {
+    --druid: #FF7D0A;
+    --hunter: #ABD473;
+    --mage: #69CCF0;
+    --paladin: #F58CBA;
+    --priest: #FFFFFF;
+    --rogue: #FFF569;
+    --shaman: #0070DE;
+    --warlock: #9482C9;
+    --warrior: #C79C6E;
+    --guild: #3CE13F;
+    --general: #FEC1C0;
+    --officer: #40BC40;
+    --party: #AAABFE;
+    --whisper: #FF7EFF;
+    --raidwarning: #FF4700;
+    --raid: #FF7D01;
+    --base: #363636;
+}
+
+body {
+    background-color: var(--base);
+    color: var(--general);
+    display: flex;
+    flex-flow: column wrap;
+
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.form {
+    display: flex;
+    flex-flow: column wrap;
+    justify-content: space-around;
+    align-items: center;
+    margin: 50px;
+    padding: 50px;
+    border: 3px solid var(--general);
+}
+
+.header {
+    width: 100%;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+}
+
+main {
+    display: flex;
+    justify-content: center;
+    /* align-items: center; */
+    width: 100%;
+}
+
+a {
+    color: var(--officer);
+    text-decoration: none;
+}

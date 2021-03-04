@@ -13,7 +13,7 @@ const charactersController = require('./controllers/characters-controller.js');
 const guildsController = require('./controllers/guilds-controller');
 const raidsController = require('./controllers/raids-controller.js');
 
-app.use(express.static('public'));
+app.use(express.static('./views/public'));
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(methodOverride('_method'));
 app.use(session({
