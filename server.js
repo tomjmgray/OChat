@@ -11,6 +11,7 @@ const bcrypt = require('bcrypt');
 const usersController = require('./controllers/users-controller.js');
 const charactersController = require('./controllers/characters-controller.js');
 const guildsController = require('./controllers/guilds-controller');
+const raidsController = require('./controllers/raids-controller.js');
 
 app.use(express.static('public'));
 app.use(bodyParser.urlencoded({extended: false}));
@@ -27,9 +28,14 @@ app.use(session({
 app.use('/users', usersController);
 app.use('/characters', charactersController);
 app.use('/guilds', guildsController);
+app.use('/raids', raidsController);
 
 app.get('/', (req, res) => {
     res.render('landing.ejs');
+})
+
+app.get('/loginErr', (req, res) => {
+    res.render('landingErr.ejs')
 })
 
 app.get('/home', (req, res) => {
@@ -56,19 +62,28 @@ app.get('/home', (req, res) => {
 })
 
 app.post('/register', (req, res) => {
-    bcrypt.hash(req.body.password, 15, (err, hashPass) => {
-        const newUser = {
-            username: req.body.username,
-            password: hashPass
-        };
-        db.Users.create(newUser, (err, createdUser) => {
-            if (err) {
-                console.log(err);
+    db.Users.find({username: req.body.username}, (err, foundUser) => {
+        if (err) throw err;
+        console.log(foundUser);
+        if (foundUser.length > 0) {
+            return res.redirect('/loginErr');
+        }
+        bcrypt.hash(req.body.password, 15, (err, hashPass) => {
+            const newUser = {
+                username: req.body.username,
+                password: hashPass
             };
-            req.session.currentUser = createdUser;
-            res.redirect('users/profile')
+            db.Users.create(newUser, (err, createdUser) => {
+                if (err) {
+                    console.log(err);
+                };
+                console.log('createdUser')
+                req.session.currentUser = createdUser;
+                res.redirect('users/profile')
+            })
         })
     })
+    
 })
 
 app.set('view engine', 'ejs');

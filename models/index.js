@@ -16,4 +16,5 @@ module.exports = {
     Characters: require('./Characters'),
     Guilds: require('./Guilds'),
     Realms: require('./Realms'),
+    Raids: require('./Raids'),
 }

@@ -8,7 +8,9 @@ const guildsSchema = new Schema({
     officers: [{type: Schema.Types.ObjectId, ref: 'Characters'}],
     description: {type: String},
     realm: {type: Schema.Types.ObjectId, ref: 'Realms'}, 
-    joinRequests: [{type: Schema.Types.ObjectId, ref: 'Characters'}]
+    joinRequests: [{type: Schema.Types.ObjectId, ref: 'Characters'}],
+    raids: [{type: Schema.Types.ObjectId, ref: 'Raids'}],
+    dkpLogs: [{type: Schema.Types.ObjectId, ref: 'DKPLogs'}]
 })
 
 const Guilds = mongoose.model('Guilds', guildsSchema);

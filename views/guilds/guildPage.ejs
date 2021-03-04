@@ -9,22 +9,38 @@
     <%- include('../partials/header.ejs') %>
     <h1><%= guild.name %></h1>
     <p><%= guild.description %></p>
-    <h2>Leadership</h2>
-    <ul>
-        <li>Guild Master: <%= guild.guildMaster.name %></li>
-        <% guild.officers.forEach((officer) => { %>
-            <li><%= officer.name %></li>
-        <% }) %>
-    </ul>
-    <h2>Members</h2>
-    <ul>
-        <% guild.members.forEach((member) => { %>
-            <li><%= member.name %></li>
-        <% }) %>
-    </ul>
-    <p>Want to join <%= guild.name %>? Send a join request <a href="/guilds/<%= guild._id %>/joinRequest">here</a></p>
+    <div>
+        <h1>Members</h2>
+            <h2>Leadership</h2>
+            <ul>
+                <li>Guild Master: <%= guild.guildMaster.name %></li>
+                <% guild.officers.forEach((officer) => { %>
+                    <li><%= officer.name %></li>
+                <% }) %>
+            </ul>
+            <h2>Members</h2>
+            <ul>
+                <% guild.members.forEach((member) => { %>
+                    <li><%= member.name %></li>
+                <% }) %>
+            </ul>
+            <p>Want to join <%= guild.name %>? Send a join request <a href="/guilds/<%= guild._id %>/joinRequest">here</a></p>
+    </div>
+
+    <div>
+        <h1>Raids</h1>
+        <% for (let i = guild.raids.length - 1; i > guild.raids.length -6; i--) { %>
+            <div>
+                <h3><a href="/raids/detail/<%=guild.raids[i]?._id%>"><%= guild.raids[i]?.location %></a></h3>
+                <p><%= guild.raids[i]?.date %></p>    
+            </div>
+        <% } %>
+    </div>
+   
     <% if (user.isAdmin.join('').includes(guild._id)) { %>
         <button><a href="/guilds/manageGuildRoster/<%= guild._id %>">Manage Guild Roster</a></button>
+        <br>
+        <button><a href="/raids/createRaid/<%= guild._id %>">Create Raid</a></button>
     <% } %>
     
 

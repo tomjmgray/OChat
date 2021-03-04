@@ -51,7 +51,7 @@ router.post('/login', (req, res) => {
         if (!foundUser) {
             console.log('Improper login credentials, please try again');
 
-            return res.redirect('/');
+            return res.redirect('/loginErr');
         }
         bcrypt.compare(req.body.password, foundUser?.password, (err, resolved) => {
             if (err) console.log(err);
@@ -63,7 +63,7 @@ router.post('/login', (req, res) => {
                 res.redirect('/users/profile')
             } else {
                 // alert('Improper login credentials, please try again');
-                res.redirect('/');
+                res.redirect('/loginErr');
             }
         })
     })

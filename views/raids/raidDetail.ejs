@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <%- include('../partials/header.ejs') %>
+    <div>
+        <h2>Info</h2>
+        <ul>
+            <li>Location: <%= raid.location %></li>
+            <li>Start Time: <%= raid.date %></li>
+            <% if (raid.lootStructure.length > 1) { %>
+                <li>Loot Structure: <%= raid.lootStructure %></li>
+            <% } %>
+            <li>Raid Slots available: <%= raid.raidSize - raid.signedUp.length %></li>
+        </ul>
+    </div>
+
+    <div>
+        <h2>Signed Up</h2>
+        <ul>
+            <% raid.signedUp.forEach((char, index) => { %>
+                <li><%= char.name %> <%= char.spec %> <%= char.class %> (<%= index + 1 %>)</li>
+            <% }) %>
+        </ul>
+        <h3>Bench</h3>
+        <ul>
+            <% raid.bench.forEach((char, index) => { %>
+                <li><%= char.name %> <%= char.spec %> <%= char.class %> (<%= index + 1 %>)</li>
+            <% }) %>
+        </ul>
+        <h3>Tentative</h3>
+        <ul>
+            <% raid.tentative.forEach((char, index) => { %>
+                <li><%= char.name %> <%= char.spec %> <%= char.class %> (<%= index + 1 %>)</li>
+            <% }) %>
+        </ul>
+    </div>
+
+    <div>
+        <h2>Sign Up</h2>
+        <form action="/raids/addSignUp/<%= raid._id %>" method="POST">
+            
+            <label for="character">Select which character to sign up with</label>
+            <select name="character" id="character" required>
+                <% user.characters.forEach((char) => { %>
+                    <option value="<%= char._id %>"><%= char.name %></option>
+                <% }) %>
+            </select>
+            <br>
+            <label for="tentative">Tentative/Late</label>
+            <input type="checkbox" name="tentative" id="tentative">
+            <label for="bench">Bench</label>
+            <input type="checkbox" name="bench" id="bench">
+            <br>
+            <button type="submit">Sign Up</button>
+        </form>
+    </div>
+    
+</body>
+</html>
