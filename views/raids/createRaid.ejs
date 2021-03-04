@@ -6,22 +6,25 @@
 </head>
 <body>
     <%- include('../partials/header.ejs') %>
-    <h1>Create New Raid</h1>
-    <form action="/raids/createRaid/<%= guild._id %>" method="POST">
-        <input type="hidden" value="<%= guild._id %>" name="guild">
-        <label for="date">Date</label>
-        <input type="datetime-local" id="date" name="date" required>
-        <br>
-        <label for="lootStructure">Loot System (optional)</label>
-        <input type="text" name="lootStructure" id="lootStructure">
-        <br>
-        <label for="location">Raid Location</label>
-        <input type="text" name="location" id="location">
-        <br>
-        <label for="raidSize">Raid Size</label>
-        <input type="number" name="raidSize" id="raidSize" required>
-        <br>
-        <button type="submit">Create Raid</button>
-    </form>
+    <main>
+        <h1>Create New Raid</h1>
+        <form action="/raids/createRaid/<%= guild._id %>" method="POST">
+            <input type="hidden" value="<%= guild._id %>" name="guild">
+            <label for="date">Date</label>
+            <input type="datetime-local" id="date" name="date" required>
+            <br>
+            <label for="lootStructure">Loot System (optional)</label>
+            <input type="text" name="lootStructure" id="lootStructure">
+            <br>
+            <label for="location">Raid Location</label>
+            <input type="text" name="location" id="location">
+            <br>
+            <label for="raidSize">Raid Size</label>
+            <input type="number" name="raidSize" id="raidSize" required>
+            <br>
+            <button type="submit">Create Raid</button>
+        </form>
+    </main>
+    
 </body>
 </html>

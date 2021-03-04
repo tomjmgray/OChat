@@ -12,24 +12,33 @@
     --general: #FEC1C0;
     --officer: #40BC40;
     --party: #AAABFE;
+    --partyLeader: #77C8FF;
     --whisper: #FF7EFF;
     --raidwarning: #FF4700;
     --raid: #FF7D01;
     --base: #363636;
 }
 
+@font-face {
+    font-family: 'LifeCraft';
+    src: 
+     url('../fonts/LifeCraft_Font.ttf') format('truetype'); /* Chrome 4+, Firefox 3.5, Opera 10+, Safari 3—5 */
+  } 
+
 body {
-    background-color: var(--base);
+    background-color: black;
     color: var(--general);
     display: flex;
     flex-flow: column wrap;
-
+    justify-content: center;
+    align-items: center;
 }
 
 .container {
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: top;
+    max-height: 80%;
 }
 
 .form {
@@ -42,21 +51,106 @@ body {
     border: 3px solid var(--general);
 }
 
-.header {
+header {
     width: 100%;
     display: inline-flex;
     justify-content: center;
     align-items: center;
+    width: 90vw;
+}
+
+.header-logo {
+    font-family: 'LifeCraft';
+    font-size: 75px;
+    color: var(--officer) !important;
+}
+
+.main-header {
+    display: inline-flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: black;
+    border: 3px solid var(--officer);
+    color: var(--guild);
+    padding: 0 2.5vw;
 }
 
 main {
     display: flex;
     justify-content: center;
-    /* align-items: center; */
-    width: 100%;
+    align-items: center;
+    flex-flow: column;
+    height: 70vh;
+    width: 95vw;
+    border: 3px solid var(--officer);
 }
 
 a {
-    color: var(--officer);
+    color: var(--guild);
     text-decoration: none;
+}
+
+button {
+    background-color: var(--base);
+    color: var(--guild);
+}
+
+.character {
+    width: 25%;
+    border: 3px solid var(--party);
+    color: var(--party);
+}
+
+li {
+    list-style: none;
+}
+
+.main-character {
+    width: 25%;
+    border: 3px solid var(--partyLeader);
+    color: var(--partyLeader);
+}
+
+.Druid {
+    color: var(--druid);
+}
+
+.Hunter {
+    color: var(--hunter);
+}
+
+.Mage {
+    color: var(--mage);
+}
+
+.Paladin {
+    color: var(--paladin);
+}
+
+.Priest {
+    color: var(--priest);
+}
+
+.Rogue {
+    color: var(--rogue);
+}
+
+.Shaman {
+    color: var(--shaman);
+}
+
+.Warlock {
+    color: var(--warlock);
+}
+
+.Warrior {
+    color: var(--warrior);
+}
+
+.party-leader {
+    color: var(--partyLeader);
+}
+
+.party {
+    color: var(--party);
 }

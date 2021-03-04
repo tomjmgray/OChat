@@ -6,37 +6,46 @@
 </head>
 <body>
     <%- include('../partials/header') %>
-    <h1>Profile Page</h1>
-    <h2><%= user.username %></h2>
-    
-    <div class="container">
-        <h2>Characters</h2>
-        <% if (user.characters.length === 0) { %>
-            <h3>You haven't created any characters yet. Press the button to get started!</h3>
-        <% } else { %>
-            <% for (let i = 0; i < user.characters.length; i++) { %>
-                <h3 
-                    <% if(user.characters[i].isMain) { %>
-                        style="color:blue"
-                    <% } else { %>
-                        style="color:green"
-                    <% } %>
-                ><%= user.characters[i].name %></h3>
-                <p>Level <%= user.characters[i].level%> <%= user.characters[i].race %> <%= user.characters[i].spec %> <%= user.characters[i].class %> </p>
-                <% if (user.characters[i]?.guild) { %>
-                    <p><%= user.characters[i]?.guildRank %> of <%= user.characters[i]?.guild?.name %></p>
-                <% } else { %>
-                    <p>You haven't joined a guild for the time being. Click <a href="/guilds/join">here</a> to browse guilds and send a request to join!</p>
-                <% } %>
-                <button><a href="/characters/editCharacter/<%= user.characters[i]._id %>">Edit Character</a></button>
-            <% } %>
-        <% } %>
+    <main>
+        <h1 class="party-leader"><%= user.username %></h1>
+            <h2 class="party">Characters</h2>
+            <button><a href="/characters/new">Create a Character</a></button>
+        <div>
 
-        <button><a href="/characters/new">Create a Character</a></button>
-        
-    </div>
-    <div>
-        <button><a href="/users/logout">Log Out</a></button>
-    </div>
+        <div class="container">
+            <% if (user.characters.length === 0) { %>
+                <h3>You haven't created any characters yet. Press the button to get started!</h3>
+            <% } else { %>
+                <% for (let i = 0; i < user.characters.length; i++) { %>
+                    <div <% if(user.characters[i].isMain) { %>
+                        class="main-character form"
+                    <% } else { %>
+                        class="character form"
+                    <% } %>>
+                        
+                        
+                    <h3 class="<%= user.characters[i].class %>"><%= user.characters[i].name %></h3>
+                    <p>Level <%= user.characters[i].level%> <%= user.characters[i].race %> <%= user.characters[i].spec %> <%= user.characters[i].class %> </p>
+                    <% if (user.characters[i]?.guild) { %>
+                        <p><%= user.characters[i]?.guildRank %> of <a href="/guilds/<%= user.characters[i].guild._id %>"><%= user.characters[i]?.guild?.name %></a></p>
+                    <% } else { %>
+                        <p>You haven't joined a guild for the time being. Click <a href="/guilds/join">here</a> to browse guilds and send a request to join!</p>
+                    <% } %>
+                    <button><a href="/characters/editCharacter/<%= user.characters[i]._id %>">Edit Character</a></button>
+                    </div>
+                    
+                <% } %>
+            <% } %>
+        </div>
+            
+
+           
+            
+        </div>
+        <div>
+            <button><a href="/users/logout">Log Out</a></button>
+        </div>
+    </main>
+    
 </body>
 </html>

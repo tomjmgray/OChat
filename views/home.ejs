@@ -6,15 +6,16 @@
 </head>
 <body>
     <%- include('./partials/header') %>
-    <h1>Home</h1>
-    <div>
-        <h2>Your Guilds</h2>
-        <ul>
-            <% guilds.forEach((guild) => { %>
-                <li><a href="/guilds/<%= guild._id %>"><%= guild.name %></a></li>
-             <% }) %>
-        </ul>
-        
-    </div>
+    <main>
+        <h1>Home</h1>
+            <h2>Your Guilds</h2>
+            <ul>
+                <% guilds.forEach((guild) => { %>
+                    <li><a href="/guilds/<%= guild._id %>"><%= guild.name %></a></li>
+                <% }) %>
+            </ul>
+            
+    </main>
+    
 </body>
 </html>
