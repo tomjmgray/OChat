@@ -42,6 +42,11 @@
                 </div>
                 <div class="rborder raid top-form">
                     <h2>Staging Area</h2>
+                    <div class="inline">
+                        <button><a href="/raids/clearStaging/<%= raid._id %>">Clear</a></button>
+                        <button><a href="/raids/markStagingOnTime/<%= raid._id %>">Mark On Time</a></button>
+                        <button><a href="/raids/markStagingCompleted/<%= raid._id %>">Mark Finished</a></button>
+                    </div>
                     <ul>
                         <% raid.staging.forEach((char) => { %>
                             <form action="/raids/removeFromStaging/<%= raid._id %>" method="POST">
@@ -50,11 +55,6 @@
                             </form>
                         <% }) %>
                     </ul>
-                    <div class="inline">
-                        <button><a href="/raids/clearStaging/<%= raid._id %>">Clear</a></button>
-                        <button><a href="/raids/markStagingOnTime/<%= raid._id %>">Mark On Time</a></button>
-                        <button><a href="/raids/markStagingCompleted/<%= raid._id %>">Mark Finished</a></button>
-                    </div>
                 </div>
 
                 
