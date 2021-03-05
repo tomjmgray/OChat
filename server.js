@@ -55,7 +55,7 @@ app.get('/home', (req, res) => {
         })
         const context = {
             guilds: guilds,
-            user: foundUser
+            user: req.session.currentUser
         };
         res.render('home.ejs', context);
     })

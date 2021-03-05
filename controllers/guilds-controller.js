@@ -89,7 +89,7 @@ router.get('/:id/joinRequest', (req, res) => {
             if (err) throw err;
             const context = {
                 guild: foundGuild,
-                user: populatedUser
+                user: req.session.currentUser
             };
             res.render('guilds/joinGuildForm', context);
         })

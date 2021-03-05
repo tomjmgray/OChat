@@ -27,18 +27,27 @@
 
 body {
     background-color: black;
-    color: var(--general);
-    display: flex;
+    color: var(--guild);
+    display: block;
     flex-flow: column wrap;
     justify-content: center;
     align-items: center;
 }
 
+body { font-size: 24px; } 
+
+h1, h2, h3, h4, h5, h6 { font-weight: bold; } 
+h1 { font-size: 2em; } 
+h2 { font-size: 1.75em; } 
+h3 { font-size: 1.60em; }
+h4{ font-size: 1.50em; }
+h5 { font-size: 1.40em; } 
+h6 { font-size: 1.25em; }
+
 .container {
     display: flex;
     justify-content: center;
     align-items: top;
-    max-height: 80%;
 }
 
 .form {
@@ -46,9 +55,11 @@ body {
     flex-flow: column wrap;
     justify-content: space-around;
     align-items: center;
-    margin: 50px;
-    padding: 50px;
-    border: 3px solid var(--general);
+    margin: 20px 50px;
+}
+
+input {
+    margin: 10px 20px;
 }
 
 header {
@@ -59,10 +70,21 @@ header {
     width: 90vw;
 }
 
+nav {
+    display: inline-flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 40%;
+}
+
 .header-logo {
     font-family: 'LifeCraft';
     font-size: 75px;
     color: var(--officer) !important;
+}
+
+.header-logo a {
+    text-decoration: none !important;
 }
 
 .main-header {
@@ -73,6 +95,7 @@ header {
     border: 3px solid var(--officer);
     color: var(--guild);
     padding: 0 2.5vw;
+    margin: 20px;
 }
 
 main {
@@ -80,34 +103,43 @@ main {
     justify-content: center;
     align-items: center;
     flex-flow: column;
-    height: 70vh;
+    min-height: 70vh;
+    margin: 20px 20px;
     width: 95vw;
     border: 3px solid var(--officer);
 }
 
 a {
     color: var(--guild);
-    text-decoration: none;
 }
 
 button {
     background-color: var(--base);
     color: var(--guild);
+    margin: 20px;
 }
 
 .character {
     width: 25%;
     border: 3px solid var(--party);
     color: var(--party);
+    padding: 20px;
+}
+
+ul {
+    margin: auto;
+    padding: 10px 10px;
 }
 
 li {
     list-style: none;
+    height: 2em;
 }
 
 .main-character {
     width: 25%;
     border: 3px solid var(--partyLeader);
+    padding: 20px;
     color: var(--partyLeader);
 }
 
@@ -153,4 +185,38 @@ li {
 
 .party {
     color: var(--party);
+}
+
+.raid {
+    color: var(--raid);
+    justify-content: flex-start;
+}
+
+.guild {
+    color: var(--guild);
+}
+
+.officer {
+    color: var(--officer);
+}
+
+.login {
+    border: 3px solid var(--party)
+}
+
+.register {
+    border: 3px solid var(--partyLeader)
+}
+
+.gborder {
+    border: 3px solid var(--guild);
+    padding: 20px;
+}
+
+.oborder {
+    border: 3px solid var(--officer);
+}
+
+.rborder {
+    border: 3px solid var(--raid);
 }

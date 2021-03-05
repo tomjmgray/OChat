@@ -7,44 +7,65 @@
 <body>
     <%- include('../partials/header.ejs') %>
     <main>
+            
+            <div class="form gborder">
+                <div class="container">
+                    <h1><%= guild.name %></h1>
+                </div>
+                <div class="container">
+                    <p><%= guild.description %></p>
+                </div>
+            </div>
         <div class="container">
-            <h1><%= guild.name %></h1>
-            <p><%= guild.description %></p>
+            <div class="form">
+                <div class="form guild gborder">
+                    <h1>Members</h2>
+                        <div class="form officer">
+                            <h2>Leadership</h2>
+                            <ul>
+                                <li>Guild Master</li><li class="<%=guild.guildMaster.class%>"><%= guild.guildMaster.name %></li>
+                                <br>
+                                <li>Officers</li>
+                                <% guild.officers.forEach((officer) => { %>
+                                    <li class="<%= officer.class %>"><%= officer.name %></li>
+                                <% }) %>
+                            </ul>
+                        </div>
+                        <div class="form guild">
+                            <h2>Members</h2>
+                            <ul>
+                                <% guild.members.forEach((member) => { %>
+                                    <li class="<%= member.class %>"><%= member.name %></li>
+                                <% }) %>
+                            </ul>
+                        </div> 
+                </div>
+            </div>
+                
+        
+                <div class="form raid rborder">
+                    <h1>Raids</h1>
+                    <% for (let i = guild.raids.length - 1; i > (-1 ||guild.raids.length -6); i--) { %>
+                        <div class="form raid">
+                            <h3><a href="/raids/detail/<%=guild.raids[i]?._id%>"><%= guild.raids[i]?.location %></a></h3>
+                            <p><%= guild.raids[i]?.date %></p>    
+                        </div>
+                    <% } %>
+                </div>
         </div>
         
-        <div>
-            <h1>Members</h2>
-                <h2>Leadership</h2>
-                <ul>
-                    <li>Guild Master: <%= guild.guildMaster.name %></li>
-                    <% guild.officers.forEach((officer) => { %>
-                        <li><%= officer.name %></li>
-                    <% }) %>
-                </ul>
-                <h2>Members</h2>
-                <ul>
-                    <% guild.members.forEach((member) => { %>
-                        <li><%= member.name %></li>
-                    <% }) %>
-                </ul>
-                <p>Want to join <%= guild.name %>? Send a join request <a href="/guilds/<%= guild._id %>/joinRequest">here</a></p>
+        
+        
+        <div class="form">
+            <p>Want to join <%= guild.name %>? Send a join request <a href="/guilds/<%= guild._id %>/joinRequest">here</a></p>
+            <div class="container">    
+                <% if (user.isAdmin.join('').includes(guild._id)) { %>
+                    <button><a href="/guilds/manageGuildRoster/<%= guild._id %>">Manage Guild Roster</a></button>
+                    <br>
+                    <button><a href="/raids/createRaid/<%= guild._id %>">Create Raid</a></button>
+                <% } %>
+            </div>
         </div>
-
-        <div>
-            <h1>Raids</h1>
-            <% for (let i = guild.raids.length - 1; i > guild.raids.length -6; i--) { %>
-                <div>
-                    <h3><a href="/raids/detail/<%=guild.raids[i]?._id%>"><%= guild.raids[i]?.location %></a></h3>
-                    <p><%= guild.raids[i]?.date %></p>    
-                </div>
-            <% } %>
-        </div>
-    
-        <% if (user.isAdmin.join('').includes(guild._id)) { %>
-            <button><a href="/guilds/manageGuildRoster/<%= guild._id %>">Manage Guild Roster</a></button>
-            <br>
-            <button><a href="/raids/createRaid/<%= guild._id %>">Create Raid</a></button>
-        <% } %>
     </main>
     
     
