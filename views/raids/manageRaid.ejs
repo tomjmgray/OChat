@@ -5,18 +5,10 @@
 </head>
 <body>
     <%- include('../partials/header') %>
-    <main>
+    <main class="rborder">
         <div class="form">
-            <h1>Manage Raid</h1>
-            <div class="form rborder raid">
-                <h2><a href="/raids/detail/<%= raid._id %>"></a>Raid Info</h2>
-                <ul>
-                    <li>Location: <%= raid.location %></li>
-                    <li>Start Time: <%= raid.date %></li>
-                    <li>Loot Structure: <%= raid.lootStructure %></li>
-                    <li>Raid Slots: <%= raid.raidSize %></li>
-                </ul>
-            </div>
+            <h1 class="raid">Manage Raid</h1>
+            
             <div class="container">
                 <div class="rborder raid top-form">
                     <h2>Signed Up </h2>
@@ -49,7 +41,7 @@
                     </ul>
                 </div>
                 <div class="rborder raid top-form">
-                    <h1>Staging Area</h1>
+                    <h2>Staging Area</h2>
                     <ul>
                         <% raid.staging.forEach((char) => { %>
                             <form action="/raids/removeFromStaging/<%= raid._id %>" method="POST">
@@ -58,8 +50,60 @@
                             </form>
                         <% }) %>
                     </ul>
+                    <div class="inline">
+                        <button><a href="/raids/clearStaging/<%= raid._id %>">Clear</a></button>
+                        <button><a href="/raids/markStagingOnTime/<%= raid._id %>">Mark On Time</a></button>
+                        <button><a href="/raids/markStagingCompleted/<%= raid._id %>">Mark Finished</a></button>
+                    </div>
                 </div>
+
+                
             </div>  
+            <div class="rborder raid container">
+                <div class="top-form">
+                    <h1>Assign DKP</h1>
+                    <form action="/dkp/newForm" class="top-form" method="POST">
+                        <input type="hidden" value="<%= raid._id %>" name="raid">
+                        <input type="hidden" value="<%= raid.guild._id %>" name="guild">
+                        <input type="hidden" value="<%= user.main._id %>" name="assignedBy">
+                        <div class="container">
+                            <label for="amount">Amount Awarded</label>
+                            <input type="number" required name="amount" id="amount">
+                            <br>
+                            <label for="characters">Awarded To:</label>
+                            <select name="characters" id="characters">
+                                <option value="staging">Staging Area</option>
+                                <option value="bench">Bench</option>
+                                <option value="completed">Completed</option>
+                                <option value="onTime">On Time</option>
+                                <option value="signedUp">Signed Up</option>
+                                <option value="tentative">Tentative</option>
+                            </select> 
+                        </div>
+                        <br>
+                        <div class="container">
+                            <label for="description">Description</label>
+                            <textarea name="description" id="description" cols="80" rows="5" minlength="1"></textarea>
+                            <br>
+                        </div>
+                        
+                        
+                        
+                        <br>
+                        <button type="submit">Award DKP</button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="form rborder raid">
+                <h2><a href="/raids/detail/<%= raid._id %>"></a>Raid Info</h2>
+                <ul>
+                    <li>Location: <%= raid.location %></li>
+                    <li>Start Time: <%= raid.date %></li>
+                    <li>Loot Structure: <%= raid.lootStructure %></li>
+                    <li>Raid Slots: <%= raid.raidSize %></li>
+                </ul>
+            </div>
         </div>
     </main>
 </body>

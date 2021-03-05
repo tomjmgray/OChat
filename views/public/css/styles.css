@@ -96,6 +96,14 @@ input {
     margin: 10px 20px;
 }
 
+select {
+    margin: 10px 20px;
+}
+
+textarea {
+    margin: 10px 20px;
+}
+
 header {
     width: 100%;
     display: inline-flex;
@@ -254,22 +262,18 @@ li {
 
 .gborder {
     border: 3px solid var(--guild);
-    padding: 20px;
 }
 
 .oborder {
     border: 3px solid var(--officer);
-    padding: 20px;
 }
 
 .rborder {
     border: 3px solid var(--raid);
-    padding: 20px;
 }
 
 .pborder {
     border: 3px solid var(--party);
-    padding: 20px;
 }
 
 .inline {

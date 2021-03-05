@@ -13,6 +13,7 @@ const characterScema = new Schema({
     guild: {type: Schema.Types.ObjectId, ref: 'Guilds'},
     guildRank: {type: String},
     realm: {type: Schema.Types.ObjectId, ref: 'Realms'},
+    dkpLogs: [{type: Schema.Types.ObjectId, ref: 'DKPLogs'}],
 });
 
 const Characters = mongoose.model('Characters', characterScema);

@@ -17,4 +17,5 @@ module.exports = {
     Guilds: require('./Guilds'),
     Realms: require('./Realms'),
     Raids: require('./Raids'),
+    DKPLogs: require('./DKPLogs')
 }

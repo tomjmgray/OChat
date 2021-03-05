@@ -116,4 +116,37 @@ router.get('/addSignedUpToStaging/:raidId', (req, res) => {
     })
 })
 
+router.get('/clearStaging/:raidId', (req, res) => {
+    db.Raids.findByIdAndUpdate(req.params.raidId, {
+        $set: {staging: []}
+    }, (err, updatedRaid) => {
+        console.log(updatedRaid);
+        if (err) throw err;
+        res.redirect(`/raids/manageRaid/${updatedRaid._id}`)
+    })
+})
+
+router.get('/markStagingOnTime/:raidId', (req, res) => {
+    db.Raids.findById(req.params.raidId, (err, foundRaid) => {
+        if (err) throw err;
+        db.Raids.findByIdAndUpdate(req.params.raidId, {
+            $push: {onTime: {$each: foundRaid.staging}}
+        }, (err, updatedRaid) => {
+            if (err) throw err;
+            res.redirect(`/raids/manageRaid/${updatedRaid._id}`)
+    })
+})})
+
+router.get('/markStagingCompleted/:raidId', (req, res) => {
+    db.Raids.findById(req.params.raidId, (err, foundRaid) => {
+        if (err) throw err;
+        db.Raids.findByIdAndUpdate(req.params.raidId, {
+            $push: {completed: {$each: foundRaid.staging}}
+        }, (err, updatedRaid) => {
+            if (err) throw err;
+            res.redirect(`/raids/manageRaid/${updatedRaid._id}`)
+        })
+    })
+})
+
 module.exports = router;
