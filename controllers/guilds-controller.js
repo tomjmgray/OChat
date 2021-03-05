@@ -67,6 +67,8 @@ router.get('/manageGuildRoster/:id', (req, res) => {
     })
 })
 
+
+
 router.get('/:id', (req, res) => {
     db.Guilds.findById(req.params.id).populate(['members', 'guildMaster', 'officers', 'realm', 'raids']
     ).exec((err, foundGuild) => {
@@ -83,7 +85,7 @@ router.get('/:id', (req, res) => {
 })
 
 router.get('/:id/joinRequest', (req, res) => {
-    db.Guilds.findById(req.params.id).populate('guildMaster').exec((err, foundGuild) => {
+    db.Guilds.findById(req.params.id).populate(['guildMaster', 'joinRequests']).exec((err, foundGuild) => {
         if (err) throw err;
         db.Users.findById(req.session.currentUser._id).populate('characters').exec((err, populatedUser) => {
             if (err) throw err;

@@ -142,6 +142,36 @@ router.get('/gkickMember/:charId', (req, res) => {
     })
 })
 
+router.get('/demoteCharacter/:charId', (req, res) => {
+    db.Characters.findByIdAndUpdate(req.params.charId, {
+        guildRank: 'Member'
+    }, (err, updatedChar) => {
+        if (err) throw err;
+        db.Guilds.findByIdAndUpdate(updatedChar.guild, {
+            $push: {members: updatedChar._id},
+            $pull: {officers: updatedChar._id}
+        }, (err, updatedGuild) => {
+            if (err) throw err;
+            res.redirect(`/guilds/manageGuildRoster/${updatedGuild._id}`)
+        })
+    })
+})
+
+router.get('/promoteCharacter/:charId', (req, res) => {
+    db.Characters.findByIdAndUpdate(req.params.charId, {
+        guildRank: 'Officer'
+    }, (err, updatedChar) => {
+        if (err) throw err;
+        db.Guilds.findByIdAndUpdate(updatedChar.guild, {
+            $pull: {members: updatedChar._id},
+            $push: {officers: updatedChar._id}
+        }, (err, updatedGuild) => {
+            if (err) throw err;
+            res.redirect(`/guilds/manageGuildRoster/${updatedGuild._id}`)
+        })
+    })
+})
+
 router.put('/editCharacter/:id', (req, res) => {
     const charObj = {
         name: req.body.name,
@@ -183,8 +213,7 @@ router.get('/delete/:id', (req, res) => {
             if (err) throw err;
             db.Users.findByIdAndUpdate(req.session.currentUser._id, {
                 $pull: {
-                    characters: deletedCharacter._id, 
-                    main: deletedCharacter._id
+                    characters: deletedCharacter._id
                 },
             }, (err, updatedUser) => {
                 if (err) throw err;

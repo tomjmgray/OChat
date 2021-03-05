@@ -44,17 +44,18 @@
             
                 <div class="form raid rborder">
                     <h2>Sign Up</h2>
-                    <form action="/raids/addSignUp/<%= raid._id %>" method="POST" class="form">
+                    <form action="/raids/addSignUp/<%= raid._id %>" method="POST" class="top-form">
+                        <div class="inline">
+                            <label for="character">Character    </label>
+                            <select name="character" id="character" required style="margin-left: 20px;">
+                                <% user.characters.forEach((char) => { %>
+                                    <option value="<%= char._id %>"><%= char.name %></option>
+                                <% }) %>
+                            </select>
+                        </div>
                         
-                        <label for="character">Select which character to sign up with</label>
                         <br>
-                        <select name="character" id="character" required>
-                            <% user.characters.forEach((char) => { %>
-                                <option value="<%= char._id %>"><%= char.name %></option>
-                            <% }) %>
-                        </select>
-                        <br>
-                        <div class="container">
+                        <div class="inline">
                             <div class="container">
                                 <label for="tentative">Tentative/Late</label>
                                 <input type="checkbox" name="tentative" id="tentative">
@@ -65,8 +66,10 @@
                                 <br>
                                 
                             </div>
-                            <button type="submit">Sign Up</button>
                         </div>
+                        <br>
+                        <button type="submit">Sign Up</button>
+                        
                     </form>
                 </div>
             </div>

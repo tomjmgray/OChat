@@ -104,4 +104,16 @@ router.post('/removeFromStaging/:raidId', (req, res) => {
     })
 })
 
+router.get('/addSignedUpToStaging/:raidId', (req, res) => {
+    db.Raids.findById(req.params.raidId, (err, foundRaid) => {
+        if (err) throw err;
+        db.Raids.findByIdAndUpdate(foundRaid._id, {
+            $push: {staging: {$each: foundRaid.signedUp}}
+        }, (err, updatedRaid) => {
+            if (err) throw err;
+            res.redirect(`/raids/manageRaid/${updatedRaid._id}`);
+        })
+    })
+})
+
 module.exports = router;

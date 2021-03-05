@@ -9,7 +9,7 @@
         <div class="form">
             <h1>Manage Raid</h1>
             <div class="form rborder raid">
-                <h2>Raid Info</h2>
+                <h2><a href="/raids/detail/<%= raid._id %>"></a>Raid Info</h2>
                 <ul>
                     <li>Location: <%= raid.location %></li>
                     <li>Start Time: <%= raid.date %></li>
@@ -18,13 +18,14 @@
                 </ul>
             </div>
             <div class="container">
-                <div class="form">
-                    <h2>Signed Up</h2>
+                <div class="rborder raid top-form">
+                    <h2>Signed Up </h2>
+                    <button><a href="/raids/addSignedUpToStaging/<%=raid._id%>">+ All</a></button>
                     <ul>
                         <% raid.signedUp.forEach((char, index) => { %>
                             <form action="/raids/addToStaging/<%= raid._id %>" method="POST">
                                 <input type="hidden" name="character" value="<%= char._id %>">
-                                <li class="<%= char.class %>"><%= char.name %>(<%= index %>)<button type="submit">+</button></li>
+                                <li class="<%= char.class %>"><%= char.name %>(<%= index + 1%>)<button type="submit">+</button></li>
                             </form>
                         <% }) %>
                     </ul>
@@ -33,7 +34,7 @@
                         <% raid.bench.forEach((char, index) => { %>
                             <form action="/raids/addToStaging/<%= raid._id %>" method="POST">
                                 <input type="hidden" name="character" value="<%= char._id %>">
-                                <li class="<%= char.class %>"><%= char.name %>(<%= index %>) <button type="submit">+</button></li>
+                                <li class="<%= char.class %>"><%= char.name %>(<%= index + 1%>) <button type="submit">+</button></li>
                             </form>
                         <% }) %>
                     </ul>
@@ -42,12 +43,12 @@
                         <% raid.tentative.forEach((char, index) => { %>
                             <form action="/raids/addToStaging/<%= raid._id %>" method="POST">
                                 <input type="hidden" name="character" value="<%= char._id %>">
-                                <li class="<%= char.class %>"><%= char.name %>(<%= index %>) <button type="submit">+</button></li>
+                                <li class="<%= char.class %>"><%= char.name %>(<%= index + 1%>) <button type="submit">+</button></li>
                             </form>
                         <% }) %>
                     </ul>
                 </div>
-                <div class="form">
+                <div class="rborder raid top-form">
                     <h1>Staging Area</h1>
                     <ul>
                         <% raid.staging.forEach((char) => { %>

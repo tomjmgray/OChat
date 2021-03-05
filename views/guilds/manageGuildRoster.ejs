@@ -8,29 +8,43 @@
     <%- include('../partials/header') %>
     <main>
         <h1>Manage <%= guild.name %></h1>
-        <div class="form">
-            <h1>Guild Invite Requests</h1>
-            <div class="login container">
-                
-                <ul class="form">
+        <div class="container">
+            
+            <div class="form gborder">
+                <h1>Guild Invite Requests</h1>
+                <ul class="top-form">
                     <% if (guild.joinRequests.length !== 0) { %>
                         <% for (let i = 0; i < guild.joinRequests.length; i++) { %>
-                            <li>
+                            <ul class="inline">
                                 <form action="/guilds/addMember" method="POST">
                                     <input type="hidden" value="<%= guild._id %>" name="guildId">
                                     <input type="hidden" id="name" name="name" value="<%= guild.joinRequests[i]._id %>">
-                                    <label for="name"><%= guild.joinRequests[i].name %></label>
+                                    <li class="inline"> 
+                                        <label for="name"><%= guild.joinRequests[i].name %></label>
+                                    <!-- </li>
+                                    <li class="inline"> -->
+                                        <div class="inline">
+                                           
+                                            <label for="isOfficer"><small>Officer:</small></label>
+                                            <input type="checkbox" name="isOfficer" id="isOfficer"> 
+                                        </div>
+                                        
+                                        
+                                    </li>
                                     <br>
-                                    <label for="isOfficer">Add as Officer?</label>
-                                    <input type="checkbox" name="isOfficer" id="isOfficer">
-                                    <button type="submit">Accept Request</button>
+                                    <li>
+                                        <button type="submit">Accept Request</button>
+                                    </li>
                                 </form>
-                                <form action="/guilds/declineJoinRequest" method="POST">
+                                <li>
+                                    <form action="/guilds/declineJoinRequest" method="POST">
                                     <input type="hidden" name="userId" value="<%=guild.joinRequests[i]._id%>">
                                     <input type="hidden" name="guildId" value="<%= guild._id %>">
                                     <button type="submit">Decline Request</button>
                                 </form> 
-                            </li>
+                                </li>
+                                
+                            </ul>
                     <% } %>
                     <% } else { %>
                         <li>You have no new join requests.</li>
@@ -38,40 +52,54 @@
                     
                 </ul>
             </div>
-            <div class="form">
+            <div class="form oborder officer">
                 <h1>Manage Members</h1>
-                <div class="register container">
+                <div class="top-form">
                     
-                    <div class="form">
-                        <h3 class="party-leader">Officers</h3>
-                        <ul class="form">
-                            <li class="raid-warning">Guild Master: <%= guild.guildMaster.name %></li>
+                    <div class="top-form">
+                        <h3 class="officer">Officers</h3>
+                        <ul class="top-form">
+                            <li class="officer">Guild Master: <%= guild.guildMaster.name %></li>
                             <% guild.officers.forEach(officer => { %>
-                                <div class="form">
-                                    <li class="<%= officer.class %>"><%= officer.name %>
+                                <div class="inline">
+                                    <li class="<%= officer.class %>"><%= officer.name %></li>
                                 <% if (officer.user.isAdmin[0]?.toString() === guild._id.toString()) { %>
-                                    <button><a href="/characters/removeAdmin/<%= officer._id %>">Remove Admin</a></button>
+                                    <li>
+                                        <button><a href="/characters/removeAdmin/<%= officer._id %>">Remove Admin</a></button>
+                                    </li>
                                 <% } else { %>
-                                    <button><a href="/characters/grantAdmin/<%= officer._id %>">Make Admin</a></button>
+                                    <li>
+                                       <button><a href="/characters/grantAdmin/<%= officer._id %>">Make Admin</a></button> 
+                                    </li>
+                                    
                                 <% } %>
                                 
-                                <button><a href="/characters/demoteCharacter/<%= officer._id %>">Demote</a></button>
-                                <button><a href="/characters/gkickOfficer/<%= officer._id %>">GKick</a></button>
-                            <% }) %>
+                                <li>
+                                   <button><a href="/characters/demoteCharacter/<%= officer._id %>">Demote</a></button> 
                                 </li>
-                                </div>
+                                
+                                <li>
+                                    <button><a href="/characters/gkickOfficer/<%= officer._id %>">GKick</a></button>
+                                </li>
+                            </div>
+                            <% }) %>
+                                
                                 
                         </ul>
                     </div>
-                    <div class="form">
+                    <div class="top-form">
                             <h3>Members</h3>
-                            <ul class="form">
+                            <form class="top-form">
                                 <% guild.members.forEach(member => { %>
-                                    <li class="<%= member.class %>"><%= member.name %>
-                                    <button><a href="/characters/gkickMember/<%= member._id %>">GKick</a></button>
-                                    </li>
+                                    <ul class="inline">
+                                        <li class="<%= member.class %>"><%= member.name %>
+                                        <button><a href="/characters/gkickMember/<%= member._id %>">GKick</a></button>
+                                        <button><a href="/characters/promoteCharacter/<%= member._id %>">Promote</a></button>
+                                        </li>
+                                    </ul>
+                                    
                                 <% }) %>
-                            </ul>
+                                </top>
                     </div>
                 </div>
             </div>

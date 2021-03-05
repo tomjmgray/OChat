@@ -20,7 +20,7 @@
             <div class="form">
                 <div class="form guild gborder">
                     <h1>Members</h2>
-                        <div class="form officer">
+                        <div class="top-form officer">
                             <h2>Leadership</h2>
                             <ul>
                                 <li>Guild Master</li><li class="<%=guild.guildMaster.class%>"><%= guild.guildMaster.name %></li>
@@ -31,7 +31,7 @@
                                 <% }) %>
                             </ul>
                         </div>
-                        <div class="form guild">
+                        <div class="top-form guild">
                             <h2>Members</h2>
                             <ul>
                                 <% guild.members.forEach((member) => { %>
@@ -43,10 +43,10 @@
             </div>
                 
         
-                <div class="form raid rborder">
+                <div class="top-form raid rborder">
                     <h1>Raids</h1>
                     <% for (let i = guild.raids.length - 1; i > (-1 ||guild.raids.length -6); i--) { %>
-                        <div class="form raid">
+                        <div class="top-form raid">
                             <h3><a href="/raids/detail/<%=guild.raids[i]?._id%>"><%= guild.raids[i]?.location %></a></h3>
                             <p><%= guild.raids[i]?.date %></p>    
                         </div>

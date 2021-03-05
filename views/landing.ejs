@@ -16,33 +16,34 @@
         <div class="container">
             <div class="party form login">
                 <h1>Login</h1>
-                <h3>Already a user?</h3>
-                <form action="/users/login" method="POST" class="form">
-                    <div class="form">
+                <p>Already a user?</p>
+                <form action="/users/login" method="POST" class="top-form">
+                    <div class="top-form">
                         <label for="username">Username </label>
                         <input type="text" name="username" id="username">
-                    </div>
-                    <div class="form">
+                        <br>
                         <label for="password">Password</label>
                         <input type="password" id="password" name="password">
+                        <br>
+                        <button type="submit">Log In</button>
                     </div>
-                    <button type="submit">Log In</button>
+                    
                 </form>
             </div>
     
             <div class="party-leader form register">
-                <h1>Register</h1>
-                <h3>Don't have an account?</h3><p>Sign up for free to get started!</p>
-                <form action="/register" method="POST" class="form">
-                    <div class="form">
+                <h1>Register</h1><p>Sign up to get started!</p>
+                <form action="/register" method="POST" class="top-form">
+                    <div class="top-form">
                         <label for="username">Username</label>
                         <input type="text" name="username" id="username">
-                    </div>
-                    <div class="form">
+                        <br>
                         <label for="password">Password</label>
                         <input type="password" name="password" id="password">
+                        <br>
+                        <button type="submit">Register</button>
                     </div>
-                    <button type="submit">Register</button>
+                    
                 </form>
                     
             </div>
