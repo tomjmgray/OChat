@@ -72,5 +72,36 @@ router.post('/createRaid/:guildId', (req, res) => {
     })
 })
 
+router.get('/manageRaid/:raidId', (req, res) => {
+    db.Raids.findById(req.params.raidId).populate([
+        'guild', 'signedUp', 'tentative', 'bench', 'onTime', 'completed', 'staging'
+        // 'dkpLogs'
+    ]).exec((err, foundRaid) => {
+        if (err) throw err;
+        const context = {
+            raid: foundRaid,
+            user: req.session.currentUser
+        };
+        res.render('raids/manageRaid', context)
+    })
+})
+
+router.post('/addToStaging/:raidId', (req, res) => {
+    db.Raids.findByIdAndUpdate(req.params.raidId, {
+        $push: {staging: req.body.character}
+    }, (err, updatedRaid) => {
+        if (err) throw err;
+        res.redirect(`/raids/manageRaid/${updatedRaid._id}`)
+    })
+})
+
+router.post('/removeFromStaging/:raidId', (req, res) => {
+    db.Raids.findByIdAndUpdate(req.params.raidId, {
+        $pull: {staging: req.body.character}
+    }, (err, updatedRaid) => {
+        if (err) throw err;
+        res.redirect(`/raids/manageRaid/${updatedRaid._id}`)
+    })
+})
 
 module.exports = router;

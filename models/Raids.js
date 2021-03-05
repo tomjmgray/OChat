@@ -12,7 +12,8 @@ const raidSchema = new Schema({
     completed: [{type: Schema.Types.ObjectId, ref: 'Characters'}],
     dkpLogs: [{type: Schema.Types.ObjectId, ref: 'DKPLogs'}],
     location: {type: String, required: true},
-    raidSize: {type: Number}
+    raidSize: {type: Number},
+    staging: [{type: Schema.Types.ObjectId, ref: 'Characters'}],
 })
 
 const Raids = mongoose.model('Raids', raidSchema);

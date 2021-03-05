@@ -9,10 +9,7 @@
     <main>
         <div class="party-leader form">
             <h1><%= user.username %></h1>
-            <div class="container">
                 <h2>Characters</h2>
-                <button><a href="/characters/new">Create a Character</a></button> 
-            </div>
             
         </div>
         
@@ -43,8 +40,9 @@
                 <% } %>
             </div>
         </div>
-        <div>
+        <div class="container">
             <button><a href="/users/logout">Log Out</a></button>
+            <button><a href="/characters/new">Create a Character</a></button>
         </div>
     </main>
     

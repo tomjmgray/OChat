@@ -26,7 +26,7 @@
   } 
 
 body {
-    background-color: black;
+    background-color: var(--base);
     color: var(--guild);
     display: block;
     flex-flow: column wrap;
@@ -37,12 +37,35 @@ body {
 body { font-size: 24px; } 
 
 h1, h2, h3, h4, h5, h6 { font-weight: bold; } 
-h1 { font-size: 2em; } 
-h2 { font-size: 1.75em; } 
-h3 { font-size: 1.60em; }
-h4{ font-size: 1.50em; }
-h5 { font-size: 1.40em; } 
-h6 { font-size: 1.25em; }
+h1 { 
+    font-size: 2em; 
+    margin: 0;
+} 
+
+h2 { 
+    font-size: 1.75em;
+    margin: 0; 
+}
+
+h3 { 
+    font-size: 1.60em; 
+    margin: 0;
+}
+
+h4 { 
+    font-size: 1.50em; 
+    margin: 0;
+}
+
+h5 { 
+    font-size: 1.40em; 
+    margin: 0;
+}
+
+h6 { 
+    font-size: 1.25em; 
+    margin: 0;
+}
 
 .container {
     display: flex;
@@ -94,7 +117,7 @@ nav {
     background-color: black;
     border: 3px solid var(--officer);
     color: var(--guild);
-    padding: 0 2.5vw;
+    padding: 2.5vw;
     margin: 20px;
 }
 
@@ -107,6 +130,7 @@ main {
     margin: 20px 20px;
     width: 95vw;
     border: 3px solid var(--officer);
+    background-color: black;
 }
 
 a {
@@ -116,7 +140,8 @@ a {
 button {
     background-color: var(--base);
     color: var(--guild);
-    margin: 20px;
+    margin: 10px;
+    max-height: 2.5em;
 }
 
 .character {
@@ -215,8 +240,15 @@ li {
 
 .oborder {
     border: 3px solid var(--officer);
+    padding: 20px;
 }
 
 .rborder {
     border: 3px solid var(--raid);
+    padding: 20px;
+}
+
+.pborder {
+    border: 3px solid var(--party);
+    padding: 20px;
 }

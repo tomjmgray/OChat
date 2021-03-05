@@ -48,7 +48,7 @@
                             <li class="raid-warning">Guild Master: <%= guild.guildMaster.name %></li>
                             <% guild.officers.forEach(officer => { %>
                                 <div class="form">
-                                    <li class="party-leader"><%= officer.name %>
+                                    <li class="<%= officer.class %>"><%= officer.name %>
                                 <% if (officer.user.isAdmin[0]?.toString() === guild._id.toString()) { %>
                                     <button><a href="/characters/removeAdmin/<%= officer._id %>">Remove Admin</a></button>
                                 <% } else { %>

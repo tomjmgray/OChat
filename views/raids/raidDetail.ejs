@@ -7,71 +7,77 @@
 <body>
     <%- include('../partials/header.ejs') %>
     <main>
-        <div class="form raid rborder">
-            <h2>Info</h2>
-            <ul>
-                <li>Location: <%= raid.location %></li>
-                <li>Start Time: <%= raid.date %></li>
-                <% if (raid.lootStructure.length > 1) { %>
-                    <li>Loot Structure: <%= raid.lootStructure %></li>
-                <% } %>
-                <li>Raid Slots available: <%= raid.raidSize - raid.signedUp.length %></li>
-            </ul>
-        </div>
-        <div class="container">
+        <div class="form">
             <div class="form raid rborder">
-                <h2>Signed Up</h2>
+                <h2>Info</h2>
                 <ul>
-                    <% raid.signedUp.forEach((char, index) => { %>
-                        <li class="<%= char.class %>"><%= char.name %> (<%= index + 1 %>)</li>
-                        
-                    <% }) %>
-                </ul>
-                <h3>Bench</h3>
-                <ul>
-                    <% raid.bench.forEach((char, index) => { %>
-                        <li class="<%= char.class %>"><%= char.name %> (<%= index + 1 %>)</li>
-                    <% }) %>
-                </ul>
-                <h3>Tentative</h3>
-                <ul>
-                    <% raid.tentative.forEach((char, index) => { %>
-                        <li class="<%= char.class %>"><%= char.name %> (<%= index + 1 %>)</li>
-                    <% }) %>
+                    <li>Location: <%= raid.location %></li>
+                    <li>Start Time: <%= raid.date %></li>
+                    <% if (raid.lootStructure.length > 1) { %>
+                        <li>Loot Structure: <%= raid.lootStructure %></li>
+                    <% } %>
+                    <li>Raid Slots available: <%= raid.raidSize - raid.signedUp.length %></li>
                 </ul>
             </div>
-        
-            <div class="form raid rborder">
-                <h2>Sign Up</h2>
-                <form action="/raids/addSignUp/<%= raid._id %>" method="POST" class="form">
-                    
-                    <label for="character">Select which character to sign up with</label>
-                    <br>
-                    <select name="character" id="character" required>
-                        <% user.characters.forEach((char) => { %>
-                            <option value="<%= char._id %>"><%= char.name %></option>
-                        <% }) %>
-                    </select>
-                    <br>
-                    <div class="container">
-                        <div class="container">
-                            <label for="tentative">Tentative/Late</label>
-                            <input type="checkbox" name="tentative" id="tentative">
-                        </div>
-                        <div class="container">
-                            <label for="bench">Bench</label>
-                            <input type="checkbox" name="bench" id="bench">
-                            <br>
+            <div class="container">
+                <div class="form raid rborder">
+                    <h2>Signed Up</h2>
+                    <ul>
+                        <% raid.signedUp.forEach((char, index) => { %>
+                            <li class="<%= char.class %>"><%= char.name %> (<%= index + 1 %>)</li>
                             
+                        <% }) %>
+                    </ul>
+                    <h3>Bench</h3>
+                    <ul>
+                        <% raid.bench.forEach((char, index) => { %>
+                            <li class="<%= char.class %>"><%= char.name %> (<%= index + 1 %>)</li>
+                        <% }) %>
+                    </ul>
+                    <h3>Tentative</h3>
+                    <ul>
+                        <% raid.tentative.forEach((char, index) => { %>
+                            <li class="<%= char.class %>"><%= char.name %> (<%= index + 1 %>)</li>
+                        <% }) %>
+                    </ul>
+                </div>
+            
+                <div class="form raid rborder">
+                    <h2>Sign Up</h2>
+                    <form action="/raids/addSignUp/<%= raid._id %>" method="POST" class="form">
+                        
+                        <label for="character">Select which character to sign up with</label>
+                        <br>
+                        <select name="character" id="character" required>
+                            <% user.characters.forEach((char) => { %>
+                                <option value="<%= char._id %>"><%= char.name %></option>
+                            <% }) %>
+                        </select>
+                        <br>
+                        <div class="container">
+                            <div class="container">
+                                <label for="tentative">Tentative/Late</label>
+                                <input type="checkbox" name="tentative" id="tentative">
+                            </div>
+                            <div class="container">
+                                <label for="bench">Bench</label>
+                                <input type="checkbox" name="bench" id="bench">
+                                <br>
+                                
+                            </div>
+                            <button type="submit">Sign Up</button>
                         </div>
-                        <button type="submit">Sign Up</button>
-                    </div>
-                    
-                    
-                </form>
+                    </form>
+                </div>
             </div>
+            <% if (user.isAdmin.join('').includes(raid.guild._id)) { %>
+                <div class="conatiner">
+                    <button>
+                        <a href="/raids/manageRaid/<%= raid._id %>">Manage Raid</a>
+                    </button>
+                </div>
+            <% } %>
         </div>
-        
     </main>
     
     

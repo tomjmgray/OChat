@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('../partials/head') %>
+</head>
+<body>
+    <%- include('../partials/header') %>
+    <main>
+        <div class="form">
+            <h1>Manage Raid</h1>
+            <div class="form rborder raid">
+                <h2>Raid Info</h2>
+                <ul>
+                    <li>Location: <%= raid.location %></li>
+                    <li>Start Time: <%= raid.date %></li>
+                    <li>Loot Structure: <%= raid.lootStructure %></li>
+                    <li>Raid Slots: <%= raid.raidSize %></li>
+                </ul>
+            </div>
+            <div class="container">
+                <div class="form">
+                    <h2>Signed Up</h2>
+                    <ul>
+                        <% raid.signedUp.forEach((char, index) => { %>
+                            <form action="/raids/addToStaging/<%= raid._id %>" method="POST">
+                                <input type="hidden" name="character" value="<%= char._id %>">
+                                <li class="<%= char.class %>"><%= char.name %>(<%= index %>)<button type="submit">+</button></li>
+                            </form>
+                        <% }) %>
+                    </ul>
+                    <h3>Bench</h3>
+                    <ul>
+                        <% raid.bench.forEach((char, index) => { %>
+                            <form action="/raids/addToStaging/<%= raid._id %>" method="POST">
+                                <input type="hidden" name="character" value="<%= char._id %>">
+                                <li class="<%= char.class %>"><%= char.name %>(<%= index %>) <button type="submit">+</button></li>
+                            </form>
+                        <% }) %>
+                    </ul>
+                    <h3>Tentative</h3>
+                    <ul>
+                        <% raid.tentative.forEach((char, index) => { %>
+                            <form action="/raids/addToStaging/<%= raid._id %>" method="POST">
+                                <input type="hidden" name="character" value="<%= char._id %>">
+                                <li class="<%= char.class %>"><%= char.name %>(<%= index %>) <button type="submit">+</button></li>
+                            </form>
+                        <% }) %>
+                    </ul>
+                </div>
+                <div class="form">
+                    <h1>Staging Area</h1>
+                    <ul>
+                        <% raid.staging.forEach((char) => { %>
+                            <form action="/raids/removeFromStaging/<%= raid._id %>" method="POST">
+                                <input type="hidden" name="character" value="<%= char._id %>">
+                                <li class="<%= char.class %>"><%= char.name %> <button type="submit">-</button></li>
+                            </form>
+                        <% }) %>
+                    </ul>
+                </div>
+            </div>  
+        </div>
+    </main>
+</body>
+</html>

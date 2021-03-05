@@ -39,24 +39,21 @@ app.get('/loginErr', (req, res) => {
 })
 
 app.get('/home', (req, res) => {
-    const userId = req.session.currentUser?._id;
-    db.Users.findById(userId).populate(
-        {path: 'characters', populate: [
-            {path: 'guild', model: 'Guilds'},
-            {path: 'realm', model: 'Realms'}
-        ]}
-    ).exec((err, foundUser) => {
+    const user = req.session.currentUser;
+    db.Guilds.findById(user.main.guild).populate([
+            'members',
+            'guildMaster',
+            'officers',
+            'realm',
+            'raids'
+        ]
+    ).exec((err, foundGuild) => {
+        console.log(foundGuild);
         if (err) throw err;
-        const guilds = [];
-        foundUser.characters.forEach((char) => {
-            if (char.guild && !guilds.includes(char.guild)) {
-                guilds.push(char.guild);
-            }
-        })
         const context = {
-            guilds: guilds,
-            user: req.session.currentUser
-        };
+            user: req.session.currentUser,
+            guild: foundGuild
+        }
         res.render('home.ejs', context);
     })
 })

@@ -7,14 +7,40 @@
 <body>
     <%- include('./partials/header') %>
     <main>
-        <h1>Home</h1>
-            <h2>Your Guilds</h2>
-            <ul>
-                <% guilds.forEach((guild) => { %>
-                    <li><a href="/guilds/<%= guild._id %>"><%= guild.name %></a></li>
-                <% }) %>
-            </ul>
-            
+        <div class="form">
+            <h1>Home</h1>
+            <div class="container">
+                <div class="form guild">
+                    <div class="container">
+                        <div class="form">
+                            <h1><a href="/guilds/<%= guild._id %>"><%= guild.name %></a></h1>
+                            <div class="form rborder raid">
+                                <h2>Upcoming Raids</h2>
+                            <% for (let i = guild.raids.length - 1; i > ( -1 || guild.raids.length - 4); i--) { %>
+                                <div class="form raid">
+                                    <h3><a href="/raids/detail/<%= guild.raids[i]?._id %>"><%= guild.raids[i]?.location %></a></h3>
+                                    <p><%= guild.raids[i]?.date %></p>
+                                </div>
+                            <% } %>
+                            </div>
+                        </div>
+                    <div class="form party">
+                        <h1>Your Characters</h1>
+                        <div class="form party pborder">
+                            <h3 class="<%= user.main.class %>"><%= user.main.name %></h3>
+                            <p><%= user.main.spec %> <%=  user.main.class %></p>
+                            <% user.characters.forEach((char) => { %>
+                                <% if (!char.isMain) { %>
+                                    <h3 class="<%= char.class %>"><%= char.name %></h3>
+                                    <p><%= char.spec %> <%= char.class %></p>
+                            <% }}) %>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
     </main>
     
 </body>
