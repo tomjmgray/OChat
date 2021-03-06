@@ -7,26 +7,24 @@
 <body>
     <%- include('./partials/header') %>
     <main>
-        <div class="form">
+        <div class="form full">
             <h1>Home</h1>
-            <div class="container">
-                <div class="form guild">
-                    <div class="container">
-                        <div class="form">
-                            <h1><a href="/guilds/<%= guild._id %>"><%= guild.name %></a></h1>
-                            <div class="form rborder raid">
-                                <h2>Upcoming Raids</h2>
-                            <% for (let i = guild.raids.length - 1; i > ( -1 || guild.raids.length - 4); i--) { %>
-                                <div class="form raid">
-                                    <h3><a href="/raids/detail/<%= guild.raids[i]?._id %>"><%= guild.raids[i]?.location %></a></h3>
-                                    <p><%= guild.raids[i]?.date %></p>
-                                </div>
-                            <% } %>
+                <div class="container full">
+                    <div class="form full">
+                        <h1><a href="/guilds/<%= guild._id %>"><%= guild.name %></a></h1>
+                        <div class="form rborder raid full">
+                            <h2>Upcoming Raids</h2>
+                        <% for (let i = guild.raids.length - 1; i > ( -1 || guild.raids.length - 4); i--) { %>
+                            <div class="form raid">
+                                <h3><a href="/raids/detail/<%= guild.raids[i]?._id %>"><%= guild.raids[i]?.location %></a></h3>
+                                <p><%= guild.raids[i]?.date %></p>
                             </div>
+                        <% } %>
                         </div>
-                    <div class="form party">
+                    </div>
+                    <div class="form party full">
                         <h1>Your Characters</h1>
-                        <div class="form party pborder">
+                        <div class="form party pborder full">
                             <h3 class="<%= user.main.class %>"><%= user.main.name %></h3>
                             <p><%= user.main.spec %> <%=  user.main.class %></p>
                             <% user.characters.forEach((char) => { %>
@@ -37,10 +35,7 @@
                             <% }}) %>
                         </div>
                     </div>
-                    </div>
-                </div>
             </div>
-
         </div>
     </main>
     

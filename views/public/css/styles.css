@@ -44,7 +44,7 @@ h1 {
 
 h2 { 
     font-size: 1.75em;
-    margin: 0; 
+    margin-top: 20px; 
 }
 
 h3 { 
@@ -72,6 +72,7 @@ h6 {
     justify-content: center;
     align-items: top;
     flex: 1;
+    flex-flow: row wrap;
 }
 
 .form {
@@ -275,6 +276,9 @@ li {
 .pborder {
     border: 3px solid var(--party);
 }
+.plborder {
+    border: 3px solid var(--partyLeader);
+}
 
 .inline {
     display: inline-flex;
@@ -288,4 +292,12 @@ li {
     flex-flow: row wrap;
     align-items: flex-start;
     justify-content: flex-start;
+}
+
+.half {
+    width: 45%;
+}
+
+.full {
+    width: 95%;
 }

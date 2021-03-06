@@ -7,11 +7,11 @@
 <body>
     <%- include('../partials/header') %>
     <main>
-        <div class="form gborder">
-            <h1>Join Guilds</h1>
+        <div class="top-form full">
+            <h1>Join Guilds on <%= user.main.realm.name %></h1>
             <ul>
                 <% guilds.forEach((guild) => { %>
-                    <li><a href="/guilds/<%= guild._id %>"><%= guild.name %></a></li>
+                    <li><a href="/guilds/<%= guild._id %>"><h1><%= guild.name %></h1></a></li>
                 <% }) %>
             </ul>
             <p>Don't see your guild anywhere on the site? Sign your guild up <a href="/guilds/createGuild">here</a> to get started!</p>

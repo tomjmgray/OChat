@@ -6,11 +6,11 @@
 <body>
     <%- include('../partials/header') %>
     <main class="rborder">
-        <div class="form">
+        <div class="form full">
             <h1 class="raid">Manage Raid</h1>
             
-            <div class="container">
-                <div class="rborder raid top-form">
+            <div class="container full">
+                <div class="rborder raid top-form half">
                     <h2>Signed Up </h2>
                     <button><a href="/raids/addSignedUpToStaging/<%=raid._id%>">+ All</a></button>
                     <ul>
@@ -40,7 +40,7 @@
                         <% }) %>
                     </ul>
                 </div>
-                <div class="rborder raid top-form">
+                <div class="rborder raid top-form half">
                     <h2>Staging Area</h2>
                     <div class="inline">
                         <button><a href="/raids/clearStaging/<%= raid._id %>">Clear</a></button>
@@ -59,7 +59,7 @@
 
                 
             </div>  
-            <div class="rborder raid container">
+            <div class="rborder raid container full">
                 <div class="top-form">
                     <h1>Assign DKP</h1>
                     <form action="/dkp/newForm" class="top-form" method="POST">

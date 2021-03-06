@@ -7,9 +7,9 @@
 <body>
     <%- include('../partials/header.ejs') %>
     <main class="container rborder">
-        <div class="form raid">
+        <div class="form raid full">
             <h1>Create New Raid</h1>
-            <form action="/raids/createRaid/<%= guild._id %>" method="POST" class="form rborder">
+            <form action="/raids/createRaid/<%= guild._id %>" method="POST" class="form rborder half">
                 <input type="hidden" value="<%= guild._id %>" name="guild">
                 <label for="date">Date</label>
                 <input type="datetime-local" id="date" name="date" required>

@@ -7,13 +7,13 @@
 <body>
     <%- include('../partials/header') %>
     <main>
-        <div class="top-form gborder">
+        <div class="top-form full">
             <h1><%= guild.name %> Join Request</h1>
             <p>Select which of your characters you wish to join the guild with:</p>
             
             <% user.characters.forEach((char, index) => { %>
                 <% if (!guild.joinRequests.join('').includes(char._id)) { %>
-                    <% if (!char.guild) { %>
+                    <% if (char.guild?.length > 0) { %>
                         <form action="/guilds/<%= guild._id %>/joinRequest" method="POST">
                             <input type="hidden" value="<%= char._id %>" name="charId">
                             <label for="charId"><%= char.name %></label>

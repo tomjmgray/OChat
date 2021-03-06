@@ -6,7 +6,7 @@
 </head>
 <body>
     <%- include('../partials/header') %>
-    <main class="pborder">
+    <main class="plborder">
         <div class="party-leader form">
             <h1><%= user.username %></h1>
                 <h2>Characters</h2>
@@ -20,9 +20,9 @@
                 <% } else { %>
                     <% for (let i = 0; i < user.characters.length; i++) { %>
                         <div <% if(user.characters[i].isMain) { %>
-                            class="main-character form"
+                            class="main-character form half"
                         <% } else { %>
-                            class="character form"
+                            class="character form half"
                         <% } %>>
                             
                             
@@ -41,10 +41,13 @@
                 <% } %>
             </div>
         </div>
+        <br>
         <div class="container">
             <button><a href="/users/logout">Log Out</a></button>
             <button><a href="/characters/new">Create a Character</a></button>
         </div>
+        <br>
+        <br>
     </main>
     
 </body>

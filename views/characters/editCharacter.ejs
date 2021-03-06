@@ -7,60 +7,69 @@
 <body>
     <%- include('../partials/header') %>
     <main class="pborder">
-        <div class="form party">
-            <h1>Edit Character</h1>
-            <form action="/characters/editCharacter/<%= character._id %>/?_method=PUT" method="POST" class="form pborder">
-                <label for="name">Character Name</label>
-                <input type="text" name="name" id="name" value="<%= character.name %>">
-                <br />
-                <label for="spec">Spec</label>
-                <select name="spec" id="spec">
-                    <option value="Restoration">Restoration</option>
-                    <option value="Feral">Feral</option>
-                    <option value="Balance">Balance</option>
-                    <option value="Beast Mastery">Beast Mastery</option>
-                    <option value="Marksmanship">Marksmanship</option>
-                    <option value="Survival">Survival</option>
-                    <option value="Arcane">Arcane</option>
-                    <option value="Fire">Fire</option>
-                    <option value="Frost">Frost</option>
-                    <option value="Holy">Holy</option>
-                    <option value="Protection">Protection</option>
-                    <option value="Retribution">Retribution</option>
-                    <option value="Discipline">Discipline</option>
-                    <option value="Shadow">Shadow</option>
-                    <option value="Assassination">Assassination</option>
-                    <option value="Combat">Combat</option>
-                    <option value="Subtelty">Subtelty</option>
-                    <option value="Elemental">Elemental</option>
-                    <option value="Enhancement">Enhancement</option>
-                    <option value="Affliction">Affliction</option>
-                    <option value="Demonology">Demonology</option>
-                    <option value="Destruction">Destruction</option>
-                    <option value="Arms">Arms</option>
-                    <option value="Fury">Fury</option>
-                </select><br>
-                <label for="level">Level</label>
-                <input type="number" name="level" id="level" max="70" min= "1"><br>
-                <label for="realm">Realm</label>
-                <select name="realm" id="realm">
-                    <% for (let i = 0; i < realms.length; i++) { %>
-                        <option value=<%= realms[i]._id %>><%= realms[i].name %></option>
-                    <% } %>
-                </select>
+        <div class="form party full">
+            <h1>Edit <%= character.name %></h1>
+            <form action="/characters/editCharacter/<%= character._id %>/?_method=PUT" method="POST" class="form pborder half">
+                <div class="inline">
+                    <label for="name">Character Name</label>
+                    <input type="text" name="name" id="name" value="<%= character.name %>">
+                    <br />
+                    <label for="spec">Spec</label>
+                    <select name="spec" id="spec">
+                        <option value="Restoration">Restoration</option>
+                        <option value="Feral">Feral</option>
+                        <option value="Balance">Balance</option>
+                        <option value="Beast Mastery">Beast Mastery</option>
+                        <option value="Marksmanship">Marksmanship</option>
+                        <option value="Survival">Survival</option>
+                        <option value="Arcane">Arcane</option>
+                        <option value="Fire">Fire</option>
+                        <option value="Frost">Frost</option>
+                        <option value="Holy">Holy</option>
+                        <option value="Protection">Protection</option>
+                        <option value="Retribution">Retribution</option>
+                        <option value="Discipline">Discipline</option>
+                        <option value="Shadow">Shadow</option>
+                        <option value="Assassination">Assassination</option>
+                        <option value="Combat">Combat</option>
+                        <option value="Subtelty">Subtelty</option>
+                        <option value="Elemental">Elemental</option>
+                        <option value="Enhancement">Enhancement</option>
+                        <option value="Affliction">Affliction</option>
+                        <option value="Demonology">Demonology</option>
+                        <option value="Destruction">Destruction</option>
+                        <option value="Arms">Arms</option>
+                        <option value="Fury">Fury</option>
+                    </select>
+                </div>
                 <br>
-                <label for="isMain">Is this your main character?</label>
-                <input type="checkbox" name="isMain" id="isMain">
+                <div class="inline">
+                    <label for="level">Level</label>
+                    <input type="number" name="level" id="level" max="70" min= "1"><br>
+                    <label for="realm">Realm</label>
+                    <select name="realm" id="realm">
+                        <% for (let i = 0; i < realms.length; i++) { %>
+                            <option value=<%= realms[i]._id %>><%= realms[i].name %></option>
+                        <% } %>
+                    </select>
+                </div>
+                
                 <br>
+                <div>
+                    <label for="isMain">Is this your main character?</label>
+                    <input type="checkbox" name="isMain" id="isMain"> 
+                </div>
                 <button type="submit">Save Character</button>
                 <br>
-                <br>
-                <button><a href="/characters/delete/<%= character._id %>">Delete Character</a></button>
+                <div class="inline">
+                    <button><a href="/characters/delete/<%= character._id %>">Delete Character</a></button>
                 <% if (character.rank === 'Member') { %>
                     <button><a href="/characters/gkickMember/<%= character._id %>">GQuit</a></button>
                 <% } else { %>
                     <button><a href="/characters/gkickOfficer/<%= character._id %>">GQuit</a></button>
                 <% } %>
+                </div>
+                
                 
             </form>
         </div>

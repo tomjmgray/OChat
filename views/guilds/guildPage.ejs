@@ -8,7 +8,7 @@
     <%- include('../partials/header.ejs') %>
     <main>
             
-            <div class="form gborder">
+            <div class="form gborder full">
                 <div class="container">
                     <h1><%= guild.name %></h1>
                 </div>
@@ -16,9 +16,8 @@
                     <p><%= guild.description %></p>
                 </div>
             </div>
-        <div class="container">
-            <div class="form">
-                <div class="form guild gborder">
+        <div class="container full">
+                <div class="top-form guild gborder half">
                     <h1>Members</h2>
                         <div class="top-form officer">
                             <h2>Leadership</h2>
@@ -40,10 +39,9 @@
                             </ul>
                         </div> 
                 </div>
-            </div>
                 
         
-                <div class="top-form raid rborder">
+                <div class="top-form raid rborder half">
                     <h1>Raids</h1>
                     <% for (let i = guild.raids.length - 1; i > (-1 ||guild.raids.length -6); i--) { %>
                         <div class="top-form raid">
@@ -56,7 +54,7 @@
         
         
         
-        <div class="form">
+        <div class="form full">
             <p>Want to join <%= guild.name %>? Send a join request <a href="/guilds/<%= guild._id %>/joinRequest">here</a></p>
             <div class="container">    
                 <% if (user.isAdmin.join('').includes(guild._id)) { %>

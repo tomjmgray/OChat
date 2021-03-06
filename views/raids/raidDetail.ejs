@@ -6,9 +6,9 @@
 </head>
 <body>
     <%- include('../partials/header.ejs') %>
-    <main class="rborder">
-        <div class="form">
-            <div class="form raid rborder">
+    <main class="rborder full">
+        <div class="form full">
+            <div class="form raid rborder full">
                 <h2>Info</h2>
                 <ul>
                     <li>Location: <%= raid.location %></li>
@@ -19,8 +19,8 @@
                     <li>Raid Slots available: <%= raid.raidSize - raid.signedUp.length %></li>
                 </ul>
             </div>
-            <div class="container">
-                <div class="form raid rborder">
+            <div class="container full">
+                <div class="form raid rborder half">
                     <h2>Signed Up</h2>
                     <ul>
                         <% raid.signedUp.forEach((char, index) => { %>
@@ -42,7 +42,7 @@
                     </ul>
                 </div>
             
-                <div class="form raid rborder">
+                <div class="form raid rborder half">
                     <h2>Sign Up</h2>
                     <form action="/raids/addSignUp/<%= raid._id %>" method="POST" class="top-form">
                         <div class="inline">
