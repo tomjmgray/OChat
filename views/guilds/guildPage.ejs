@@ -15,10 +15,14 @@
                 <div class="container">
                     <p><%= guild.description %></p>
                 </div>
+                <p>Want to join <%= guild.name %>? Send a join request <button><a href="/guilds/<%= guild._id %>/joinRequest">Join</a></button></p>
             </div>
         <div class="container full">
-                <div class="top-form guild gborder half">
+                <div class="top-form officer oborder half">
                     <h1>Members</h2>
+                        <% if (user.isAdmin.join('').includes(guild._id)) { %>
+                            <button><a href="/guilds/manageGuildRoster/<%= guild._id %>">Manage Guild Roster</a></button>
+                        <% } %>
                         <div class="top-form officer">
                             <h2>Leadership</h2>
                             <ul>
@@ -43,8 +47,11 @@
         
                 <div class="top-form raid rborder half">
                     <h1>Raids</h1>
+                    <% if (user.isAdmin.join('').includes(guild._id)) { %>
+                        <button><a href="/raids/createRaid/<%= guild._id %>" class="raid">Create Raid</a></button>
+                    <% } %>
                     <% for (let i = guild.raids.length - 1; i > (-1 ||guild.raids.length -6); i--) { %>
-                        <div class="top-form raid">
+                        <div class="top-form raid rborder">
                             <h3><a href="/raids/detail/<%=guild.raids[i]?._id%>"><%= guild.raids[i]?.location %></a></h3>
                             <p><%= guild.raids[i]?.date %></p>    
                         </div>
@@ -55,13 +62,9 @@
         
         
         <div class="form full">
-            <p>Want to join <%= guild.name %>? Send a join request <a href="/guilds/<%= guild._id %>/joinRequest">here</a></p>
+            
             <div class="container">    
-                <% if (user.isAdmin.join('').includes(guild._id)) { %>
-                    <button><a href="/guilds/manageGuildRoster/<%= guild._id %>">Manage Guild Roster</a></button>
-                    <br>
-                    <button><a href="/raids/createRaid/<%= guild._id %>">Create Raid</a></button>
-                <% } %>
+                
             </div>
         </div>
     </main>

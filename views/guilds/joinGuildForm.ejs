@@ -13,7 +13,7 @@
             
             <% user.characters.forEach((char, index) => { %>
                 <% if (!guild.joinRequests.join('').includes(char._id)) { %>
-                    <% if (char.guild?.length > 0) { %>
+                    <% if (!char.guild?._id?.length > 0) { %>
                         <form action="/guilds/<%= guild._id %>/joinRequest" method="POST">
                             <input type="hidden" value="<%= char._id %>" name="charId">
                             <label for="charId"><%= char.name %></label>

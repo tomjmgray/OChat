@@ -189,6 +189,11 @@ li {
     height: 2em;
 }
 
+.roster {
+    font-size: 0.75em;
+    padding: 10px;
+}
+
 .main-character {
     width: 25%;
     border: 3px solid var(--partyLeader);
@@ -263,21 +268,26 @@ li {
 
 .gborder {
     border: 3px solid var(--guild);
+    padding: 10px;
 }
 
 .oborder {
     border: 3px solid var(--officer);
+    padding: 10px;
 }
 
 .rborder {
     border: 3px solid var(--raid);
+    padding: 10px;
 }
 
 .pborder {
     border: 3px solid var(--party);
+    padding: 10px;
 }
 .plborder {
     border: 3px solid var(--partyLeader);
+    padding: 10px;
 }
 
 .inline {
