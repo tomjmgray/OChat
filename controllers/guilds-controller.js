@@ -73,12 +73,18 @@ router.get('/:id', (req, res) => {
     db.Guilds.findById(req.params.id).populate(['members', 'guildMaster', 'officers', 'realm', 'raids']
     ).exec((err, foundGuild) => {
         if (err) throw err;
-        
+        const gmArr = [foundGuild.guildMaster];
+        const officersArr = gmArr.concat(foundGuild.officers);
+        const membersArr = officersArr.concat(foundGuild.members);
+        const sortedArr = membersArr.sort((a, b) => {
+            return b.dkp - a.dkp
+        })
+        console.log(sortedArr);
         const context = {
+            dkpStandings: sortedArr,
             guild: foundGuild,
             user: req.session.currentUser
         }
-        console.log(req.session)
         
         res.render('guilds/guildPage', context);
     })

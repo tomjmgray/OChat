@@ -19,7 +19,7 @@
             </div>
         
             <% if (user.isAdmin.join('').includes(guild._id)) { %>
-                <div class="form oborder full officer">
+                <div class="form plborder full party-leader">
                     <h1>Admin Settings</h1>
                     <div class="container">
                         <h3><a href="/guilds/manageGuildRoster/<%= guild._id %>">Manage Guild Roster</a></h3>
@@ -34,27 +34,26 @@
 
         <div class="container full">
                 <div class="top-form officer oborder half">
-                    <h1>Members</h2>
-                        
-                        <div class="top-form officer">
-                            <h2>Leadership</h2>
-                            <ul>
-                                <li>Guild Master</li><li class="<%=guild.guildMaster.class%>"><a href="/characters/characterInfo/<%= guild.guildMaster._id %>"><%= guild.guildMaster.name %></a></li>
-                                <br>
-                                <li>Officers</li>
-                                <% guild.officers.forEach((officer) => { %>
-                                    <li class="<%= officer.class %>"><a href="/characters/characterInfo/<%= officer._id %>"><%= officer.name %></a></li>
-                                <% }) %>
-                            </ul>
+                    <h1><a href="/dkp/standings/<%= guild._id %>">DKP Standings</a></h1>
+                    <div class="container">
+                        <div class="top-form">
+                            <ol>
+                                <% for (let i = 0; i < (dkpStandings.length || 10); i++) { %>
+                                    <li class="<%= dkpStandings[i].class %>"><%= i + 1 %>. <%= dkpStandings[i].name %> (<%= Math.floor(dkpStandings[i].dkp) %>)</li>
+                                <% } %>    
+                            </ol>
                         </div>
-                        <div class="top-form guild">
-                            <h2>Members</h2>
-                            <ul>
-                                <% guild.members.forEach((member) => { %>
-                                    <li class="<%= member.class %>"><a href="/characters/characterInfo/<%= member._id %>"><%= member.name %></a></li>
-                                <% }) %>
-                            </ul>
-                        </div> 
+                    <% if (dkpStandings.length > 10) { %>
+                        <div class="top-form">
+                            <ol>
+                                <% for (let i = 10; i < (dkpStandings.length || 20); i++) { %>
+                                    <li class="<%= dkpStandings[i].class %>"><%= i + 1 %>. <%= dkpStandings[i].name %> (<%= Math.floor(dkpStandings[i].dkp) %>)</li>
+                                <% } %>    
+                            </ol>
+                        </div>
+                    <% } %>
+                         
+                    </div>
                 </div>
                 
         
@@ -71,10 +70,30 @@
         
         
         
-        <div class="form full">
-            
-            <div class="container">    
-                
+        <div class="container full">
+            <div class="form full officer oborder">    
+                <h1>Members</h2>
+                <div class="container">
+                    <div class="top-form officer half">
+                        <h3>Leadership</h3>
+                        <ul>
+                            <li>Guild Master</li><li class="<%=guild.guildMaster.class%>"><a href="/characters/characterInfo/<%= guild.guildMaster._id %>"><%= guild.guildMaster.name %></a></li>
+                            <br>
+                            <li>Officers</li>
+                            <% guild.officers.forEach((officer) => { %>
+                                <li class="<%= officer.class %>"><a href="/characters/characterInfo/<%= officer._id %>"><%= officer.name %></a></li>
+                            <% }) %>
+                        </ul>
+                    </div>
+                    <div class="top-form guild half">
+                        <h3>Members</h3>
+                        <ul>
+                            <% guild.members.forEach((member) => { %>
+                                <li class="<%= member.class %>"><a href="/characters/characterInfo/<%= member._id %>"><%= member.name %></a></li>
+                            <% }) %>
+                        </ul>
+                    </div> 
+                </div>    
             </div>
         </div>
     </main>
