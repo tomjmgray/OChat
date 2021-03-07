@@ -21,9 +21,18 @@
 
 @font-face {
     font-family: 'LifeCraft';
-    src: 
-     url('../fonts/LifeCraft_Font.ttf') format('truetype'); /* Chrome 4+, Firefox 3.5, Opera 10+, Safari 3—5 */
-  } 
+    src: url('../fonts/LifeCraft_Font.ttf') format('truetype'); 
+} 
+
+@font-face {
+    font-family: 'LatoRegular';
+    src: url('../fonts/Lato/Lato-Regular.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'LatoBold';
+    src: url('../fonts/Lato/Lato-Bold.ttf') format('truetype');
+}
 
 body {
     background-color: var(--base);
@@ -32,11 +41,16 @@ body {
     flex-flow: column wrap;
     justify-content: center;
     align-items: center;
+    font-size: 24px;
+    font-family: 'LatoRegular';
 }
 
-body { font-size: 24px; } 
+h1, h2, h3, h4, h5, h6 { 
+    font-weight: bold;
+    font-family: 'LatoBold' 
+} 
 
-h1, h2, h3, h4, h5, h6 { font-weight: bold; } 
+
 h1 { 
     font-size: 2em; 
     margin-top: 20px;
@@ -49,7 +63,7 @@ h2 {
 
 h3 { 
     font-size: 1.60em; 
-    margin: 0;
+    margin: 0 10px;
 }
 
 h4 { 

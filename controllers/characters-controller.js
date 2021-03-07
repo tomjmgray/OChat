@@ -235,4 +235,16 @@ router.get('/delete/:id', (req, res) => {
     })
 })
 
+router.get('/characterInfo/:charId', (req, res) => {
+    db.Characters.findById(req.params.charId).populate([
+        'guild', 'realm', 'dkpLogs', {path: 'user', populate: 'characters'}
+    ]).exec((err, foundCharacter) => {
+        const context = {
+            character: foundCharacter,
+            user: req.session.currentUser
+        };
+        res.render('characters/characterInfo', context)
+    })
+})
+
 module.exports = router;

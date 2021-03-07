@@ -17,20 +17,32 @@
                 </div>
                 <p>Want to join <%= guild.name %>? Send a join request <button><a href="/guilds/<%= guild._id %>/joinRequest">Join</a></button></p>
             </div>
+        
+            <% if (user.isAdmin.join('').includes(guild._id)) { %>
+                <div class="form oborder full officer">
+                    <h1>Admin Settings</h1>
+                    <div class="container">
+                        <h3><a href="/guilds/manageGuildRoster/<%= guild._id %>">Manage Guild Roster</a></h3>
+                        <h3><a href="/raids/createRaid/<%= guild._id %>" class="raid">Create Raid</a></h3>
+                        <h3><a href="/dkp/dkpForm/<%= guild._id %>">Manage DKP</a></h3>
+                    </div>
+                    
+                </div>
+                
+            <% } %>
+
         <div class="container full">
                 <div class="top-form officer oborder half">
                     <h1>Members</h2>
-                        <% if (user.isAdmin.join('').includes(guild._id)) { %>
-                            <button><a href="/guilds/manageGuildRoster/<%= guild._id %>">Manage Guild Roster</a></button>
-                        <% } %>
+                        
                         <div class="top-form officer">
                             <h2>Leadership</h2>
                             <ul>
-                                <li>Guild Master</li><li class="<%=guild.guildMaster.class%>"><%= guild.guildMaster.name %></li>
+                                <li>Guild Master</li><li class="<%=guild.guildMaster.class%>"><a href="/characters/characterInfo/<%= guild.guildMaster._id %>"><%= guild.guildMaster.name %></a></li>
                                 <br>
                                 <li>Officers</li>
                                 <% guild.officers.forEach((officer) => { %>
-                                    <li class="<%= officer.class %>"><%= officer.name %></li>
+                                    <li class="<%= officer.class %>"><a href="/characters/characterInfo/<%= officer._id %>"><%= officer.name %></a></li>
                                 <% }) %>
                             </ul>
                         </div>
@@ -38,7 +50,7 @@
                             <h2>Members</h2>
                             <ul>
                                 <% guild.members.forEach((member) => { %>
-                                    <li class="<%= member.class %>"><%= member.name %></li>
+                                    <li class="<%= member.class %>"><a href="/characters/characterInfo/<%= member._id %>"><%= member.name %></a></li>
                                 <% }) %>
                             </ul>
                         </div> 
@@ -47,9 +59,6 @@
         
                 <div class="top-form raid rborder half">
                     <h1>Raids</h1>
-                    <% if (user.isAdmin.join('').includes(guild._id)) { %>
-                        <button><a href="/raids/createRaid/<%= guild._id %>" class="raid">Create Raid</a></button>
-                    <% } %>
                     <% for (let i = guild.raids.length - 1; i > (-1 ||guild.raids.length -6); i--) { %>
                         <div class="top-form raid rborder">
                             <h3><a href="/raids/detail/<%=guild.raids[i]?._id%>"><%= guild.raids[i]?.location %></a></h3>

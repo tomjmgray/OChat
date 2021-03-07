@@ -2,6 +2,103 @@ const express = require('express');
 const router = express.Router();
 const db = require('../models');
 
+
+router.get('/dkpForm/:guildId', (req, res) => {
+    db.Guilds.findById(req.params.guildId).populate(['members', 'guildMaster', 'officers', 'dkpLogs']).exec((err, foundGuild) => {
+        if (err) throw err;
+        const context = {
+            user: req.session.currentUser,
+            guild: foundGuild
+        }
+        res.render('guilds/dkpForm.ejs', context);
+    })
+})
+
+router.post('/dkpForm/:guildId', (req, res) => {
+    const formObj = {
+        guild: req.params.guildId,
+        assignedBy: req.session.currentUser.main._id,
+        raid: null,
+        amount: req.body.amount,
+        description: req.body.description,
+        characters: []
+    };
+
+    if (req.body.characters === 'guild') {
+        db.Guilds.findById(req.params.guildId, (err, foundGuild) => {
+            if (err) throw err;
+            formObj.characters.push(foundGuild.guildMaster);
+            foundGuild.officers.forEach((officer) => {
+                formObj.characters.push(officer);
+            });
+            foundGuild.members.forEach((member) => {
+                formObj.characters.push(member);
+            })
+            db.DKPLogs.create(formObj, (err, createdLog) => {
+                if (err) throw err;
+                db.Guilds.findByIdAndUpdate(createdLog.guild, {
+                    $push: {dkpLogs: createdLog._id}
+                }, (err, updatedGuild) => {
+                    if (err) throw err;
+                    if (req.body.decay === 'on') {
+                        const decayVar = (100 - createdLog.amount) * 0.01
+                        createdLog.characters.forEach((char) => {
+                            db.Characters.findByIdAndUpdate(char, {
+                                $push: {dkpLogs: createdLog._id},
+                                $mul: {dkp: decayVar}
+                            }, (err, updatedCharacter) => {
+                                if (err) throw err;
+                            })
+                        })
+                    } else {
+                        createdLog.characters.forEach((char) => {
+                            db.Characters.findByIdAndUpdate(char, {
+                                $push: {dkpLogs: createdLog._id},
+                                $inc: {dkp: createdLog.amount}
+                            }, (err, updatedCharacter) => {
+                                if (err) throw err;
+                            })
+                        })
+                    }
+                    res.redirect(`/guilds/${updatedGuild._id}`);
+                })
+            })
+        })
+    } else {
+        formObj.characters.push(req.body.characters);
+        db.DKPLogs.create(formObj, (err, createdLog) => {
+            if (err) throw err;
+            db.Guilds.findByIdAndUpdate(createdLog.guild, {
+                $push: {dkpLogs: createdLog._id}
+            }, (err, updatedGuild) => {
+                if (err) throw err;
+                if (req.body.decay === 'on') {
+                    const decayVar = (100 - createdLog.amount) * 0.01
+                    createdLog.characters.forEach((char) => {
+                        db.Characters.findByIdAndUpdate(char, {
+                            $push: {dkpLogs: createdLog._id},
+                            $mul: {dkp: decayVar}
+                        }, (err, updatedCharacter) => {
+                            if (err) throw err;
+                        })
+                    })
+                } else {
+                    createdLog.characters.forEach((char) => {
+                        db.Characters.findByIdAndUpdate(char, {
+                            $push: {dkpLogs: createdLog._id},
+                            $inc: {dkp: createdLog.amount}
+                        }, (err, updatedCharacter) => {
+                            if (err) throw err;
+                        })
+                    })
+                }
+                res.redirect(`/guilds/${req.params.guildId}`);
+            })
+        })
+    }
+})
+
+
 router.post('/newForm', (req, res) => {
     const form = {
         guild: req.body.guild,

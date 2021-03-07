@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('../partials/head') %>
+    <title>Document</title>
+</head>
+<body>
+    <%- include('../partials/header') %>
+    <main class="container party pborder">
+        <div class="form half">
+            <h1 class="<%= character.class %>"><%= character.name %></h1>
+            <h2>Level <%= character.level %> <%= character.race %> <%= character.spec %> <%= character.class %></h2>
+            <h2><%= character.guildRank %> of <a href="guilds/<%= character.guild._id %>"><%= character.guild.name %></a></h2>
+            <h2>DKP: <%= character.dkp %></h2>
+            <p><a href="/characters/dkpHistory/<%= character._id %>"></a></p>
+            <h2>Alts: <% character.user.characters.forEach(char => { %>
+                <% if (char.name !== character.name) { %>
+                <a href="/characters/characterInfo/<%= char._id %>" class="<%= char.class %>"><%= char.name %> </a>
+            <% }}) %></h2>
+        </div>
+        
+    </main>
+</body>
+</html>

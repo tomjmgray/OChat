@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('../partials/head.ejs') %>
+</head>
+<body>
+    <%- include('../partials/header.ejs') %>
+    <main>
+        <div class="container full orborder officer">
+            <div class="form half oborder officer">
+                <h1>Distribute DKP</h1>
+                <form action="/dkp/dkpForm/<%= guild._id %>" method="POST" class="form">
+                    <label for="characters">Award DKP To:</label>
+                    <select name="characters" id="characters">
+                        <option value="guild">Entire Guild</option>
+                        <option value="<%= guild.guildMaster._id %>"><%= guild.guildMaster.name %></option>
+                        <% guild.officers.forEach((officer) => { %>
+                            <option value="<%= officer._id %>"><%= officer.name %></option>
+                        <% }) %>
+                        <% guild.members.forEach((member) => { %>
+                            <option value="<%= member._id %>"><%= member.name %></option>
+                        <% }) %>
+                    </select>
+                    <label for="amount">DKP Awarded</label>
+                    <input type="number" name="amount" value="amount">
+                    <div class="inline">
+                        <label for="decay"><small>Make DKP Awarded a DKP decay percentage? (eg: DKP Awarded: 5 Makes recipients lose 5% of their DKP)</small> </label>
+                        <input type="checkbox" name="decay" id="decay">
+                    </div>
+                    
+                    <label for="description">DKP description</label>
+                    <textarea name="description" id="description" cols="80" rows="5" minlength="1"></textarea>
+                    <button type="submit">Award DKP</button>
+                </form>
+            </div>
+            
+
+        </div>
+    </main>
+</body>
+</html>

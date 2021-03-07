@@ -27,6 +27,7 @@
                         <div class="form party pborder full">
                             <h3 class="<%= user.main.class %>"><%= user.main.name %></h3>
                             <p><%= user.main.spec %> <%=  user.main.class %></p>
+                            <p> DKP: <%= user.main.dkp %></p>
                             <% user.characters.forEach((char) => { %>
                                 <% if (!char.isMain) { %>
                                     <h3 class="<%= char.class %>"><%= char.name %></h3>
