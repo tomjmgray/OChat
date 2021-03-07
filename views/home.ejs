@@ -24,15 +24,21 @@
                     </div>
                     <div class="form party full">
                         <h1>Your Characters</h1>
-                        <div class="form party pborder full">
-                            <h3 class="<%= user.main.class %>"><%= user.main.name %></h3>
-                            <p><%= user.main.spec %> <%=  user.main.class %></p>
-                            <p> DKP: <%= user.main.dkp %></p>
+                        <div class="top-form party pborder full">
+                            <div class="top-form">
+                                <h3 class="<%= user.main.class %>"><%= user.main.name %></h3>
+                                <p><%= user.main.spec %> <%=  user.main.class %></p>
+                                <p> DKP: <%= user.main.dkp %></p>
+                            </div>
+                            
                             <% user.characters.forEach((char) => { %>
                                 <% if (!char.isMain) { %>
-                                    <h3 class="<%= char.class %>"><%= char.name %></h3>
-                                    <p><%= char.spec %> <%= char.class %></p>
-                                    <p>DKP: <%= char.dkp %></p>
+                                    <div class="top-form">
+                                        <h3 class="<%= char.class %>"><%= char.name %></h3>
+                                        <p><%= char.spec %> <%= char.class %></p>
+                                        <p>DKP: <%= char.dkp %></p>
+                                    </div>
+                                    
                             <% }}) %>
                         </div>
                     </div>

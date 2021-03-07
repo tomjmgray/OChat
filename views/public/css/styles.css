@@ -145,12 +145,14 @@ small {
 
 .header-logo {
     font-family: 'LifeCraft';
-    font-size: 75px;
+    font-size: 4em;
     color: var(--officer) !important;
+    margin: 20px 0 0 0;
 }
 
 .header-logo a {
     text-decoration: none !important;
+    
 }
 
 .main-header {
@@ -162,6 +164,7 @@ small {
     color: var(--guild);
     padding: 2.5vw;
     margin: 20px;
+    max-height: 10vh;
 }
 
 main {

@@ -87,11 +87,20 @@ router.get('/:id', (req, res) => {
 router.get('/:id/joinRequest', (req, res) => {
     db.Guilds.findById(req.params.id).populate(['guildMaster', 'joinRequests']).exec((err, foundGuild) => {
         if (err) throw err;
-        db.Users.findById(req.session.currentUser._id).populate('characters').exec((err, populatedUser) => {
+        db.Users.findById(req.session.currentUser._id).populate([
+            {path: 'main', populate: [
+                {path: 'guild', model: 'Guilds'},
+                {path: 'realm', model: 'Realms'}
+            ]},
+            {path: 'characters', populate: [
+                {path: 'guild', model: 'Guilds'},
+                {path: 'realm', model: 'Realms'}
+            ]}
+        ]).exec((err, populatedUser) => {
             if (err) throw err;
             const context = {
                 guild: foundGuild,
-                user: req.session.currentUser
+                user: populatedUser
             };
             res.render('guilds/joinGuildForm', context);
         })
