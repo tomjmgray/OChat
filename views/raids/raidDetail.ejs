@@ -22,20 +22,20 @@
             <div class="container full">
                 <div class="form raid rborder half">
                     <h2>Signed Up</h2>
-                    <ul class="container">
+                    <ul class="big-list">
                         <% raid.signedUp.forEach((char, index) => { %>
                             <li class="<%= char.class %> roster"><%= char.name %> (<%= index + 1 %>)  </li>
                             
                         <% }) %>
                     </ul>
                     <h3>Bench</h3>
-                    <ul>
+                    <ul class="big-list">
                         <% raid.bench.forEach((char, index) => { %>
                             <li class="<%= char.class %> roster"><%= char.name %> (<%= index + 1 %>)</li>
                         <% }) %>
                     </ul>
                     <h3>Tentative</h3>
-                    <ul>
+                    <ul class="big-list">
                         <% raid.tentative.forEach((char, index) => { %>
                             <li class="<%= char.class %> roster"><%= char.name %> (<%= index + 1 %>)</li>
                         <% }) %>
@@ -67,14 +67,14 @@
                                 
                             </div>
                         <br>
-                        <button type="submit">Sign Up</button>
+                        <button type="submit" class="raid">Sign Up</button>
                         
                     </form>
                 </div>
             </div>
             <% if (user.isAdmin.join('').includes(raid.guild._id)) { %>
                 <div class="conatiner">
-                    <button>
+                    <button class="raid">
                         <a href="/raids/manageRaid/<%= raid._id %>">Manage Raid</a>
                     </button>
                 </div>

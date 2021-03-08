@@ -4,6 +4,9 @@ const db = require('../models');
 
 
 router.get('/dkpForm/:guildId', (req, res) => {
+    if (!req.session.currentUser.isAdmin?.includes(req.params.guildId)) {
+        res.redirect(`/guilds/${req.params.guildId}`);
+    }
     db.Guilds.findById(req.params.guildId).populate(['members', 'guildMaster', 'officers', 'dkpLogs']).exec((err, foundGuild) => {
         if (err) throw err;
         const context = {
@@ -56,6 +59,10 @@ router.get('/dkpHistory/:guildId', (req, res) => {
 })
 
 router.post('/dkpForm/:guildId', (req, res) => {
+    if (!req.session.currentUser.isAdmin?.includes(req.params.guildId)) {
+        res.redirect(`/guilds/${req.params.guildId}`);
+    }
+
     const formObj = {
         guild: req.params.guildId,
         assignedBy: req.session.currentUser.main?._id,
@@ -141,6 +148,9 @@ router.post('/dkpForm/:guildId', (req, res) => {
 
 
 router.post('/newForm', (req, res) => {
+    if (!req.session.currentUser.isAdmin?.includes(req.body.guild)) {
+        res.redirect(`/guilds/${req.body.guild}`);
+    }
     const form = {
         guild: req.body.guild,
         assignedBy: req.body.assignedBy,

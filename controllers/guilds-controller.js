@@ -13,6 +13,7 @@ router.get('/join', (req, res) => {
     })
 })
 
+
 router.get('/createGuild', (req, res) => {
     db.Realms.find({}, (err, foundRealms) => {
         if (err) throw err
@@ -79,7 +80,6 @@ router.get('/:id', (req, res) => {
         const sortedArr = membersArr.sort((a, b) => {
             return b.dkp - a.dkp
         })
-        console.log(sortedArr);
         const context = {
             dkpStandings: sortedArr,
             guild: foundGuild,

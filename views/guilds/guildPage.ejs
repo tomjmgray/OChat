@@ -24,7 +24,7 @@
                     <div class="container">
                         <h3><a href="/guilds/manageGuildRoster/<%= guild._id %>">Manage Guild Roster</a></h3>
                         
-                        <h3><a href="/dkp/dkpForm/<%= guild._id %>">Manage DKP</a></h3>
+                        <h3><a href="/dkp/dkpForm/<%= guild._id %>">Distribute DKP</a></h3>
                         <h3><a href="/raids/createRaid/<%= guild._id %>" >Create Raid</a></h3>
                     </div>
                     
@@ -38,7 +38,7 @@
                     <div class="container">
                         <div class="top-form">
                             <ol>
-                                <% for (let i = 0; i < (dkpStandings.length || 10); i++) { %>
+                                <% for (let i = 0; (i < dkpStandings.length && i < 10 ); i++) { %>
                                     <li class="<%= dkpStandings[i].class %>"><%= i + 1 %>. <%= dkpStandings[i].name %> (<%= Math.floor(dkpStandings[i].dkp) %>)</li>
                                 <% } %>    
                             </ol>
@@ -46,7 +46,7 @@
                     <% if (dkpStandings.length > 10) { %>
                         <div class="top-form">
                             <ol>
-                                <% for (let i = 10; i < (dkpStandings.length || 20); i++) { %>
+                                <% for (let i = 10; (i < dkpStandings.length && i < 20); i++) { %>
                                     <li class="<%= dkpStandings[i].class %>"><%= i + 1 %>. <%= dkpStandings[i].name %> (<%= Math.floor(dkpStandings[i].dkp) %>)</li>
                                 <% } %>    
                             </ol>

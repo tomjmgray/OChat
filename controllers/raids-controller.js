@@ -3,6 +3,9 @@ const router = express.Router();
 const db = require('../models');
 
 router.get('/createRaid/:guildId', (req, res) => {
+    if (!req.session.currentUser.isAdmin?.includes(req.params.guildId)) {
+        res.redirect(`/guilds/${req.params.guildId}`);
+    }
     db.Guilds.findById(req.params.guildId).populate(['members', 'guildMaster', 'officers']).exec((err, foundGuild) => {
         if (err) throw err;
         const context = {
@@ -61,6 +64,9 @@ router.post('/addSignup/:raidId', (req, res) => {
 })
 
 router.post('/createRaid/:guildId', (req, res) => {
+    if (!req.session.currentUser.isAdmin?.includes(req.params.guildId)) {
+        res.redirect(`/guilds/${req.params.guildId}`);
+    }
     db.Raids.create(req.body, (err, createdRaid) => {
         if (err) throw err;
         db.Guilds.findByIdAndUpdate(req.params.guildId, {
@@ -78,11 +84,16 @@ router.get('/manageRaid/:raidId', (req, res) => {
         // 'dkpLogs'
     ]).exec((err, foundRaid) => {
         if (err) throw err;
-        const context = {
-            raid: foundRaid,
-            user: req.session.currentUser
-        };
-        res.render('raids/manageRaid', context)
+        console.log('!!!!!!!!!!!!!!!!!!!!', !req.session.currentUser.isAdmin?.join('').includes(foundRaid.guild._id))
+        if (!req.session.currentUser.isAdmin?.join('').includes(foundRaid.guild._id)) {
+            res.redirect(`/guilds/${foundRaid.guild._id}`);
+        } else {
+            const context = {
+                raid: foundRaid,
+                user: req.session.currentUser
+            };
+            res.render('raids/manageRaid', context)
+        }
     })
 })
 
@@ -109,6 +120,18 @@ router.get('/addSignedUpToStaging/:raidId', (req, res) => {
         if (err) throw err;
         db.Raids.findByIdAndUpdate(foundRaid._id, {
             $push: {staging: {$each: foundRaid.signedUp}}
+        }, (err, updatedRaid) => {
+            if (err) throw err;
+            res.redirect(`/raids/manageRaid/${updatedRaid._id}`);
+        })
+    })
+})
+
+router.get('/addOnTimeToStaging/:raidId', (req, res) => {
+    db.Raids.findById(req.params.raidId, (err, foundRaid) => {
+        if (err) throw err;
+        db.Raids.findByIdAndUpdate(foundRaid._id, {
+            $push: {staging: {$each: foundRaid.onTime}}
         }, (err, updatedRaid) => {
             if (err) throw err;
             res.redirect(`/raids/manageRaid/${updatedRaid._id}`);

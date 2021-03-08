@@ -11,47 +11,69 @@
             
             <div class="container full">
                 <div class="rborder raid top-form half">
-                    <h2>Signed Up </h2>
-                    <button><a href="/raids/addSignedUpToStaging/<%=raid._id%>">+ All</a></button>
-                    <ul>
+                    <div class="inline">
+                        <h2>Signed Up </h2>
+                        <button class="raid"><a href="/raids/addSignedUpToStaging/<%=raid._id%>">+ All</a></button>
+                    </div>
+                    <ul class="big-list">
                         <% raid.signedUp.forEach((char, index) => { %>
                             <form action="/raids/addToStaging/<%= raid._id %>" method="POST">
                                 <input type="hidden" name="character" value="<%= char._id %>">
-                                <li class="<%= char.class %>"><%= char.name %>(<%= index + 1%>)<button type="submit">+</button></li>
+                                <li class="<%= char.class %>"><%= char.name %>(<%= index + 1%>)<button type="submit" class="raid">+</button></li>
                             </form>
                         <% }) %>
                     </ul>
-                    <h3>Bench</h3>
-                    <ul>
-                        <% raid.bench.forEach((char, index) => { %>
-                            <form action="/raids/addToStaging/<%= raid._id %>" method="POST">
-                                <input type="hidden" name="character" value="<%= char._id %>">
-                                <li class="<%= char.class %>"><%= char.name %>(<%= index + 1%>) <button type="submit">+</button></li>
-                            </form>
-                        <% }) %>
-                    </ul>
-                    <h3>Tentative</h3>
-                    <ul>
-                        <% raid.tentative.forEach((char, index) => { %>
-                            <form action="/raids/addToStaging/<%= raid._id %>" method="POST">
-                                <input type="hidden" name="character" value="<%= char._id %>">
-                                <li class="<%= char.class %>"><%= char.name %>(<%= index + 1%>) <button type="submit">+</button></li>
-                            </form>
-                        <% }) %>
-                    </ul>
+                    <div class="container">
+                        <div class="top-form">
+                            <h3>Bench</h3>
+                            <ul class="big-list">
+                                <% raid.bench.forEach((char, index) => { %>
+                                    <form action="/raids/addToStaging/<%= raid._id %>" method="POST">
+                                        <input type="hidden" name="character" value="<%= char._id %>">
+                                        <li class="<%= char.class %> inline"><%= char.name %>(<%= index + 1%>) <button type="submit" class="raid">+</button></li>
+                                    </form>
+                                <% }) %>
+                            </ul>
+                        </div>
+                        <div class="top-form">
+                            <h3>Tentative</h3>
+                            <ul class="big-list">
+                                <% raid.tentative.forEach((char, index) => { %>
+                                    <form action="/raids/addToStaging/<%= raid._id %>" method="POST">
+                                        <input type="hidden" name="character" value="<%= char._id %>">
+                                        <li class="<%= char.class %> inline"><%= char.name %>(<%= index + 1%>) <button type="submit" class="raid">+</button></li>
+                                    </form>
+                                <% }) %>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="top-form">
+                        <div class="inline">
+                           <h3>On Time</h3>
+                            <button class="raid"><a href="/raids/addOnTimeToStaging/<%= raid._id %>">+ All</a></button> 
+                        </div>
+                        <ul class="big-list">
+                            <% raid.onTime.forEach((char, index) => { %>
+                                <form action="/raids/addToStaging/<%= raid._id %>" method="POST">
+                                    <input type="hidden" name="character" value="<%= char._id %>">
+                                    <li class="<%= char.class %>"><%= char.name %>(<%= index + 1%>)<button type="submit" class="raid">+</button></li>
+                                </form>
+                            <% }) %>
+                        </ul>
+                    </div>
                 </div>
                 <div class="rborder raid top-form half">
                     <h2>Staging Area</h2>
                     <div class="inline">
-                        <button><a href="/raids/clearStaging/<%= raid._id %>">Clear</a></button>
-                        <button><a href="/raids/markStagingOnTime/<%= raid._id %>">Mark On Time</a></button>
-                        <button><a href="/raids/markStagingCompleted/<%= raid._id %>">Mark Finished</a></button>
+                        <button class="raid"><a href="/raids/clearStaging/<%= raid._id %>">Clear</a></button>
+                        <button class="raid"><a href="/raids/markStagingOnTime/<%= raid._id %>">Mark On Time</a></button>
+                        <button class="raid"><a href="/raids/markStagingCompleted/<%= raid._id %>">Mark Finished</a></button>
                     </div>
                     <ul>
                         <% raid.staging.forEach((char) => { %>
                             <form action="/raids/removeFromStaging/<%= raid._id %>" method="POST">
                                 <input type="hidden" name="character" value="<%= char._id %>">
-                                <li class="<%= char.class %>"><%= char.name %> <button type="submit">-</button></li>
+                                <li class="<%= char.class %>"><%= char.name %> <button type="submit" class="raid">-</button></li>
                             </form>
                         <% }) %>
                     </ul>
@@ -90,7 +112,7 @@
                         
                         
                         <br>
-                        <button type="submit">Award DKP</button>
+                        <button type="submit" class="raid">Award DKP</button>
                     </form>
                 </div>
             </div>

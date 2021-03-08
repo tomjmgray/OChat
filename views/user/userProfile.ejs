@@ -31,7 +31,7 @@
                             <% } else { %>
                                 <p>You haven't joined a guild for the time being. Click <a href="/guilds/join">here</a> to browse guilds and send a request to join!</p>
                             <% } %>
-                            <p>DKP: <%= user.characters[i].dkp %></p>
+                            <p>DKP: <%= Math.floor(user.characters[i].dkp) %></p>
                             <button><a href="/characters/editCharacter/<%= user.characters[i]._id %>">Edit Character</a></button>
                         </div>
                         

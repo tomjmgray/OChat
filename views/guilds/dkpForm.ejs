@@ -5,9 +5,9 @@
 </head>
 <body>
     <%- include('../partials/header.ejs') %>
-    <main>
-        <div class="container full orborder officer">
-            <div class="form half oborder officer">
+    <main class=" wborder whisper">
+        <div class="container full">
+            <div class="form half">
                 <h1>Distribute DKP</h1>
                 <form action="/dkp/dkpForm/<%= guild._id %>" method="POST" class="form">
                     <label for="characters">Award DKP To:</label>
@@ -30,7 +30,7 @@
                     
                     <label for="description">DKP description</label>
                     <textarea name="description" id="description" cols="80" rows="5" minlength="1"></textarea>
-                    <button type="submit">Award DKP</button>
+                    <button type="submit" class="whisper">Award DKP</button>
                 </form>
             </div>
             
