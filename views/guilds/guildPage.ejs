@@ -40,7 +40,7 @@
                         <% if (guild.posts[i].postType === 'Announcement') %>
                         <div class="top-form genborder">
                             <h3><%= guild.posts[i].title %></h3>
-                            <% if (user.main._id == guild.posts[i].author._id) { %>
+                            <% if (user.main?._id == guild.posts[i].author._id) { %>
                                 <div class="inline">
                                     <button><a href="/posts/editPost/<%= guild.posts[i]._id %>" class="general">Edit Post</a></button>
                                     <button><a href="/posts/deletePost/<%= guild.posts[i]._id %>" class="general">Delete Post</a></button>
