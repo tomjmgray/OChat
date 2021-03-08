@@ -14,7 +14,7 @@
             <% user.characters.forEach((char, index) => { %>
                 <% if (!guild.joinRequests.join('').includes(char._id)) { %>
                     <% if (char.guild?._id === undefined) { %>
-                        <form action="/guilds/<%= guild._id %>/joinRequest" method="POST">
+                        <form action="/guilds/joinRequest/<%= guild._id %>" method="POST">
                             <input type="hidden" value="<%= char._id %>" name="charId">
                             <label for="charId"><%= char.name %></label>
                             <button type="submit">Request Invite</button>

@@ -15,7 +15,7 @@
                 <div class="container">
                     <p><%= guild.description %></p>
                 </div>
-                <p>Want to join <%= guild.name %>? Send a join request <button><a href="/guilds/<%= guild._id %>/joinRequest">Join</a></button></p>
+                <p>Want to join <%= guild.name %>? Send a join request <button><a href="/guilds/joinRequest/<%= guild._id %>">Join</a></button></p>
             </div>
         
             <% if (user.isAdmin.join('').includes(guild._id)) { %>

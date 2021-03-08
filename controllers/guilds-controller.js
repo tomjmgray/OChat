@@ -110,7 +110,7 @@ router.get('/:id', (req, res) => {
     })
 })
 
-router.get('/:id/joinRequest', (req, res) => {
+router.get('/joinRequest/:id', (req, res) => {
     db.Guilds.findById(req.params.id).populate(['guildMaster', 'joinRequests']).exec((err, foundGuild) => {
         if (err) throw err;
         db.Users.findById(req.session.currentUser._id).populate([
@@ -133,12 +133,11 @@ router.get('/:id/joinRequest', (req, res) => {
     })
 })
 
-router.post('/:id/joinRequest', (req, res) => {
+router.post('/joinRequest/:id', (req, res) => {
     console.log(req.body)
     db.Guilds.findByIdAndUpdate(req.params.id, {$push: {joinRequests: req.body.charId}}, (err, updatedGuild) => {
         if (err) throw err;
-        console.log(updatedGuild.joinRequests);
-        res.redirect(`/guilds/${req.params.id}`)
+        res.redirect(`/users/profile`)
     });
     
 })

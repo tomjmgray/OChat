@@ -14,7 +14,7 @@
                     <li class="form">
                         <a href="/guilds/<%= guild._id %>"><h3><%= guild.name %></h3></a>
                         <br>
-                        <button><a href="/guilds/<%= guild._id %>/joinRequest">Join <%= guild.name %></a></button>
+                        <button><a href="/guilds/joinRequest/<%= guild._id %>">Join <%= guild.name %></a></button>
                     </li>
                     
                 <% }) %>
