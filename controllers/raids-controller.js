@@ -38,6 +38,9 @@ router.get('/detail/:raidId', (req, res) => {
 router.post('/addSignup/:raidId', (req, res) => {
     if (req.body.tentative === 'on') {
         db.Raids.findByIdAndUpdate(req.params.raidId, {
+            $pull: {tentative: req.body.character},
+            $pull: {bench: req.body.character},
+            $pull: {signedUp: req.body.character},
             $push: {tentative: req.body.character}
         }, (err, updatedRaid) => {
             if (err) throw err;
@@ -46,6 +49,9 @@ router.post('/addSignup/:raidId', (req, res) => {
         })
     } else if (req.body.bench === 'on') {
         db.Raids.findByIdAndUpdate(req.params.raidId, {
+            $pull: {tentative: req.body.character},
+            $pull: {bench: req.body.character},
+            $pull: {signedUp: req.body.character},
             $push: {bench: req.body.character}
         }, (err, updatedRaid) => {
             if (err) throw err;
@@ -54,6 +60,9 @@ router.post('/addSignup/:raidId', (req, res) => {
         })
     } else {
         db.Raids.findByIdAndUpdate(req.params.raidId, {
+            $pull: {tentative: req.body.character},
+            $pull: {bench: req.body.character},
+            $pull: {signedUp: req.body.character},
             $push: {signedUp: req.body.character}
         }, (err, updatedRaid) => {
             if (err) throw err;
@@ -84,7 +93,6 @@ router.get('/manageRaid/:raidId', (req, res) => {
         // 'dkpLogs'
     ]).exec((err, foundRaid) => {
         if (err) throw err;
-        console.log('!!!!!!!!!!!!!!!!!!!!', !req.session.currentUser.isAdmin?.join('').includes(foundRaid.guild._id))
         if (!req.session.currentUser.isAdmin?.join('').includes(foundRaid.guild._id)) {
             res.redirect(`/guilds/${foundRaid.guild._id}`);
         } else {
