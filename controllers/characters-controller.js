@@ -247,4 +247,25 @@ router.get('/characterInfo/:charId', (req, res) => {
     })
 })
 
+router.get('/dkpHistoryChar/:charId', (req, res) => {
+    db.Characters.findById(req.params.charId).populate([
+        'guild', 'realm', {
+            path: 'dkpLogs',
+            populate: [
+                {path: 'guild', model: 'Guilds'},
+                {path: 'characters', models: 'Characters'},
+                {path: 'assignedBy', models: 'Characters'},
+                {path: 'raid', models: 'Raids'}
+            ]
+        },
+    ]).exec((err, foundChar) => {
+        if (err) throw err;
+        const context = {
+            character: foundChar,
+            user: req.session.currentUser
+        };
+        res.render('characters/dkpHistoryChar', context);
+    })
+})
+
 module.exports = router;
