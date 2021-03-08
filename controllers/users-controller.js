@@ -46,8 +46,7 @@ router.post('/login', (req, res) => {
         ]}
     ]
     ).exec((err, foundUser) => {
-        if (err) throw err;
-        console.log(foundUser);
+        if (err) throw err; 
         if (!foundUser) {
             console.log('Improper login credentials, please try again');
 
@@ -58,8 +57,6 @@ router.post('/login', (req, res) => {
             if (resolved) {
                 console.log('Login Succesful'),
                 req.session.currentUser = foundUser;
-                console.log('**********', foundUser);
-                console.log('!!!!!!!!!!!!', req.session.currentUser);
                 res.redirect('/users/profile')
             } else {
                 // alert('Improper login credentials, please try again');

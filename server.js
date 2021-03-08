@@ -1,3 +1,4 @@
+require('dotenv').config()
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
@@ -63,7 +64,6 @@ app.get('/home', (req, res) => {
 app.post('/register', (req, res) => {
     db.Users.find({username: req.body.username}, (err, foundUser) => {
         if (err) throw err;
-        console.log(foundUser);
         if (foundUser.length > 0) {
             return res.redirect('/loginErr');
         }
