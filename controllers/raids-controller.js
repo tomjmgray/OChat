@@ -38,7 +38,7 @@ router.get('/detail/:raidId', (req, res) => {
 router.post('/addSignup/:raidId', (req, res) => {
     if (req.body.tentative === 'on') {
         db.Raids.findByIdAndUpdate(req.params.raidId, {
-            $pull: {bench: req.body.character, signedUp: req.body.characters},
+            $pull: {bench: req.body.character, signedUp: req.body.character},
             $push: {tentative: req.body.character}
         }, (err, updatedRaid) => {
             if (err) throw err;
@@ -56,7 +56,7 @@ router.post('/addSignup/:raidId', (req, res) => {
         })
     } else {
         db.Raids.findByIdAndUpdate(req.params.raidId, {
-            $pull: {tentative: req.body.character, bench: req.body.characters},
+            $pull: {tentative: req.body.character, bench: req.body.character},
             $push: {signedUp: req.body.character}
         }, (err, updatedRaid) => {
             if (err) throw err;
