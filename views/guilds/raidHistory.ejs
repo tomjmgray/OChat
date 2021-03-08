@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('../partials/head') %>
+    <title>Document</title>
+</head>
+<body>
+    <%- include('../partials/header.ejs') %>
+
+    <main class="raid rborder full">
+        <div class="top-form half">
+            <h1>Raid History for <%= guild.name %></h1>
+            <ul>
+                <% raids.forEach((raid) => { %>
+                    <div class="top-form rborder">
+                        <h3><a href="/raids/detail/<%= raid._id %>"><%= raid.location %></a></h3>
+                        <p><%= raid.date %></p>
+                        <p>Spots Available: <%= raid.raidSize - raid.signedUp.length %></p>
+                        <% if (user.isAdmin.join('').includes(guild._id)) { %>
+                            <button class="raid-warning"><a href="/raids/manageRaid/<%= raid._id %>">Manage Raid</a></button>
+                        <% } %>
+                    </div>
+                <% }) %>
+            </ul>
+        </div>
+        
+    </main>
+</body>
+</html>

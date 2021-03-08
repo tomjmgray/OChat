@@ -58,8 +58,8 @@
                 
         
                 <div class="top-form raid rborder half">
-                    <h1>Raids</h1>
-                    <% for (let i = guild.raids.length - 1; i > (-1 ||guild.raids.length -6); i--) { %>
+                    <h1><a href="/guilds/raidHistory/<%= guild._id %>">Raids</a></h1>
+                    <% for (let i = guild.raids.length - 1; (i > -1 && i > guild.raids.length - 6); i--) { %>
                         <div class="top-form raid rborder">
                             <h3><a href="/raids/detail/<%=guild.raids[i]?._id%>"><%= guild.raids[i]?.location %></a></h3>
                             <p><%= guild.raids[i]?.date %></p>    

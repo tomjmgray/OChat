@@ -68,7 +68,24 @@ router.get('/manageGuildRoster/:id', (req, res) => {
     })
 })
 
-
+router.get('/raidHistory/:guildId', (req, res) => {
+    db.Guilds.findById(req.params.guildId).populate([
+        'raids', 'guildMaster', 'officers', 'members', 'realm',    
+    ]).exec((err, foundGuild) => {
+        if (err) throw err;
+        const sortedRaids = foundGuild.raids.sort((a, b) => {
+            let da = new Date(a.date);
+            let db = new Date(b.date);
+            return db - da;
+        })
+        const context = {
+            guild: foundGuild,
+            user: req.session.currentUser,
+            raids: sortedRaids
+        }
+        res.render('guilds/raidHistory', context);
+    })
+})
 
 router.get('/:id', (req, res) => {
     db.Guilds.findById(req.params.id).populate(['members', 'guildMaster', 'officers', 'realm', 'raids']
