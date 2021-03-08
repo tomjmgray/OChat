@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('../partials/head.ejs') %>
+</head>
+<body>
+    <%- include('../partials/header.ejs') %>
+    <main class="container general genborder full">
+        <div class="top-form half">
+            <h1>Create Announcement</h1>
+            <form action="/posts/newPost/<%= guild._id %>" method="POST" class="top-form">
+                <input type="hidden" name="author" value="<%= user.main._id %>">
+                <input type="hidden" name="guild" value="<%= guild._id %>">
+                <input type="hidden" name="postType" value="Announcement">
+                <label for="title">Title</label>
+                <input type="text" name="title" id="title">
+                <br>
+                <label for="message">Message</label>
+                <br>
+                <textarea name="message" id="message" cols="80" rows="5"></textarea>
+                <br>
+                <button type="submit">Create Announcement</button>
+            </form>
+        </div>
+    </main>
+
+</body>
+</html>

@@ -88,7 +88,10 @@ router.get('/raidHistory/:guildId', (req, res) => {
 })
 
 router.get('/:id', (req, res) => {
-    db.Guilds.findById(req.params.id).populate(['members', 'guildMaster', 'officers', 'realm', 'raids']
+    db.Guilds.findById(req.params.id).populate(['members', 'guildMaster', 'officers', 'realm', 'raids', {path: 'posts', populate: [
+        {path: 'author', models: 'Characters'},
+        {path: 'comments', models: 'Posts'}
+    ]}]
     ).exec((err, foundGuild) => {
         if (err) throw err;
         const gmArr = [foundGuild.guildMaster];

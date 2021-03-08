@@ -283,6 +283,14 @@ li {
     color: var(--whisper);
 }
 
+.general {
+    color: var(--general);
+}
+
+.genborder {
+    border: 3px solid var(--general);
+}
+
 .login {
     border: 3px solid var(--party)
 }

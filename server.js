@@ -13,7 +13,8 @@ const usersController = require('./controllers/users-controller.js');
 const charactersController = require('./controllers/characters-controller.js');
 const guildsController = require('./controllers/guilds-controller');
 const raidsController = require('./controllers/raids-controller.js');
-const dkpController = require('./controllers/dkp-controller.js')
+const dkpController = require('./controllers/dkp-controller.js');
+const postController = require('./controllers/post-controller.js');
 
 app.use(express.static('./views/public'));
 app.use(bodyParser.urlencoded({extended: false}));
@@ -32,6 +33,7 @@ app.use('/characters', charactersController);
 app.use('/guilds', guildsController);
 app.use('/raids', raidsController);
 app.use('/dkp', dkpController);
+app.use('/posts', postController);
 
 app.get('/', (req, res) => {
     res.render('landing.ejs');
