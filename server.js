@@ -42,7 +42,7 @@ app.get('/loginErr', (req, res) => {
 
 app.get('/home', (req, res) => {
     const user = req.session.currentUser;
-    db.Guilds.findById(user.main.guild).populate([
+    db.Guilds.findById(user.main?.guild).populate([
             'members',
             'guildMaster',
             'officers',

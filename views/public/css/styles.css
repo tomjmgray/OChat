@@ -275,6 +275,10 @@ li {
     color: var(--officer);
 }
 
+.whisper {
+    color: var(--whisper);
+}
+
 .login {
     border: 3px solid var(--party)
 }
@@ -307,6 +311,11 @@ li {
     padding: 10px;
 }
 
+.wborder {
+    border: 3px solid var(--whisper);
+    padding: 10px;
+}
+
 .inline {
     display: inline-flex;
     justify-content: space-between;
@@ -327,4 +336,15 @@ li {
 
 .full {
     width: 95%;
+}
+
+th {
+    background-color: var(--whisper);
+    color: black;
+    border: 2px solid var(--whisper);
+}
+
+
+td {
+    border: 2px solid var(--whisper);
 }

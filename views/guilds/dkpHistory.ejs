@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('../partials/head') %>
+    <title>Document</title>
+</head>
+<body>
+    <%- include('../partials/header.ejs') %>
+    <main class="wborder full">
+        <div class="top-form whisper full">
+            <h1>DKP Log History for <%= guild.name %></h1>
+            <table>
+                <tr>
+                    <th>Characters Assigned Points</th>
+                    <th>Amount</th>
+                    <th>Description</th>
+                    <th>Assigned By</th>
+                </tr>
+                <% guild.dkpLogs.forEach((log) => { %>
+                    <tr>
+                        <td><% log.characters.forEach((char) => { %>
+                                <%= char.name %> 
+                            <% }) %>
+                        </td>
+                        <td><%= log.amount %></td>
+                        <td><%= log.description %></td>
+                        <td><%= log.assignedBy.name %></td>
+                    </tr>
+                <% }) %>
+            </table>
+        </div>
+    </main>
+</body>
+</html>

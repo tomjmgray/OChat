@@ -11,13 +11,13 @@
             <h1>Home</h1>
                 <div class="container full">
                     <div class="form full">
-                        <h1><a href="/guilds/<%= guild._id %>"><%= guild.name %></a></h1>
+                        <h1><a href="/guilds/<%= guild?._id %>"><%= guild?.name %></a></h1>
                         <div class="form rborder raid full">
                             <h2>Upcoming Raids</h2>
-                        <% for (let i = guild.raids.length - 1; i > ( -1 || guild.raids.length - 4); i--) { %>
+                        <% for (let i = guild?.raids.length - 1; i > ( -1 || guild?.raids.length - 4); i--) { %>
                             <div class="form raid">
-                                <h3><a href="/raids/detail/<%= guild.raids[i]?._id %>"><%= guild.raids[i]?.location %></a></h3>
-                                <p><%= guild.raids[i]?.date %></p>
+                                <h3><a href="/raids/detail/<%= guild?.raids[i]?._id %>"><%= guild?.raids[i]?.location %></a></h3>
+                                <p><%= guild?.raids[i]?.date %></p>
                             </div>
                         <% } %>
                         </div>
@@ -26,9 +26,9 @@
                         <h1>Your Characters</h1>
                         <div class="top-form party pborder full">
                             <div class="top-form">
-                                <h3 class="<%= user.main.class %>"><%= user.main.name %></h3>
-                                <p><%= user.main.spec %> <%=  user.main.class %></p>
-                                <p> DKP: <%= user.main.dkp %></p>
+                                <h3 class="<%= user.main?.class %>"><%= user.main?.name %></h3>
+                                <p><%= user.main?.spec %> <%=  user.main?.class %></p>
+                                <p> DKP: <%= user.main?.dkp %></p>
                             </div>
                             
                             <% user.characters.forEach((char) => { %>

@@ -65,7 +65,7 @@
                     <form action="/dkp/newForm" class="top-form" method="POST">
                         <input type="hidden" value="<%= raid._id %>" name="raid">
                         <input type="hidden" value="<%= raid.guild._id %>" name="guild">
-                        <input type="hidden" value="<%= user.main._id %>" name="assignedBy">
+                        <input type="hidden" value="<%= user.main?._id %>" name="assignedBy">
                         <div class="container">
                             <label for="amount">Amount Awarded</label>
                             <input type="number" required name="amount" id="amount">

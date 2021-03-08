@@ -14,10 +14,51 @@ router.get('/dkpForm/:guildId', (req, res) => {
     })
 })
 
+router.get('/standings/:id', (req, res) => {
+    db.Guilds.findById(req.params.id).populate(['members', 'guildMaster', 'officers', 'realm', 'raids']
+    ).exec((err, foundGuild) => {
+        if (err) throw err;
+        const gmArr = [foundGuild.guildMaster];
+        const officersArr = gmArr.concat(foundGuild.officers);
+        const membersArr = officersArr.concat(foundGuild.members);
+        const sortedArr = membersArr.sort((a, b) => {
+            return b.dkp - a.dkp
+        })
+        const context = {
+            dkpStandings: sortedArr,
+            guild: foundGuild,
+            user: req.session.currentUser
+        }
+        
+        res.render('guilds/dkpStandings', context);
+    })
+})
+
+router.get('/dkpHistory/:guildId', (req, res) => {
+    db.Guilds.findById(req.params.guildId).populate([
+        {
+            path: 'dkpLogs',
+            populate: [
+                {path: 'guild', model: 'Guilds'},
+                {path: 'characters', models: 'Characters'},
+                {path: 'assignedBy', models: 'Characters'},
+                {path: 'raid', models: 'Raids'}
+            ]
+        }, 'members', 'guildMaster', 'officers'
+    ]).exec((err, foundGuild) => {
+        if (err) throw err;
+        const context = {
+            guild: foundGuild,
+            user: req.session.currentUser
+        }
+        res.render('guilds/dkpHistory', context);
+    })
+})
+
 router.post('/dkpForm/:guildId', (req, res) => {
     const formObj = {
         guild: req.params.guildId,
-        assignedBy: req.session.currentUser.main._id,
+        assignedBy: req.session.currentUser.main?._id,
         raid: null,
         amount: req.body.amount,
         description: req.body.description,

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('../partials/head') %>
+    <title>Document</title>
+</head>
+<body>
+    <%- include('../partials/header.ejs') %>
+    <main class="wborder full">
+        <div class="top-form whisper full">
+            <h1>DKP Standings for <%= guild.name %></h1>
+            <h4><a href="/dkp/dkpHistory/<%= guild._id %>">View full DKP Logs for <%= guild.name %></a></h4>
+            <ol>
+                <% for (let i = 0; i < dkpStandings.length; i++) { %>
+                    <li class="<%= dkpStandings[i].class %>"><%= i + 1 %>.
+                        <a href="/characters/characterInfo/<%= dkpStandings[i]._id %>">
+                             <%= dkpStandings[i].name %> 
+                        </a>(<%= Math.floor(dkpStandings[i].dkp) %>)</li>
+                <% } %>    
+            </ol>
+        </div>
+    </main>
+</body>
+</html>
