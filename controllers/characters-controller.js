@@ -5,9 +5,20 @@ const db = require('../models');
 router.get('/new', (req, res) => {
     db.Realms.find({}, (err, foundRealms) => {
         if (err) throw err;
+        const sortedRealms = foundRealms.sort((a, b) => {
+            const aname = a.name;
+            const bname = b.name;
+            let comparison = 0;
+            if (aname > bname) {
+                comparison = 1;
+            } else if (bname > aname) {
+                comparison = -1
+            }
+            return comparison
+        })
         const context = {
             user: req.session.currentUser,
-            realms: foundRealms,
+            realms: sortedRealms,
         }
         res.render('characters/createCharacter.ejs', context);
     })
@@ -62,10 +73,21 @@ router.get('/editCharacter/:id', (req, res) => {
         if (err) throw err;
         db.Realms.find({}, (err, foundRealms) => {
             if (err) throw err;
+            const sortedRealms = foundRealms.sort((a, b) => {
+                const aname = a.name;
+                const bname = b.name;
+                let comparison = 0;
+                if (aname > bname) {
+                    comparison = 1;
+                } else if (bname > aname) {
+                    comparison = -1
+                }
+                return comparison
+            })
             const context = {
                 user: req.session.currentUser,
                 character: foundCharacter,
-                realms: foundRealms
+                realms: sortedRealms
             }
             res.render('characters/editCharacter.ejs', context);
         })
@@ -190,10 +212,6 @@ router.put('/editCharacter/:id', (req, res) => {
         if (updatedCharacter.isMain === true) {
             db.Users.findByIdAndUpdate(req.session.currentUser._id, {main: updatedCharacter._id}, {upsert: true}, (err, updatedUser) => {
                 if (err) throw err;
-                console.log(updatedUser);
-                // req.session.reload((err) => {
-                //     req.session.currentUser = updatedUser;   
-                // })
                 
                 res.redirect('/users/profile');
             })

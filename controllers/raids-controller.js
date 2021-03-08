@@ -38,9 +38,7 @@ router.get('/detail/:raidId', (req, res) => {
 router.post('/addSignup/:raidId', (req, res) => {
     if (req.body.tentative === 'on') {
         db.Raids.findByIdAndUpdate(req.params.raidId, {
-            $pull: {tentative: req.body.character},
-            $pull: {bench: req.body.character},
-            $pull: {signedUp: req.body.character},
+            $pull: {bench: req.body.character, signedUp: req.body.characters},
             $push: {tentative: req.body.character}
         }, (err, updatedRaid) => {
             if (err) throw err;
@@ -49,9 +47,7 @@ router.post('/addSignup/:raidId', (req, res) => {
         })
     } else if (req.body.bench === 'on') {
         db.Raids.findByIdAndUpdate(req.params.raidId, {
-            $pull: {tentative: req.body.character},
-            $pull: {bench: req.body.character},
-            $pull: {signedUp: req.body.character},
+            $pull: {tentative: req.body.character, signedUp: req.body.character},
             $push: {bench: req.body.character}
         }, (err, updatedRaid) => {
             if (err) throw err;
@@ -60,9 +56,7 @@ router.post('/addSignup/:raidId', (req, res) => {
         })
     } else {
         db.Raids.findByIdAndUpdate(req.params.raidId, {
-            $pull: {tentative: req.body.character},
-            $pull: {bench: req.body.character},
-            $pull: {signedUp: req.body.character},
+            $pull: {tentative: req.body.character, bench: req.body.characters},
             $push: {signedUp: req.body.character}
         }, (err, updatedRaid) => {
             if (err) throw err;
@@ -176,6 +170,18 @@ router.get('/markStagingCompleted/:raidId', (req, res) => {
         }, (err, updatedRaid) => {
             if (err) throw err;
             res.redirect(`/raids/manageRaid/${updatedRaid._id}`)
+        })
+    })
+})
+
+router.get('/cancelRaid/:raidId', (req, res) => {
+    db.Raids.findByIdAndDelete(req.params.raidId, (err, deletedRaid) => {
+        if (err) throw err;
+        db.Guilds.findByIdAndUpdate(deletedRaid.guild, {
+            $pull: {raids: deletedRaid._id}
+        }, (err, updatedGuild) => {
+            if (err) throw err;
+            res.redirect(`/guilds/${updatedGuild._id}`)
         })
     })
 })
