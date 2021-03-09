@@ -70,7 +70,14 @@ router.post('/createRaid/:guildId', (req, res) => {
     if (!req.session.currentUser.isAdmin?.includes(req.params.guildId)) {
         res.redirect(`/guilds/${req.params.guildId}`);
     }
-    db.Raids.create(req.body, (err, createdRaid) => {
+    const raidForm = {
+        guild: req.body.guild,
+        date: req.body.date,
+        lootStructure: req.body?.lootStructure,
+        location: req.body.location,
+        raidSize: req.body.raidSize,
+    }
+    db.Raids.create(raidForm, (err, createdRaid) => {
         if (err) throw err;
         db.Guilds.findByIdAndUpdate(req.params.guildId, {
             $push: {raids: createdRaid._id}
