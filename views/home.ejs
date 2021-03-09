@@ -10,9 +10,9 @@
         <div class="form full">
             <h1>Home</h1>
                 <div class="container full">
-                    <div class="form full">
+                    <div class="top-form full">
                         <h1><a href="/guilds/<%= guild?._id %>"><%= guild?.name %></a></h1>
-                        <div class="form rborder raid full">
+                        <div class="top-form rborder raid full">
                             <h2>Upcoming Raids</h2>
                         <% for (let i = guild?.raids.length - 1; i > ( -1 || guild?.raids.length - 4); i--) { %>
                             <div class="form raid">

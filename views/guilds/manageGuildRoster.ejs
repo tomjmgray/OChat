@@ -52,7 +52,7 @@
                     
                 </ul>
             </div>
-            <div class="form oborder officer">
+            <div class="top-form oborder officer">
                 <h1>Manage Members</h1>
                 <div class="top-form">
                     
@@ -89,17 +89,17 @@
                     </div>
                     <div class="top-form">
                             <h3>Members</h3>
-                            <form class="top-form">
+                            <ul class="top-form">
                                 <% guild.members.forEach(member => { %>
-                                    <ul class="inline">
+                                    
                                         <li class="<%= member.class %>"><%= member.name %>
                                         <button><a href="/characters/gkickMember/<%= member._id %>">GKick</a></button>
                                         <button><a href="/characters/promoteCharacter/<%= member._id %>">Promote</a></button>
                                         </li>
-                                    </ul>
+                                    
                                     
                                 <% }) %>
-                                </top>
+                            </ul>
                     </div>
                 </div>
             </div>

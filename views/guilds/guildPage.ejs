@@ -8,7 +8,7 @@
     <%- include('../partials/header.ejs') %>
     <main>
             
-            <div class="form gborder full">
+            <div class="top-form gborder">
                 <div class="container">
                     <h1><%= guild.name %></h1>
                 </div>
@@ -19,7 +19,7 @@
             </div>
         
             <% if (user.isAdmin.join('').includes(guild._id)) { %>
-                <div class="form plborder full party-leader">
+                <div class="top-form plborder party-leader">
                     <h1>Admin Settings</h1>
                     <div class="container">
                         <h3><a href="/guilds/manageGuildRoster/<%= guild._id %>">Manage Guild Roster</a></h3>
@@ -90,7 +90,7 @@
                      
                 </div>
             </div>
-            <div class="form half officer oborder">    
+            <div class="top-form half officer oborder">    
                 <h1>Members</h2>
                 <div class="container">
                     <div class="top-form officer half">
