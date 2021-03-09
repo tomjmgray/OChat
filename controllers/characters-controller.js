@@ -210,7 +210,7 @@ router.put('/editCharacter/:id', (req, res) => {
         if (err) throw err;
         console.log(updatedCharacter);
         if (updatedCharacter.isMain === true) {
-            db.Users.findByIdAndUpdate(req.session.currentUser._id, {main: updatedCharacter._id}, {upsert: true}, (err, updatedUser) => {
+            db.Users.findByIdAndUpdate(req.session.currentUser._id, {$set: {main: updatedCharacter._id}}, (err, updatedUser) => {
                 if (err) throw err;
                 
                 res.redirect('/users/profile');
