@@ -10,7 +10,7 @@ const raidSchema = new Schema({
     bench: [{type: Schema.Types.ObjectId, ref: 'Characters', }],
     onTime: [{type: Schema.Types.ObjectId, ref: 'Characters', }],
     completed: [{type: Schema.Types.ObjectId, ref: 'Characters', }],
-    dkpLogs: [{type: Schema.Types.ObjectId, ref: 'DKPLogs'}],
+    dkpLogs: [{type: Schema.Types.ObjectId, ref: 'DKPLogs', }],
     location: {type: String, required: true},
     raidSize: {type: Number},
     staging: [{type: Schema.Types.ObjectId, ref: 'Characters', }],

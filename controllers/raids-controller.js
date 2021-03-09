@@ -76,7 +76,15 @@ router.post('/createRaid/:guildId', (req, res) => {
         lootStructure: req.body?.lootStructure,
         location: req.body.location,
         raidSize: req.body.raidSize,
+        signedUp: [],
+        tentative: [],
+        bench: [],
+        onTime: [],
+        completed: [],
+        staging: [],
+        dkpLogs: [],
     }
+    console.log(raidForm);
     db.Raids.create(raidForm, (err, createdRaid) => {
         if (err) throw err;
         db.Guilds.findByIdAndUpdate(req.params.guildId, {
