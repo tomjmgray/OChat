@@ -91,10 +91,10 @@
                         <input type="hidden" value="<%= user.main?._id %>" name="assignedBy">
                         <div class="container">
                             <label for="amount">Amount Awarded</label>
-                            <input type="number" required name="amount" id="amount">
+                            <input type="number" required name="amount" id="amount"  required>
                             <br>
                             <label for="characters">Awarded To:</label>
-                            <select name="characters" id="characters">
+                            <select name="characters" id="characters"  required>
                                 <option value="staging">Staging Area</option>
                                 <option value="bench">Bench</option>
                                 <option value="completed">Completed</option>
@@ -106,7 +106,7 @@
                         <br>
                         <div class="container">
                             <label for="description">Description</label>
-                            <textarea name="description" id="description" cols="80" rows="5" minlength="1"></textarea>
+                            <textarea name="description" id="description" cols="80" rows="5" minlength="1"  required></textarea>
                             <br>
                         </div>
                         

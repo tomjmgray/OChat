@@ -22,14 +22,14 @@
                         <% }) %>
                     </select>
                     <label for="amount">DKP Awarded</label>
-                    <input type="number" name="amount" value="amount">
+                    <input type="number" name="amount" value="amount" required>
                     <div class="inline">
                         <label for="decay"><small>Make DKP Awarded a DKP decay percentage? (eg: DKP Awarded: 5 Makes recipients lose 5% of their DKP)</small> </label>
                         <input type="checkbox" name="decay" id="decay">
                     </div>
                     
                     <label for="description">DKP description</label>
-                    <textarea name="description" id="description" cols="80" rows="5" minlength="1"></textarea>
+                    <textarea name="description" id="description" cols="80" rows="5" minlength="1" required></textarea>
                     <button type="submit" class="whisper">Award DKP</button>
                 </form>
             </div>

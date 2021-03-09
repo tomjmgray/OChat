@@ -22,11 +22,11 @@
             <div class=inline>
                 <div class="form">
                     <label for="name">Guild Name</label>
-                    <input type="text" name="name" id="name">
+                    <input type="text" name="name" id="name"  required>
                 </div>
                 <div class="form">
                     <label for="realm">Realm</label>
-                    <select name="realm" id="realm">
+                    <select name="realm" id="realm"  required>
                         <% for (let i = 0; i < realms.length; i++) { %>
                             <option value=<%= realms[i]._id %>><%= realms[i].name %></option>
                         <% } %>
@@ -39,7 +39,7 @@
             <br>
             <label for="description">Please provide a brief description of your guild here:</label>
             <br>
-            <textarea name="description" id="description" cols="50" rows="30"></textarea>
+            <textarea name="description" id="description" cols="50" rows="30" required></textarea>
             <br>
             <p>Note that by creating a guild, you will be assigned as the guild's GM by default.</p>
             <button type="submit">Create Guild</button>
