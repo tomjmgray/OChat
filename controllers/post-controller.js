@@ -81,4 +81,29 @@ router.post('/editPost/:postId', (req, res) => {
     })
 })
 
+router.get('/postDetail/:postId', (req, res) => {
+    db.Posts.findById(req.params.postId).populate(['author', {path: 'comments', populate: 
+        {path: 'author', models: 'Characters'}}
+    ]).exec((err, foundPost) => {
+        if (err) throw err;
+        const context = {
+            post: foundPost,
+            user: req.session.currentUser
+        };
+        res.render('posts/postDetail', context);
+    })
+})
+
+router.post('/addComment', (req, res) => {
+    db.Posts.create(req.body, (err, createdPost) => {
+        if (err) throw err;
+        db.Posts.findByIdAndUpdate(createdPost.commentOf, {
+            $push: {comments: createdPost._id}
+        }, (err, updatedPost) => {
+            if (err) throw err
+            res.redirect(`/posts/postDetail/${updatedPost._id}`)
+        })
+    })
+})
+
 module.exports = router

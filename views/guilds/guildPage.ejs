@@ -39,7 +39,7 @@
                     <% for (let i = guild.posts.length - 1; (i > guild.posts.length - 5 && i > -1); i--) { %>
                         <% if (guild.posts[i].postType === 'Announcement') %>
                         <div class="top-form genborder">
-                            <h3><%= guild.posts[i].title %></h3>
+                            <h3><a href="/posts/postDetail/<%= guild.posts[i]._id %>"><%= guild.posts[i].title %></a></h3>
                             <% if (user.main?._id == guild.posts[i].author._id) { %>
                                 <div class="inline">
                                     <button><a href="/posts/editPost/<%= guild.posts[i]._id %>" class="general">Edit Post</a></button>
@@ -49,7 +49,7 @@
                                 <div></div>
                             <% } %>
                             <p><%= guild.posts[i].message %></p>
-                            <p>By: <%= guild.posts[i].author.name %></p>
+                            <p class="big-list">By: <%= guild.posts[i].author.name %> Comments: (<%= guild.posts[i].comments.length %>)</p>
                         </div>
                         
                     <% } %>

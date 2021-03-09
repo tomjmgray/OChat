@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('../partials/head') %>
+    <title>Document</title>
+</head>
+<body>
+    <%- include('../partials/header.ejs') %>
+
+    <main class="form full genborder general">
+        <div class="top-form genborder">
+            <h1><%= post.title %></h1>
+            <h4 class="<%= post.author.class %>">By: <%= post.author.name %></h4>
+            <p><%= post.message %></p>
+        </div>
+        
+        <div class="top-form">
+            <h3>Add a comment</h3>
+            <form action="/posts/addComment" method="POST">
+                <input type="hidden" value="<%= user.main?._id %>" name="author">
+                <input type="hidden" value="<%= post._id %>" name="commentOf">
+                <input type="hidden" value="Comment" name="postType">
+                <textarea name="message" cols="80" rows="5"></textarea>
+                <button type="submit">Submit Comment</button>
+            </form> 
+        </div>
+
+        <div class="top-form">
+            <h3>Comments</h3>
+            <% post.comments.forEach((comment) => { %>
+                <div class="container genborder">
+                    <p><span class="<%= comment.author.class %>"><%= comment.author.name %></span>: <%= comment.message %></p>
+                </div>
+            <% }) %>
+        </div>
+        
+    </main>    
+</body>
+</html>
