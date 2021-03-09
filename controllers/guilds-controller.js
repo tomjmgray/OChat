@@ -2,17 +2,70 @@ const express = require('express');
 const router = express.Router();
 const db = require('../models');
 
-router.get('/join', (req, res) => {
-    db.Guilds.find({}, (err, foundGuilds) => {
+// router.get('/join', (req, res) => {
+//     db.Guilds.find({}, (err, foundGuilds) => {
+//         if (err) throw err;
+//         const context = {
+//             user: req.session.currentUser,
+//             guilds: foundGuilds
+//         };
+//         res.render('guilds/browseGuilds.ejs', context);
+//     })
+// })
+
+router.get('/browseGuilds', (req, res) => {
+    db.Realms.find({}, (err, foundRealms) => {
         if (err) throw err;
-        const context = {
-            user: req.session.currentUser,
-            guilds: foundGuilds
-        };
-        res.render('guilds/browseGuilds.ejs', context);
+        db.Guilds.find({}).populate('names').exec((err, foundGuilds) => {
+            if (err) throw err;
+            const context = {
+                guilds: foundGuilds,
+                realms: foundRealms,
+                user: req.session.currentUser,
+            };
+            res.render('guilds/browseGuilds', context);
+        })
+        
     })
 })
 
+router.post('/searchByName', (req, res) => {
+    console.log(req.body.guild);
+    db.Guilds.find({name: req.body.guild.toString()}, (err, foundGuild) => {
+        console.log('***********', foundGuild)
+        if (err) throw err;
+        
+        if (!foundGuild) {
+            res.redirect('/guilds/browseGuilds')
+        } else {
+            res.redirect(`/guilds/${foundGuild[0]?._id}`);
+        }
+    })
+})
+
+router.post('/searchByRealm', (req, res) => {
+    db.Realms.find({name: req.body.realm}).populate('guilds').exec((err, foundRealm) => {
+        if (err) throw err;
+        const sortedGuilds = foundRealm[0].guilds.sort((a, b) => {
+            const aname = a.name;
+            const bname = b.name;
+            let comparison = 0;
+            if (aname > bname) {
+                comparison = 1;
+            } else if (bname > aname) {
+                comparison = -1
+            }
+            return comparison
+        })
+        console.log(sortedGuilds);
+        const context = {
+            user: req.session.currentUser,
+            realm: foundRealm[0],
+            guilds: sortedGuilds
+        };
+        res.render('guilds/browseByRealm', context);
+    })
+})
 
 router.get('/createGuild', (req, res) => {
     db.Realms.find({}, (err, foundRealms) => {

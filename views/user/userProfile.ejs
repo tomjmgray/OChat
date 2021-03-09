@@ -29,7 +29,7 @@
                             <% if (user.characters[i]?.guild) { %>
                                 <p><%= user.characters[i]?.guildRank %> of <a href="/guilds/<%= user.characters[i].guild._id %>"><%= user.characters[i]?.guild?.name %></a></p>
                             <% } else { %>
-                                <p>You haven't joined a guild for the time being. Click <a href="/guilds/join">here</a> to browse guilds and send a request to join!</p>
+                                <p>You haven't joined a guild for the time being. Click <a href="/guilds/browseGuilds">here</a> to browse guilds and send a request to join!</p>
                             <% } %>
                             <p>DKP: <%= Math.floor(user.characters[i].dkp) %></p>
                             <button><a href="/characters/editCharacter/<%= user.characters[i]._id %>">Edit Character</a></button>

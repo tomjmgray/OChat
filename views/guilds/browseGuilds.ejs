@@ -8,21 +8,36 @@
     <%- include('../partials/header') %>
     <main>
         <div class="top-form full">
-            <h1>Join Guilds</h1>
-            <ul>
-                <% guilds.forEach((guild) => { %>
-                    <li class="form">
-                        <a href="/guilds/<%= guild._id %>"><h3><%= guild.name %></h3></a>
-                        <br>
-                        <button><a href="/guilds/joinRequest/<%= guild._id %>">Join <%= guild.name %></a></button>
-                    </li>
-                    
-                <% }) %>
-            </ul>
-            <br>
-            <p>Don't see your guild anywhere on the site? Sign your guild up <a href="/guilds/createGuild">here</a> to get started!</p>
+            <h1>Browse Guilds</h1>
+            <div class="container full">
+                <div class="top-form half">
+                    <h3>Search by Guild Name</h3>
+                    <form action="/guilds/searchByName" method="POST">
+                        <input list="guilds" name="guild">
+                        <datalist id="guilds">
+                            <% guilds.forEach((guild) => { %>
+                                <option value="<%= guild.name %>"></option>
+                            <% }) %>
+                        </datalist>
+                        <button type="submit">Search</button>
+                    </form>
+                </div>
+                <div class="top-form half">
+                    <h3>Search by Realm Name</h3>
+                    <form action="/guilds/searchByRealm" method="POST">
+                        <input list="realms" name="realm">
+                        <datalist id="realms">
+                            <% realms.forEach((realm) => { %>
+                                <option><%= realm.name %></option>
+                            <% }) %>
+                        </datalist>
+                        <button type="submit">Search</button>
+                    </form>
+                </div>
+            </div>
+            <h4>Can't Find Your Guild? Click <a href="/guilds/createGuild">HERE</a> to create a new one!</h4>
+            
         </div>
-       
     </main>
     
 
